@@ -62,7 +62,7 @@
             </div>
 
             <!-- Navigation -->
-            <ul class="navbar-nav mt-3">
+            <ul class="navbar-nav">
 
                 <h6 class="navbar-heading text-muted px-3">Main</h6>
                 <li class="nav-item">
@@ -75,14 +75,14 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('services*') ? 'active' : '' }}"
                         href="{{ route('services.index') }}">
-                        <i class="ni ni-settings text-yellow"></i> Services Pages
+                        <i class="ni ni-settings text-primary"></i> Services Pages
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('contacts*') ? 'active' : '' }}"
                         href="{{ route('contacts.index') }}">
-                        <i class="ni ni-email-83 text-red"></i> Clients Contacts
+                        <i class="ni ni-email-83 text-primary"></i> Clients Contacts
                     </a>
                 </li>
 
@@ -91,14 +91,14 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('projects*') ? 'active' : '' }}"
                         href="{{ route('projects.index') }}">
-                        <i class="ni ni-collection text-blue"></i> Projects
+                        <i class="ni ni-collection text-primary"></i> Projects
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('support-and-helps*') ? 'active' : '' }}"
                         href="{{ route('support-and-helps.index') }}">
-                        <i class="ni ni-shop text-orange"></i> Support & Help
+                        <i class="ni ni-shop text-primary"></i> Support & Help
                     </a>
                 </li>
 
@@ -106,7 +106,7 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('sustainabilities*') ? 'active' : '' }}"
                         href="{{ route('sustainabilities.index') }}">
-                        <i class="ni ni-planet text-green"></i> Sustainabilities
+                        <i class="ni ni-planet text-primary"></i> Sustainabilities
                     </a>
                 </li>
 
@@ -115,7 +115,7 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('profile*') ? 'active' : '' }}"
                         href="{{ route('profile.edit') }}">
-                        <i class="ni ni-single-02 text-yellow"></i> Profile
+                        <i class="ni ni-single-02 text-primary"></i> Profile
                     </a>
                 </li>
             </ul>

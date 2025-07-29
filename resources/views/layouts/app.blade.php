@@ -35,7 +35,7 @@
         }
 
         ::-webkit-scrollbar {
-            width: 5px;
+            width: 3px;
         }
 
         ::-webkit-scrollbar-track {
@@ -47,7 +47,7 @@
             background: var(--primary-color);
             border-radius: 12px;
             transition: all 0.3s ease;
-            background-color: blue;
+            background-color: rgb(105, 105, 231);
         }
     </style>
     @stack('css')

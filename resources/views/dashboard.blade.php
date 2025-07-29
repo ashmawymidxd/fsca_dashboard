@@ -325,7 +325,7 @@
                         </div>
 
                         <!-- Activity Chart with Date Range Selector -->
-                        <div class="row" data-aos="fade-up" data-aos-delay="500">
+                        <div class="row" data-aos="fade-up" data-aos-delay="300">
                             <div class="col-lg-12">
                                 <div class="card shadow-sm">
                                     <div class="card-header bg-white border-0">

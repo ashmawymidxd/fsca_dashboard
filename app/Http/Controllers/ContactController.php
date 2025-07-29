@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactReplyMail;
 use Illuminate\Support\Facades\Validator;
-
+use App\Notifications\NewContactSubmission;
+use App\Models\User;
 class ContactController extends Controller
 {
     /**
@@ -65,6 +66,10 @@ class ContactController extends Controller
                 'name', 'email', 'phone', 'service_type', 'message'
             ]));
 
+            // Send notification to auth user
+            $authUser = auth()->user();
+            $authUser->notify(new NewContactSubmission($contact));
+
             return response()->json([
                 'success' => true,
                 'message' => 'Contact message submitted successfully',
@@ -79,7 +84,6 @@ class ContactController extends Controller
             ], 500);
         }
     }
-
     /**
      * Display the specified resource.
      *

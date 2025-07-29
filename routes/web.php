@@ -11,6 +11,7 @@ use App\Http\Controllers\SustainabilityController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ServiceCategoryController;
 use App\Http\Controllers\Api\ServiceApiController;
+use App\Http\Controllers\NotificationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,6 +44,12 @@ Route::resource('services.categories', ServiceCategoryController::class);
 
 Route::get('/servicesapi', [ServiceApiController::class, 'index']);
 Route::get('/servicesapi/{slug}', [ServiceApiController::class, 'show']);
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::get('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+    Route::post('/notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
+});
 
 Route::get('/icons', [PageController::class, 'icons'])->name('icons');
 

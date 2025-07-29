@@ -4,7 +4,7 @@
     @include('users.partials.header', [
         'title' => __('Projects'),
         'description' => __('Here you can manage your projects and view the progress of your work.'),
-        'class' => 'col-lg-7',
+        'class' => 'col-lg-12',
     ])
     <div class="container-fluid mt--7">
         <div class="row">
