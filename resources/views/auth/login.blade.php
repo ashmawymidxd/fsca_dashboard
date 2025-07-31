@@ -6,8 +6,8 @@
     <div class="container mt--9 pb-5" data-aos="zoom-in" data-aos-delay="200">
         <div class="row justify-content-center">
             <div class="col-lg-5 col-md-7">
-                <div class="card bg-secondary shadow border-0">
-                    <div class="card-header bg-transparent pb-3">
+                <div class="card bg-white shadow border-0">
+                    <div class="card-header  bg-transparent pb-3">
                         <div class="text-center">
                             <img src="{{ asset('argon') }}/img/brand/favicon.png">
                         </div>
@@ -20,7 +20,7 @@
                         <form role="form" method="POST" action="{{ route('login') }}">
                             @csrf
 
-                            <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }} mb-3">
+                            <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }} mb-3 ">
                                 <div class="input-group input-group-alternative">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-email-83"></i></span>

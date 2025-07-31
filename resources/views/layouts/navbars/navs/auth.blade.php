@@ -1,5 +1,5 @@
 <!-- Top navbar -->
-<nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+<nav class="navbar navbar-top navbar-expand navbar-dark border-bottom border-info" id="navbar-main" style="background-color: rgba(2, 0, 92, 0.705)">
     <div class="container-fluid">
         <!-- Brand -->
         <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
@@ -53,7 +53,7 @@
                             </a>
                         @empty
                             <div class="dropdown-item">
-                                <span class="text-sm text-muted">{{ __('No new notifications') }}</span>
+                                <span class="text-sm text-muted px-6">{{ __('No new notifications yet ') }}</span>
                             </div>
                         @endforelse
                     </div>
@@ -62,6 +62,52 @@
                         class="dropdown-item text-center text-primary font-weight-bold">
                         {{ __('View all notifications') }}
                     </a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    <i class="ni ni-ungroup"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-dark bg-default  dropdown-menu-right ">
+                    <div class="row shortcuts px-4">
+                        <a href="#!" class="col-4 shortcut-item">
+                            <span class="shortcut-media avatar rounded-circle bg-gradient-red">
+                                <i class="ni ni-calendar-grid-58"></i>
+                            </span>
+                            <small>Calendar</small>
+                        </a>
+                        <a href="#!" class="col-4 shortcut-item">
+                            <span class="shortcut-media avatar rounded-circle bg-gradient-orange">
+                                <i class="ni ni-email-83"></i>
+                            </span>
+                            <small>Email</small>
+                        </a>
+                        <a href="#!" class="col-4 shortcut-item">
+                            <span class="shortcut-media avatar rounded-circle bg-gradient-info">
+                                <i class="ni ni-credit-card"></i>
+                            </span>
+                            <small>Payments</small>
+                        </a>
+                        <a href="#!" class="col-4 shortcut-item">
+                            <span class="shortcut-media avatar rounded-circle bg-gradient-green">
+                                <i class="ni ni-books"></i>
+                            </span>
+                            <small>Reports</small>
+                        </a>
+                        <a href="#!" class="col-4 shortcut-item">
+                            <span class="shortcut-media avatar rounded-circle bg-gradient-purple">
+                                <i class="ni ni-pin-3"></i>
+                            </span>
+                            <small>Maps</small>
+                        </a>
+                        <a href="#!" class="col-4 shortcut-item">
+                            <span class="shortcut-media avatar rounded-circle bg-gradient-yellow">
+                                <i class="ni ni-basket"></i>
+                            </span>
+                            <small>Shop</small>
+                        </a>
+                    </div>
                 </div>
             </li>
 
@@ -85,7 +131,7 @@
                         <h6 class="text-overflow m-0">{{ __('Welcome!') }}</h6>
                     </div>
                     <a href="{{ route('profile.edit') }}" class="dropdown-item">
-                        <i class="ni ni-single-02"></i>
+                        <i class="ni ni-circle-08"></i>
                         <span>{{ __('My profile') }}</span>
                     </a>
 
@@ -93,7 +139,7 @@
                     <a href="{{ route('logout') }}" class="dropdown-item"
                         onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
-                        <i class="ni ni-user-run"></i>
+                        <i class="ni ni-button-power"></i>
                         <span>{{ __('Logout') }}</span>
                     </a>
                 </div>
