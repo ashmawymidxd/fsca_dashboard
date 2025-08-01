@@ -67,8 +67,10 @@ class ContactController extends Controller
             ]));
 
             // Send notification to auth user
-            $authUser = auth()->user();
-            $authUser->notify(new NewContactSubmission($contact));
+            $adminUsers = User::get();
+            foreach ($adminUsers as $user) {
+                $user->notify(new NewContactSubmission($contact));
+            }
 
             return response()->json([
                 'success' => true,

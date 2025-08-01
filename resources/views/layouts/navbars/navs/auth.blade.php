@@ -1,5 +1,6 @@
 <!-- Top navbar -->
-<nav class="navbar navbar-top navbar-expand navbar-dark border-bottom border-info" id="navbar-main" style="background-color: rgba(2, 0, 92, 0.705)">
+<nav class="navbar navbar-top navbar-expand navbar-dark border-bottom border-info" id="navbar-main"
+    style="background-color: rgba(2, 0, 92, 0.705)">
     <div class="container-fluid">
         <!-- Brand -->
         <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
@@ -19,7 +20,8 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right dropdown-menu-notifications">
                     <div class="dropdown-header noti-title">
-                        <h6 class="text-overflow m-0">{{ __('Notifications') }}</h6>
+                        <h6 class="text-overflow m-0">{{ auth()->user()->unreadNotifications->count() }}
+                            {{ __('Notifications') }}</h6>
                         @if (auth()->user()->unreadNotifications->count() > 0)
                             <a href="{{ route('notifications.markAllAsRead') }}" class="text-sm text-muted">Mark all as
                                 read</a>
@@ -32,7 +34,7 @@
                                 data-notification-link="{{ $notification->data['link'] ?? '#' }}">
                                 <div class="media align-items-center">
                                     <div
-                                        class="icon icon-shape icon-sm icon-{{ $notification->data['type'] ?? 'info' }} rounded-circle shadow mr-3">
+                                        class="icon icon-shape icon-sm icon-{{ $notification->data['type'] ?? 'info' }} rounded-circle shadow mr-3 bg-warning text-white">
                                         @if (isset($notification->data['type']) && $notification->data['type'] === 'contact')
                                             <i class="ni ni-email-83"></i>
                                         @elseif(isset($notification->data['type']) && $notification->data['type'] === 'alert')
@@ -69,8 +71,8 @@
                     aria-expanded="false">
                     <i class="ni ni-ungroup"></i>
                 </a>
-                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-dark bg-default  dropdown-menu-right ">
-                    <div class="row shortcuts px-4">
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-dark bg-white  dropdown-menu-right ">
+                    <div class="row shortcuts p-4">
                         <a href="#!" class="col-4 shortcut-item">
                             <span class="shortcut-media avatar rounded-circle bg-gradient-red">
                                 <i class="ni ni-calendar-grid-58"></i>
@@ -89,19 +91,19 @@
                             </span>
                             <small>Payments</small>
                         </a>
-                        <a href="#!" class="col-4 shortcut-item">
+                        <a href="#!" class="col-4 shortcut-item mt-3">
                             <span class="shortcut-media avatar rounded-circle bg-gradient-green">
                                 <i class="ni ni-books"></i>
                             </span>
                             <small>Reports</small>
                         </a>
-                        <a href="#!" class="col-4 shortcut-item">
+                        <a href="#!" class="col-4 shortcut-item mt-3">
                             <span class="shortcut-media avatar rounded-circle bg-gradient-purple">
                                 <i class="ni ni-pin-3"></i>
                             </span>
                             <small>Maps</small>
                         </a>
-                        <a href="#!" class="col-4 shortcut-item">
+                        <a href="#!" class="col-4 shortcut-item mt-3">
                             <span class="shortcut-media avatar rounded-circle bg-gradient-yellow">
                                 <i class="ni ni-basket"></i>
                             </span>

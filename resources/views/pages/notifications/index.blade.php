@@ -19,8 +19,8 @@
                             </form>
                         </div>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table align-items-center table-flush">
+                    <div class="table-responsive p-3">
+                        <table class="table align-items-center table-flush w-100 mt-3" id="notificationsTable">
                             <thead class="thead-light">
                                 <tr>
                                     <th>Message</th>
@@ -30,7 +30,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($notifications as $notification)
+                                @foreach ($notifications as $notification)
                                     <tr>
                                         <td>{{ $notification->data['message'] ?? 'Notification' }}</td>
                                         <td>{{ $notification->created_at->diffForHumans() }}</td>
@@ -50,19 +50,18 @@
                                                 class="btn btn-sm btn-primary">View</a>
                                         </td>
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="4" class="text-center">No notifications found</td>
-                                    </tr>
-                                @endforelse
+                                @endforeach
                             </tbody>
                         </table>
-                    </div>
-                    <div class="card-footer py-4">
-                        {{ $notifications->links() }}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+@push('js')
+    <script>
+        new DataTable("#notificationsTable");
+    </script>
+@endpush
