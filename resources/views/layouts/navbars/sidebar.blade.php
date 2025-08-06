@@ -110,12 +110,18 @@
                     </a>
                 </li>
 
-                <h6 class="navbar-heading text-muted px-3 mt-4">User</h6>
+                <h6 class="navbar-heading text-muted px-3 mt-4">Staff</h6>
 
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('admins*') ? 'active' : '' }}"
+                        href="{{ route('admins.index') }}">
+                        <i class="ni ni-bullet-list-67 text-primary"></i> Admins
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('profile*') ? 'active' : '' }}"
                         href="{{ route('profile.edit') }}">
-                        <i class="ni ni-single-02 text-primary"></i> Profile
+                        <i class="ni ni-circle-08 text-primary"></i> Profile
                     </a>
                 </li>
             </ul>

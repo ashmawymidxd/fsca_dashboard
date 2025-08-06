@@ -1,0 +1,66 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+use App\Models\Permission;
+
+class PermissionSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run()
+    {
+        $permissions = [
+            // Dashboard
+            ['name' => 'View Dashboard', 'slug' => 'view-dashboard'],
+
+            // Profile
+            ['name' => 'Manage Profile', 'slug' => 'manage-profile'],
+
+            // Projects
+            ['name' => 'View Projects', 'slug' => 'view-projects'],
+            ['name' => 'Manage Projects', 'slug' => 'manage-projects'],
+
+            // Support and Help
+            ['name' => 'View Support', 'slug' => 'view-support'],
+            ['name' => 'Manage Support', 'slug' => 'manage-support'],
+
+            // Sustainability
+            ['name' => 'View Sustainability', 'slug' => 'view-sustainability'],
+            ['name' => 'Manage Sustainability', 'slug' => 'manage-sustainability'],
+
+            // Services
+            ['name' => 'View Services', 'slug' => 'view-services'],
+            ['name' => 'Manage Services', 'slug' => 'manage-services'],
+
+            // Service Categories
+            ['name' => 'View Service Categories', 'slug' => 'view-service-categories'],
+            ['name' => 'Manage Service Categories', 'slug' => 'manage-service-categories'],
+
+            // Notifications
+            ['name' => 'Manage Notifications', 'slug' => 'manage-notifications'],
+
+            // Icons
+            ['name' => 'View Icons', 'slug' => 'view-icons'],
+
+            // Contacts
+            ['name' => 'View Contacts', 'slug' => 'view-contacts'],
+            ['name' => 'Manage Contacts', 'slug' => 'manage-contacts'],
+
+            // Admins
+            ['name' => 'View Admins', 'slug' => 'view-admins'],
+            ['name' => 'Manage Admins', 'slug' => 'manage-admins'],
+
+            // Permissions
+            ['name' => 'View Permissions', 'slug' => 'view-permissions'],
+            ['name' => 'Manage Permissions', 'slug' => 'manage-permissions'],
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::create($permission);
+        }
+    }
+}

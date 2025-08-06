@@ -23,6 +23,6 @@ Route::get('/projects', [ProjectController::class, 'apiIndex']);
 Route::get('/support-and-helps', [SupportAndHelpController::class, 'apiIndex']);
 Route::get('/sustainabilities', [SustainabilityController::class, 'apiIndex']);
 
-
 Route::get('/services', [ServiceApiController::class, 'index']);
 Route::get('/services/{slug}', [ServiceApiController::class, 'show']);
+

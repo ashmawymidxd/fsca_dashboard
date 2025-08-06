@@ -3,8 +3,8 @@
     style="background-color: rgba(2, 0, 92, 0.705)">
     <div class="container-fluid">
         <!-- Brand -->
-        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
-            href="{{ route('home') }}">{{ __('SFCL ADMIN FULL CONTROLE Dashboard') }}</a>
+        <a class="h4 mb-0 text-white  d-none d-lg-inline-block"
+            href="{{ route('home') }}">{{ __('SFCL Dashboard') }}</a>
 
         <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex">
@@ -71,43 +71,49 @@
                     aria-expanded="false">
                     <i class="ni ni-ungroup"></i>
                 </a>
-                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-dark bg-white  dropdown-menu-right ">
-                    <div class="row shortcuts p-4">
-                        <a href="#!" class="col-4 shortcut-item">
+                <div class="dropdown-menu dropdown-menu-xl dropdown-menu-dark bg-white  dropdown-menu-right ">
+                    <div class="row shortcuts px-4">
+                        <a href="{{ route('projects.index') }}"
+                            class="col-4 shortcut-item d-flex flex-column align-items-center justify-content-center gap-3 rounded p-2">
                             <span class="shortcut-media avatar rounded-circle bg-gradient-red">
-                                <i class="ni ni-calendar-grid-58"></i>
+                                <i class="fas fa-project-diagram"></i>
                             </span>
-                            <small>Calendar</small>
+                            <small>Projects</small>
                         </a>
-                        <a href="#!" class="col-4 shortcut-item">
+                        <a href="{{ route('sustainabilities.index') }}"
+                            class="col-4 shortcut-item d-flex flex-column align-items-center justify-content-center gap-3 rounded p-2">
                             <span class="shortcut-media avatar rounded-circle bg-gradient-orange">
-                                <i class="ni ni-email-83"></i>
+                                <i class="fas fa-leaf"></i>
                             </span>
-                            <small>Email</small>
+                            <small>Sustainabilities</small>
                         </a>
-                        <a href="#!" class="col-4 shortcut-item">
+                        <a href="{{ route('support-and-helps.index') }}"
+                            class="col-4 shortcut-item d-flex flex-column align-items-center justify-content-center gap-3 rounded p-2">
                             <span class="shortcut-media avatar rounded-circle bg-gradient-info">
-                                <i class="ni ni-credit-card"></i>
+                                <i class="fas fa-hands-helping"></i>
                             </span>
-                            <small>Payments</small>
+                            <small>Support</small>
                         </a>
-                        <a href="#!" class="col-4 shortcut-item mt-3">
+                        <a href="{{ route('services.index') }}"
+                            class="col-4 shortcut-item mt-3 d-flex flex-column align-items-center justify-content-center gap-3 rounded p-2">
                             <span class="shortcut-media avatar rounded-circle bg-gradient-green">
-                                <i class="ni ni-books"></i>
+                                <i class="fas fa-concierge-bell"></i>
                             </span>
-                            <small>Reports</small>
+                            <small>Sercices</small>
                         </a>
-                        <a href="#!" class="col-4 shortcut-item mt-3">
+                        <a href="{{ route('services.index') }}"
+                            class="col-4 shortcut-item mt-3 d-flex flex-column align-items-center justify-content-center gap-3 rounded p-2">
                             <span class="shortcut-media avatar rounded-circle bg-gradient-purple">
-                                <i class="ni ni-pin-3"></i>
+                                <i class="fas fa-tags"></i>
                             </span>
-                            <small>Maps</small>
+                            <small>Services Categories</small>
                         </a>
-                        <a href="#!" class="col-4 shortcut-item mt-3">
+                        <a href="{{ route('contacts.index') }}"
+                            class="col-4 shortcut-item mt-3 d-flex flex-column align-items-center justify-content-center gap-3 rounded p-2">
                             <span class="shortcut-media avatar rounded-circle bg-gradient-yellow">
-                                <i class="ni ni-basket"></i>
+                                <i class="fas fa-envelope"></i>
                             </span>
-                            <small>Shop</small>
+                            <small>Client Contacts</small>
                         </a>
                     </div>
                 </div>

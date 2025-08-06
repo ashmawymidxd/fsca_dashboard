@@ -113,7 +113,7 @@
                                 <p class="text-muted mb-0">{{ __('Last updated: ') . now()->format('M d, Y H:i') }}</p>
                             </div>
                             <div class="col-4 text-right">
-                                <button class="btn btn-sm btn-neutral" id="refresh-dashboard">
+                                <button class="btn btn-sm btn-secondary shadow border" id="refresh-dashboard">
                                     <i class="fas fa-sync-alt mr-2"></i>{{ __('Refresh') }}
                                 </button>
                             </div>

@@ -16,7 +16,9 @@
                         <div class="col-lg-3 order-lg-2">
                             <div class="card-profile-image">
                                 <a href="#">
-                                    <img style="height: 180px; object-fit:cover" src="{{asset('assets/profile_images/' . auth()->user()->profile_image)}}" class="rounded-circle">
+                                    <img style="height: 180px; object-fit:cover"
+                                        src="{{ asset('assets/profile_images/' . auth()->user()->profile_image) }}"
+                                        class="rounded-circle">
                                 </a>
                             </div>
                         </div>
@@ -45,8 +47,9 @@
                             <h3 class="mb-0">{{ __('Edit Profile') }}</h3>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <form method="post" action="{{ route('profile.update') }}" autocomplete="off" enctype="multipart/form-data">
+                    <div class="card-body bg-white">
+                        <form method="post" action="{{ route('profile.update') }}" autocomplete="off"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('PATCH')
 
@@ -91,24 +94,21 @@
                                 </div>
 
                                 <div class="mt-3">
-                                    <label class="form-control-label"
-                                        for="">{{ __(' Profile Image') }}</label>
+                                    <label class="form-control-label" for="">{{ __(' Profile Image') }}</label>
                                     <input type="file" id="profile_img" name="profile_image" hidden>
                                     <label for="profile_img"
                                         class="text-center border rounded bg-white shadow-sm w-100 p-2 ">
                                         -
                                     </label>
                                 </div>
-
-
-
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-success mt-4 w-100">{{ __('Save') }}</button>
                                 </div>
                             </div>
                         </form>
                         <hr class="my-4" />
-                        <form method="post" action="{{ route('password.update') }}" autocomplete="off">
+                        <form method="post" action="{{ route('password.update') }}" autocomplete="off"
+                            class="needs-validation" novalidate>
                             @csrf
                             @method('put')
 
@@ -124,42 +124,54 @@
                             @endif
 
                             <div class="pl-lg-4">
-                                <div class="form-group{{ $errors->has('old_password') ? ' has-danger' : '' }}">
+                                <div
+                                    class="form-group{{ $errors->updatePassword->has('current_password') ? ' has-danger' : '' }}">
                                     <label class="form-control-label"
                                         for="input-current-password">{{ __('Current Password') }}</label>
-                                    <input type="password" name="old_password" id="input-current-password"
-                                        class="form-control form-control-alternative{{ $errors->has('old_password') ? ' is-invalid' : '' }}"
-                                        placeholder="{{ __('Current Password') }}" value="" required>
+                                    <input type="password" name="current_password" id="input-current-password"
+                                        class="form-control form-control-alternative{{ $errors->updatePassword->has('current_password') ? ' is-invalid' : '' }}"
+                                        placeholder="{{ __('Current Password') }}" required autofocus>
 
-                                    @if ($errors->has('old_password'))
+                                    @if ($errors->updatePassword->has('current_password'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('old_password') }}</strong>
+                                            <strong>{{ $errors->updatePassword->first('current_password') }}</strong>
                                         </span>
                                     @endif
                                 </div>
-                                <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
+                                <div class="form-group{{ $errors->updatePassword->has('password') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-password">{{ __('New Password') }}</label>
                                     <input type="password" name="password" id="input-password"
-                                        class="form-control form-control-alternative{{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                        placeholder="{{ __('New Password') }}" value="" required>
+                                        class="form-control form-control-alternative{{ $errors->updatePassword->has('password') ? ' is-invalid' : '' }}"
+                                        placeholder="{{ __('New Password') }}" required>
+                                    <small class="form-text text-muted">
+                                        {{ __('Password must be at least 8 characters and contain a mix of letters, numbers, and symbols.') }}
+                                    </small>
 
-                                    @if ($errors->has('password'))
+                                    @if ($errors->updatePassword->has('password'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('password') }}</strong>
+                                            <strong>{{ $errors->updatePassword->first('password') }}</strong>
                                         </span>
                                     @endif
                                 </div>
-                                <div class="form-group">
+                                <div
+                                    class="form-group{{ $errors->updatePassword->has('password_confirmation') ? ' has-danger' : '' }}">
                                     <label class="form-control-label"
                                         for="input-password-confirmation">{{ __('Confirm New Password') }}</label>
                                     <input type="password" name="password_confirmation" id="input-password-confirmation"
-                                        class="form-control form-control-alternative"
-                                        placeholder="{{ __('Confirm New Password') }}" value="" required>
+                                        class="form-control form-control-alternative{{ $errors->updatePassword->has('password_confirmation') ? ' is-invalid' : '' }}"
+                                        placeholder="{{ __('Confirm New Password') }}" required>
+
+                                    @if ($errors->updatePassword->has('password_confirmation'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->updatePassword->first('password_confirmation') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
 
                                 <div class="text-center">
-                                    <button type="submit"
-                                        class="btn btn-success mt-4 w-100">{{ __('Change password') }}</button>
+                                    <button type="submit" class="btn btn-success mt-4 w-100">
+                                        {{ __('Change password') }}
+                                    </button>
                                 </div>
                             </div>
                         </form>

@@ -47,7 +47,7 @@
                             </div>
                         </div>
 
-                        <div class="table-responsive bg-white rounded mt-5 p-3 border">
+                        <div class="table-responsive bg-white rounded mt-5 p-3 border w-100">
                             <table class="table align-items-center table-flush w-100 mt-3" id="categoriesTable">
                                 <thead class="thead-light">
                                     <tr>

@@ -19,6 +19,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_super_admin', // Indicates if the admin is a super admin
         'profile_image',
     ];
 
@@ -41,4 +42,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class);
+    }
+
+    public function hasPermission($slug)
+    {
+        return $this->is_super_admin || $this->permissions()->where('slug', $slug)->exists();
+    }
 }
