@@ -4,7 +4,7 @@
     @include('users.partials.header', [
         'title' => __('Add New Category to Service: ') . $service->title_en,
         'description' => __('Create a new category or banner for this service'),
-        'class' => 'col-lg-12'
+        'class' => 'col-lg-12',
     ])
 
     <div class="container-fluid mt--7">
@@ -36,7 +36,8 @@
                     </div>
 
                     <div class="card-body bg-white">
-                        <form method="post" action="{{ route('services.categories.store', $service) }}" autocomplete="off" enctype="multipart/form-data" id="categoryForm">
+                        <form method="post" action="{{ route('services.categories.store', $service) }}" autocomplete="off"
+                            enctype="multipart/form-data" id="categoryForm">
                             @csrf
 
                             <!-- Step 1: Basic Information -->
@@ -52,7 +53,8 @@
                                         </label>
                                         <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
                                             <label class="btn btn-outline-primary active">
-                                                <input type="radio" name="type" id="type_category" value="category" checked>
+                                                <input type="radio" name="type" id="type_category" value="category"
+                                                    checked>
                                                 <i class="ni ni-collection mr-2"></i>{{ __('Category') }}
                                             </label>
                                             <label class="btn btn-outline-primary">
@@ -75,7 +77,9 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="fa fa-font"></i></span>
                                                     </div>
-                                                    <input type="text" name="main_header_en" id="main_header_en" class="form-control" placeholder="{{ __('e.g. Our Services') }}" value="{{ old('main_header_en') }}" required>
+                                                    <input type="text" name="main_header_en" id="main_header_en"
+                                                        class="form-control" placeholder="{{ __('e.g. Our Services') }}"
+                                                        value="{{ old('main_header_en') }}" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -88,7 +92,10 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="fa fa-font"></i></span>
                                                     </div>
-                                                    <input type="text" name="main_header_ar" id="main_header_ar" class="form-control text-right" dir="rtl" placeholder="{{ __('e.g. خدماتنا') }}" value="{{ old('main_header_ar') }}" required>
+                                                    <input type="text" name="main_header_ar" id="main_header_ar"
+                                                        class="form-control text-right" dir="rtl"
+                                                        placeholder="{{ __('e.g. خدماتنا') }}"
+                                                        value="{{ old('main_header_ar') }}" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -96,7 +103,10 @@
 
                                     <div class="form-group">
                                         <label class="form-control-label" for="order">{{ __('Display Order') }}</label>
-                                        <input type="number" name="order" id="order" class="form-control form-control-alternative" placeholder="{{ __('Lower numbers appear first') }}" value="{{ old('order', 0) }}" min="0">
+                                        <input type="number" name="order" id="order"
+                                            class="form-control form-control-alternative"
+                                            placeholder="{{ __('Lower numbers appear first') }}"
+                                            value="{{ old('order', 0) }}" min="0">
                                     </div>
 
                                     <div class="text-center mt-4">
@@ -112,15 +122,17 @@
                                 <h6 class="heading-small text-muted mb-4">
                                     <i class="ni ni-align-left-2 mr-2"></i>{{ __('Content Details') }}
                                 </h6>
-
                                 <div class="pl-lg-4">
-                                    <div class="row">
+                                    <div class="row notBanner">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="sub_header_en">
                                                     {{ __('Sub Header (English)') }}
                                                 </label>
-                                                <input type="text" name="sub_header_en" id="sub_header_en" class="form-control" placeholder="{{ __('e.g. Comprehensive Solutions') }}" value="{{ old('sub_header_en') }}">
+                                                <input type="text" name="sub_header_en" id="sub_header_en"
+                                                    class="subHeader form-control"
+                                                    placeholder="{{ __('e.g. Comprehensive Solutions') }}"
+                                                    value="{{ old('sub_header_en') }}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -128,18 +140,23 @@
                                                 <label class="form-control-label" for="sub_header_ar">
                                                     {{ __('Sub Header (Arabic)') }}
                                                 </label>
-                                                <input type="text" name="sub_header_ar" id="sub_header_ar" class="form-control text-right" dir="rtl" placeholder="{{ __('e.g. حلول شاملة') }}" value="{{ old('sub_header_ar') }}">
+                                                <input type="text" name="sub_header_ar" id="sub_header_ar"
+                                                    class="subHeader form-control text-right" dir="rtl"
+                                                    placeholder="{{ __('e.g. حلول شاملة') }}"
+                                                    value="{{ old('sub_header_ar') }}">
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="row">
+                                    <div class="row notBanner">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="focus_en">
                                                     {{ __('Focus Text (English)') }}
                                                 </label>
-                                                <input type="text" name="focus_en" id="focus_en" class="form-control" placeholder="{{ __('e.g. Quality Assurance') }}" value="{{ old('focus_en') }}">
+                                                <input type="text" name="focus_en" id="focus_en"
+                                                    class="form-control" placeholder="{{ __('e.g. Quality Assurance') }}"
+                                                    value="{{ old('focus_en') }}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -147,17 +164,22 @@
                                                 <label class="form-control-label" for="focus_ar">
                                                     {{ __('Focus Text (Arabic)') }}
                                                 </label>
-                                                <input type="text" name="focus_ar" id="focus_ar" class="form-control text-right" dir="rtl" placeholder="{{ __('e.g. ضمان الجودة') }}" value="{{ old('focus_ar') }}">
+                                                <input type="text" name="focus_ar" id="focus_ar"
+                                                    class="form-control text-right" dir="rtl"
+                                                    placeholder="{{ __('e.g. ضمان الجودة') }}"
+                                                    value="{{ old('focus_ar') }}">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row banner d-none">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label" for="button_text_en">
                                                     {{ __('Button Text (English)') }}
                                                 </label>
-                                                <input type="text" name="button_text_en" id="button_text_en" class="form-control" placeholder="{{ __('e.g. Quality Assurance') }}" value="{{ old('button_text_en') }}">
+                                                <input type="text" name="button_text_en" id="button_text_en"
+                                                    class="form-control" placeholder="{{ __('e.g. Quality Assurance') }}"
+                                                    value="{{ old('button_text_en') }}">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -165,7 +187,10 @@
                                                 <label class="form-control-label" for="button_text_ar">
                                                     {{ __('Button Text (Arabic)') }}
                                                 </label>
-                                                <input type="text" name="button_text_ar" id="button_text_ar" class="form-control text-right" dir="rtl" placeholder="{{ __('e.g. ضمان الجودة') }}" value="{{ old('button_text_ar') }}">
+                                                <input type="text" name="button_text_ar" id="button_text_ar"
+                                                    class="form-control text-right" dir="rtl"
+                                                    placeholder="{{ __('e.g. ضمان الجودة') }}"
+                                                    value="{{ old('button_text_ar') }}">
                                             </div>
                                         </div>
                                     </div>
@@ -176,8 +201,10 @@
                                                 <label class="form-control-label" for="description_en">
                                                     {{ __('Description (English)') }} <span class="text-danger">*</span>
                                                 </label>
-                                                <textarea name="description_en" id="description_en" class="form-control" rows="4" placeholder="{{ __('Detailed description in English') }}" required>{{ old('description_en') }}</textarea>
-                                                <small class="form-text text-muted">{{ __('Minimum 10 characters') }}</small>
+                                                <textarea name="description_en" id="description_en" class="form-control" rows="4"
+                                                    placeholder="{{ __('Detailed description in English') }}" required>{{ old('description_en') }}</textarea>
+                                                <small
+                                                    class="form-text text-muted">{{ __('Minimum 10 characters') }}</small>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -185,8 +212,10 @@
                                                 <label class="form-control-label" for="description_ar">
                                                     {{ __('Description (Arabic)') }} <span class="text-danger">*</span>
                                                 </label>
-                                                <textarea name="description_ar" id="description_ar" class="form-control text-right" dir="rtl" rows="4" placeholder="{{ __('Detailed description in Arabic') }}" required>{{ old('description_ar') }}</textarea>
-                                                <small class="form-text text-muted">{{ __('Minimum 10 characters') }}</small>
+                                                <textarea name="description_ar" id="description_ar" class="form-control text-right" dir="rtl" rows="4"
+                                                    placeholder="{{ __('Detailed description in Arabic') }}" required>{{ old('description_ar') }}</textarea>
+                                                <small
+                                                    class="form-text text-muted">{{ __('Minimum 10 characters') }}</small>
                                             </div>
                                         </div>
                                     </div>
@@ -214,8 +243,10 @@
                                             {{ __('Cover Image') }} <span class="text-danger">*</span>
                                         </label>
                                         <div class="custom-file">
-                                            <input type="file" name="cover_image" id="cover_image" class="custom-file-input" accept="image/*" required>
-                                            <label class="custom-file-label" for="cover_image">{{ __('Choose image file') }}</label>
+                                            <input type="file" name="cover_image" id="cover_image"
+                                                class="custom-file-input" accept="image/*" required>
+                                            <label class="custom-file-label"
+                                                for="cover_image">{{ __('Choose image file') }}</label>
                                         </div>
                                         <small class="form-text text-muted">
                                             {{ __('Recommended size: 1200×400 pixels for banners, 800×600 for categories') }}
@@ -223,7 +254,8 @@
                                     </div>
 
                                     <div class="image-preview-container text-center mt-4">
-                                        <img id="imagePreview" src="#" alt="Image Preview" class="img-fluid rounded" style="display: none; max-height: 300px;">
+                                        <img id="imagePreview" src="#" alt="Image Preview"
+                                            class="img-fluid rounded" style="display: none; max-height: 300px;">
                                         <div id="noImagePreview" class="p-4 border rounded bg-light">
                                             <i class="ni ni-image fa-3x text-muted mb-3"></i>
                                             <p class="text-muted">{{ __('Image preview will appear here') }}</p>
@@ -253,6 +285,10 @@
 @push('js')
     <script>
         $(document).ready(function() {
+            $("#type_banner").change(function() {
+                $(".notBanner").hide();
+                $(".banner").removeClass('d-none');
+            })
             // Multi-step form navigation
             $('.next-step').click(function() {
                 const currentStep = $(this).closest('.step-content').data('step');
@@ -286,20 +322,20 @@
 
                 if (step === 1) {
                     if ($('#main_header_en').val().trim() === '') {
-                        showError($('#main_header_en'), '{{ __("English header is required") }}');
+                        showError($('#main_header_en'), '{{ __('English header is required') }}');
                         isValid = false;
                     }
                     if ($('#main_header_ar').val().trim() === '') {
-                        showError($('#main_header_ar'), '{{ __("Arabic header is required") }}');
+                        showError($('#main_header_ar'), '{{ __('Arabic header is required') }}');
                         isValid = false;
                     }
                 } else if (step === 2) {
                     if ($('#description_en').val().trim().length < 10) {
-                        showError($('#description_en'), '{{ __("Description must be at least 10 characters") }}');
+                        showError($('#description_en'), '{{ __('Description must be at least 10 characters') }}');
                         isValid = false;
                     }
                     if ($('#description_ar').val().trim().length < 10) {
-                        showError($('#description_ar'), '{{ __("Description must be at least 10 characters") }}');
+                        showError($('#description_ar'), '{{ __('Description must be at least 10 characters') }}');
                         isValid = false;
                     }
                 }
@@ -432,8 +468,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Form enhancements */

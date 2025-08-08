@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('cover_image');
             $table->string('main_header_en');
             $table->string('main_header_ar');
-            $table->string('sub_header_en');
-            $table->string('sub_header_ar');
+            $table->string('sub_header_en')->nullable();
+            $table->string('sub_header_ar')->nullable();
             $table->text('description_en');
             $table->text('description_ar');
             $table->string('focus_en')->nullable();
