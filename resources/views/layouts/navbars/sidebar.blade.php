@@ -110,6 +110,20 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('complete_services*') ? 'active' : '' }}"
+                        href="{{ route('complete_services.index') }}">
+                        <i class="ni ni-briefcase-24 text-primary"></i> Complete services
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('fleets*') ? 'active' : '' }}"
+                        href="{{ route('fleets.index') }}">
+                        <i class="ni ni-ambulance text-primary"></i> fleets Managment
+                    </a>
+                </li>
+
                 <h6 class="navbar-heading text-muted px-3 mt-4">Staff</h6>
 
                 <li class="nav-item">

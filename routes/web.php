@@ -10,9 +10,10 @@ use App\Http\Controllers\SupportAndHelpController;
 use App\Http\Controllers\SustainabilityController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\ServiceCategoryController;
-use App\Http\Controllers\Api\ServiceApiController;
+use App\Http\Controllers\CompleteServiceController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AdminsController;
+use App\Http\Controllers\FleetController;
 use App\Http\Controllers\PermissionController;
 
 /*
@@ -95,10 +96,19 @@ Route::get('/icons', [PageController::class, 'icons'])
 Route::group(['middleware' => ['auth', 'admin.permission:manage-contacts']], function() {
     Route::resource('contacts', ContactController::class)->except(['create', 'edit', 'update', 'show']);
     Route::get('contacts/{contact}', [ContactController::class, 'show'])
-        ->middleware('admin.permission:view-contacts')
-        ->name('contacts.show');
+    ->middleware('admin.permission:view-contacts')
+    ->name('contacts.show');
     Route::post('contacts/{contact}/reply', [ContactController::class,'sendReply'])->name('contacts.reply');
 });
+
+// complete services routes with permission
+Route::resource('complete_services', CompleteServiceController::class)
+    ->middleware(['auth','admin.permission:manage-complete-services']);
+
+
+// fleets routes with permission
+Route::resource('fleets', FleetController::class)
+    ->middleware(['auth','admin.permission:manage-fleets']);
 
 // Admins routes with permissions
 Route::group(['middleware' => ['auth', 'admin.permission:manage-admins']], function () {
