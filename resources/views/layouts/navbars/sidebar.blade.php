@@ -63,14 +63,39 @@
 
             <!-- Navigation -->
             <ul class="navbar-nav">
-
-                <h6 class="navbar-heading text-muted px-3">Main</h6>
+                <!-- Dashboard with dropdown -->
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('home') ? 'active' : '' }}" href="{{ route('home') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> Dashboard
+                    <div class="nav-link d-flex justify-content-between align-items-center" data-toggle="collapse"
+                        href="#dashboardCollapse" role="button" aria-expanded="false"
+                        aria-controls="dashboardCollapse">
+                        <div>
+                            <i class="ni ni-collection text-primary mr-4"></i>Home
+                        </div>
+                    </div>
+                    <div class="collapse pl-4" id="dashboardCollapse">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link text-left pl-4 {{ Request::is('complete_services*') ? 'active' : '' }}"
+                                    href="{{ route('complete_services.index') }}">
+                                    <i class="ni ni-briefcase-24 text-primary "></i> Services
+                                </a>
+                            </li>
+                            {{-- sectors --}}
+                            <li class="nav-item">
+                                <a class="nav-link text-left pl-4 {{ Request::is('sectors*') ? 'active' : '' }}"
+                                    href="{{ route('sectors.index') }}">
+                                    <i class="ni ni-bullet-list-67 text-primary"></i> Sectors
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-left pl-4 {{ Request::is('home') ? 'active' : '' }}"
+                        href="{{ route('home') }}">
+                        <i class="ni ni-chart-bar-32 text-primary"></i> Overview
                     </a>
                 </li>
-
 
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('services*') ? 'active' : '' }}"
@@ -80,13 +105,15 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('contacts*') ? 'active' : '' }}"
-                        href="{{ route('contacts.index') }}">
-                        <i class="ni ni-email-83 text-primary"></i> Clients Contacts
+                    <a class="nav-link {{ Request::is('common-units*') ? 'active' : '' }}"
+                        href="{{ route('common-units.index') }}">
+                        <i class="ni ni-ui-04 text-primary"></i> Common Units
                     </a>
                 </li>
 
-                <h6 class="navbar-heading text-muted px-3 mt-4">Organization</h6>
+                <li class="nav-item">
+                    <span class="nav-link">Pages Content</span>
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('projects*') ? 'active' : '' }}"
@@ -102,7 +129,6 @@
                     </a>
                 </li>
 
-
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('sustainabilities*') ? 'active' : '' }}"
                         href="{{ route('sustainabilities.index') }}">
@@ -111,20 +137,22 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('complete_services*') ? 'active' : '' }}"
-                        href="{{ route('complete_services.index') }}">
-                        <i class="ni ni-briefcase-24 text-primary"></i> Complete services
+                    <a class="nav-link {{ Request::is('fleets*') ? 'active' : '' }}"
+                        href="{{ route('fleets.index') }}">
+                        <i class="ni ni-ambulance text-primary"></i> Fleet Management
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('fleets*') ? 'active' : '' }}"
-                        href="{{ route('fleets.index') }}">
-                        <i class="ni ni-ambulance text-primary"></i> fleets Managment
+                    <a class="nav-link {{ Request::is('trains*') ? 'active' : '' }}"
+                        href="{{ route('trains.index') }}">
+                        <i class="ni ni-user-run text-primary"></i> Trains Centers
                     </a>
                 </li>
 
-                <h6 class="navbar-heading text-muted px-3 mt-4">Staff</h6>
+                <li class="nav-item">
+                    <span class="nav-link">Clients & Staff</span>
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('admins*') ? 'active' : '' }}"
@@ -132,15 +160,17 @@
                         <i class="ni ni-bullet-list-67 text-primary"></i> Admins
                     </a>
                 </li>
+
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('profile*') ? 'active' : '' }}"
-                        href="{{ route('profile.edit') }}">
-                        <i class="ni ni-circle-08 text-primary"></i> Profile
+                    <a class="nav-link {{ Request::is('contacts*') ? 'active' : '' }}"
+                        href="{{ route('contacts.index') }}">
+                        <i class="ni ni-email-83 text-primary"></i> Clients Contacts
                     </a>
                 </li>
             </ul>
 
-            <div class="mt-auto d-none d-md-block border bg-secondary rounded">
+
+            {{-- <div class="mt-auto d-none d-md-block border bg-secondary rounded">
                 <a href="{{ route('profile.edit') }}" class="nav-link py-1" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     <div class="media align-items-center">
@@ -155,7 +185,7 @@
                         </div>
                     </div>
                 </a>
-            </div>
+            </div> --}}
         </div>
     </div>
 </nav>

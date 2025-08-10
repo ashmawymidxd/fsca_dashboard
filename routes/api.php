@@ -8,6 +8,9 @@ use App\Http\Controllers\SupportAndHelpController;
 use App\Http\Controllers\SustainabilityController;
 use App\Http\Controllers\CompleteServiceController;
 use App\Http\Controllers\FleetController;
+use App\Http\Controllers\SectorController;
+use App\Http\Controllers\TrainController;
+use App\Http\Controllers\CommonUnitController;
 
 use App\Http\Controllers\Api\ServiceApiController;
 /*
@@ -27,6 +30,10 @@ Route::get('/support-and-helps', [SupportAndHelpController::class, 'apiIndex']);
 Route::get('/sustainabilities', [SustainabilityController::class, 'apiIndex']);
 Route::get('/complete-services', [CompleteServiceController::class, 'apiIndex']);
 Route::get('/fleets', [FleetController::class, 'apiIndex']);
+Route::get('/sectors', [SectorController::class, 'apiIndex']);
+Route::get('/trains', [TrainController::class, 'apiIndex']);
+Route::get('/commons', [CommonUnitController::class, 'apiIndex']);
+Route::get('/common/{name}', [CommonUnitController::class, 'apiShow']);
 
 Route::get('/services', [ServiceApiController::class, 'index']);
 Route::get('/services/{slug}', [ServiceApiController::class, 'show']);

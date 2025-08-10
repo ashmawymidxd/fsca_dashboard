@@ -14,7 +14,10 @@ use App\Http\Controllers\CompleteServiceController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\FleetController;
+use App\Http\Controllers\SectorController;
+use App\Http\Controllers\trainController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\CommonUnitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -109,6 +112,18 @@ Route::resource('complete_services', CompleteServiceController::class)
 // fleets routes with permission
 Route::resource('fleets', FleetController::class)
     ->middleware(['auth','admin.permission:manage-fleets']);
+
+// fleets routes with permission
+Route::resource('sectors', SectorController::class)
+    ->middleware(['auth','admin.permission:manage-sectors']);
+
+// fleets routes with permission
+Route::resource('trains', trainController::class)
+    ->middleware(['auth','admin.permission:manage-train']);
+
+// fleets routes with permission
+Route::resource('common-units', CommonUnitController::class)
+    ->middleware(['auth','admin.permission:manage-commons-unit']);
 
 // Admins routes with permissions
 Route::group(['middleware' => ['auth', 'admin.permission:manage-admins']], function () {
