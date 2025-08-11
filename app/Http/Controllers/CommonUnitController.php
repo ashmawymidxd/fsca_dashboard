@@ -104,14 +104,14 @@ class CommonUnitController extends Controller
     private function uploadImage($image)
     {
         $imageName = Str::random(20) . '.' . $image->getClientOriginalExtension();
-        $imagePath = 'assets/images/' . $imageName;
+        $imagePath = 'assets/images/common_unit/' . $imageName;
 
         // Ensure the directory exists
-        if (!File::exists(public_path('assets/images'))) {
-            File::makeDirectory(public_path('assets/images'), 0755, true);
+        if (!File::exists(public_path('assets/images/common_unit'))) {
+            File::makeDirectory(public_path('assets/images/common_unit'), 0755, true);
         }
 
-        $image->move(public_path('assets/images'), $imageName);
+        $image->move(public_path('assets/images/common_unit'), $imageName);
         return $imagePath;
     }
 
@@ -140,9 +140,11 @@ class CommonUnitController extends Controller
                 "title_$lang as title",
                 "description_$lang as description",
                 'banner_image',
-                'cover_image'
+                'cover_image',
+                'page_name'
             ])->map(function ($commonUnit) {
                 return [
+                    'page_name' => $commonUnit->page_name,
                     'title' => $commonUnit->title,
                     'description' => $commonUnit->description,
                     'banner_image_url' => $commonUnit->banner_image ? asset($commonUnit->banner_image) : null,
@@ -173,15 +175,12 @@ class CommonUnitController extends Controller
         }
 
         return response()->json([
-            'success' => true,
-            'data' => [
+           [
+                'page_name' => $commonUnit->page_name,
                 'title' => $commonUnit["title_$lang"],
                 'description' => $commonUnit["description_$lang"],
                 'banner_image_url' => $commonUnit->banner_image ? asset($commonUnit->banner_image) : null,
                 'cover_image_url' => $commonUnit->cover_image ? asset($commonUnit->cover_image) : null,
-                'page_name' => $commonUnit->page_name,
-                'created_at' => $commonUnit->created_at,
-                'updated_at' => $commonUnit->updated_at,
             ]
         ]);
     }
