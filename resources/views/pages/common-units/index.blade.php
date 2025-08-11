@@ -37,6 +37,7 @@
                                     <tr>
                                         <th scope="col">{{ __('Title (EN)') }}</th>
                                         <th scope="col">{{ __('Title (AR)') }}</th>
+                                        <th scope="col">{{ __('Page Name') }}</th>
                                         <th scope="col">{{ __('Actions') }}</th>
                                     </tr>
                                 </thead>
@@ -45,6 +46,7 @@
                                         <tr>
                                             <td>{{ $commonUnit->title_en }}</td>
                                             <td>{{ $commonUnit->title_ar }}</td>
+                                            <td>{{ $commonUnit->page_name }}</td>
                                             <td>
                                                 <a href="{{ route('common-units.edit', $commonUnit) }}"
                                                     class="btn btn-sm btn-primary">

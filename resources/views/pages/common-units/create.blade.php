@@ -30,15 +30,25 @@
                                     <input type="text" name="title_ar" id="title_ar" class="form-control" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label" for="title_ar">{{ __('Page Name') }}</label>
-                                    <input type="text" name="page_name" id="page_name" class="form-control" required>
+                                    <label class="form-control-label" for="page_name">{{ __('Page Name') }}</label>
+                                    <select name="page_name" id="page_name" class="form-control" required>
+                                        <option value="">-- Select Page Name --</option>
+                                        <option value="home">Home</option>
+                                        <option value="projects">Projects</option>
+                                        <option value="support_help">Support & Help</option>
+                                        <option value="sustainability">Sustainability</option>
+                                        <option value="fleet">Fleet</option>
+                                        <option value="train">Train</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label" for="description_en">{{ __('Description (English)') }}</label>
+                                    <label class="form-control-label"
+                                        for="description_en">{{ __('Description (English)') }}</label>
                                     <textarea name="description_en" id="description_en" class="form-control" rows="3" required></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label" for="description_ar">{{ __('Description (Arabic)') }}</label>
+                                    <label class="form-control-label"
+                                        for="description_ar">{{ __('Description (Arabic)') }}</label>
                                     <textarea name="description_ar" id="description_ar" class="form-control" rows="3" required></textarea>
                                 </div>
                                 <div class="text-center">
