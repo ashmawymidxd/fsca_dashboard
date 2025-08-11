@@ -54,24 +54,23 @@
                                             <td>{{ Str::limit($sector->description_en, 50) }}</td>
                                             <td>{{ $sector->created_at->format('d/m/Y') }}</td>
                                             <td>
-                                                <div class="d-flex">
-                                                    <a href="{{ route('sectors.show', $sector) }}"
-                                                        class="btn btn-sm btn-info mr-2" title="View">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-                                                    <a href="{{ route('sectors.edit', $sector) }}"
-                                                        class="btn btn-sm btn-primary mr-2" title="Edit">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                    <form action="{{ route('sectors.destroy', $sector) }}" method="POST"
-                                                        onsubmit="return confirm('Are you sure you want to delete this vehicle?');">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm btn-danger" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
+                                                <a href="{{ route('sectors.edit', $sector) }}"
+                                                    class="btn btn-sm btn-primary">
+                                                    {{ __('Edit') }}
+                                                </a>
+                                                <a href="{{ route('sectors.show', $sector) }}"
+                                                    class="btn btn-sm btn-primary">
+                                                    {{ __('Show') }}
+                                                </a>
+                                                <form action="{{ route('sectors.destroy', $sector) }}" method="POST"
+                                                    style="display: inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger"
+                                                        onclick="return confirm('Are you sure?')">
+                                                        {{ __('Delete') }}
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

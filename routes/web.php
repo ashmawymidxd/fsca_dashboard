@@ -15,9 +15,11 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\FleetController;
 use App\Http\Controllers\SectorController;
-use App\Http\Controllers\trainController;
+use App\Http\Controllers\TrainController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\CommonUnitController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\HeroController;
 
 /*
 |--------------------------------------------------------------------------
@@ -106,50 +108,62 @@ Route::group(['middleware' => ['auth', 'admin.permission:manage-contacts']], fun
 
 // Complete Services Routes
 Route::prefix('complete_services')->group(function () {
+    // Index route
     Route::get('/', [CompleteServiceController::class, 'index'])
         ->middleware(['auth', 'admin.permission:view-complete-services'])
         ->name('complete_services.index');
 
-    Route::resource('/', CompleteServiceController::class)
+    // Resource routes with proper path
+    Route::resource('service', CompleteServiceController::class)
         ->except(['index'])
         ->middleware(['auth', 'admin.permission:manage-complete-services'])
-        ->names('complete_services');
+        ->names('complete_services')
+        ->parameters(['service' => 'completeService']);
 });
 
 // Fleets Routes
 Route::prefix('fleets')->group(function () {
+    // Index route
     Route::get('/', [FleetController::class, 'index'])
         ->middleware(['auth', 'admin.permission:view-fleets'])
         ->name('fleets.index');
 
-    Route::resource('/', FleetController::class)
+    // Resource routes with proper path
+    Route::resource('fleet', FleetController::class)
         ->except(['index'])
         ->middleware(['auth', 'admin.permission:manage-fleets'])
-        ->names('fleets');
+        ->names('fleets')
+        ->parameters(['fleet' => 'fleet']); // Explicit parameter naming
 });
 
 // Sectors Routes
 Route::prefix('sectors')->group(function () {
+    // Index route
     Route::get('/', [SectorController::class, 'index'])
         ->middleware(['auth', 'admin.permission:view-sectors'])
         ->name('sectors.index');
 
-    Route::resource('/', SectorController::class)
+    // Resource routes with proper path
+    Route::resource('sector', SectorController::class)
         ->except(['index'])
         ->middleware(['auth', 'admin.permission:manage-sectors'])
-        ->names('sectors');
+        ->names('sectors')
+        ->parameters(['sector' => 'sector']); // Explicit parameter name
 });
 
 // Trains Routes
 Route::prefix('trains')->group(function () {
+    // Index route
     Route::get('/', [TrainController::class, 'index'])
         ->middleware(['auth', 'admin.permission:view-trains'])
         ->name('trains.index');
 
-    Route::resource('/', TrainController::class)
+    // Resource routes with proper path
+    Route::resource('train', TrainController::class)
         ->except(['index'])
         ->middleware(['auth', 'admin.permission:manage-trains'])
-        ->names('trains');
+        ->names('trains')
+        ->parameters(['train' => 'train']); // Explicit parameter binding
 });
 
 // Common Units Routes
@@ -164,7 +178,22 @@ Route::prefix('common-units')->group(function () {
         ->except(['index'])
         ->middleware(['auth', 'admin.permission:manage-common-units'])
         ->names('common-units')
-        ->parameters(['unit' => 'commonUnit']); // This tells Laravel to use commonUnit as route parameter name
+        ->parameters(['unit' => 'commonUnit']);
+});
+
+// Hero Section Routes
+Route::prefix('heroes')->group(function () {
+    // Index route
+    Route::get('/', [HeroController::class, 'index'])
+        ->middleware(['auth', 'admin.permission:view-heroes'])
+        ->name('heroes.index');
+
+    // Resource routes with proper path
+    Route::resource('section', HeroController::class)
+        ->except(['index'])
+        ->middleware(['auth', 'admin.permission:manage-heroes'])
+        ->names('heroes')
+        ->parameters(['section' => 'hero']);
 });
 
 // Admins routes with permissions
@@ -181,6 +210,14 @@ Route::group(['middleware' => ['auth', 'admin.permission:manage-permissions']], 
     Route::get('permissions/{permission}', [PermissionController::class, 'show'])
         ->middleware('admin.permission:view-permissions')
         ->name('permissions.show');
+});
+
+// settings routes with permissions
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/settings', [SettingController::class, 'index'])->name('settings.index')
+        ->middleware('admin.permission:view-settings');
+    Route::put('/settings', [SettingController::class, 'update'])->name('settings.update')
+        ->middleware('admin.permission:manage-settings');
 });
 
 require __DIR__.'/auth.php';

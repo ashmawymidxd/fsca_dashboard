@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\Api\ServiceApiController;
 use App\Http\Controllers\ContactController;
 
 use App\Http\Controllers\ProjectController;
@@ -11,8 +13,10 @@ use App\Http\Controllers\FleetController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\TrainController;
 use App\Http\Controllers\CommonUnitController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\HeroController;
 
-use App\Http\Controllers\Api\ServiceApiController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -37,4 +41,6 @@ Route::get('/common/{name}', [CommonUnitController::class, 'apiShow']);
 
 Route::get('/services', [ServiceApiController::class, 'index']);
 Route::get('/services/{slug}', [ServiceApiController::class, 'show']);
+Route::get('/settings', [SettingController::class, 'apiIndex']);
+Route::get('/heros', [HeroController::class, 'apiIndex']);
 

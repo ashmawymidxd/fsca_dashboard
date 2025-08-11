@@ -74,7 +74,7 @@
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('services*') ? 'active' : '' }}"
                         href="{{ route('services.index') }}">
-                        <i class="ni ni-settings text-primary"></i>
+                        <i class="ni ni-single-copy-04 text-primary"></i>
                         <span class="nav-link-text">Services Pages</span>
                     </a>
                 </li>
@@ -84,6 +84,14 @@
                         href="{{ route('common-units.index') }}">
                         <i class="ni ni-ui-04 text-primary"></i>
                         <span class="nav-link-text">Common Units</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::is('settings*') ? 'active' : '' }}"
+                        href="{{ route('settings.index') }}">
+                        <i class="ni ni-settings text-primary"></i>
+                        <span class="nav-link-text">Settings</span>
                     </a>
                 </li>
 
@@ -106,6 +114,20 @@
                     <div class="collapse {{ Request::is('complete_services*') || Request::is('sectors*') ? 'show' : '' }}"
                         id="navbar-examples">
                         <ul class="nav nav-sm flex-column ps-4">
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('heroes*') ? 'active' : '' }}"
+                                    href="{{route('heroes.index')}}">
+                                    <i class="ni ni-tv-2 text-primary"></i>
+                                    <span class="nav-link-text">{{ __('Hero') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('complete_services*') ? 'active' : '' }}"
+                                    href="#">
+                                    <i class="ni ni-paper-diploma text-primary"></i>
+                                    <span class="nav-link-text">{{ __('Who we are') }}</span>
+                                </a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ Request::is('complete_services*') ? 'active' : '' }}"
                                     href="{{ route('complete_services.index') }}">
@@ -141,7 +163,7 @@
                             <li class="nav-item">
                                 <a class="nav-link {{ Request::is('projects*') ? 'active' : '' }}"
                                     href="{{ route('projects.index') }}">
-                                    <i class="ni ni-collection text-primary"></i>
+                                    <i class="ni ni-bulb-61 text-primary"></i>
                                     <span class="nav-link-text">Projects</span>
                                 </a>
                             </li>

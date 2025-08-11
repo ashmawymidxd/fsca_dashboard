@@ -66,25 +66,23 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <div class="d-flex">
-                                                    <a href="{{ route('complete_services.show', $service) }}"
-                                                        class="btn btn-sm btn-info mr-2" title="View">
-                                                        <i class="fas fa-eye"></i>
-                                                    </a>
-                                                    <a href="{{ route('complete_services.edit', $service) }}"
-                                                        class="btn btn-sm btn-primary mr-2" title="Edit">
-                                                        <i class="fas fa-edit"></i>
-                                                    </a>
-                                                    <form action="{{ route('complete_services.destroy', $service) }}"
-                                                        method="POST"
-                                                        onsubmit="return confirm('Are you sure you want to delete this service?');">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm btn-danger" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
+                                                <a href="{{ route('complete_services.edit', $service) }}"
+                                                    class="btn btn-sm btn-primary">
+                                                    {{ __('Edit') }}
+                                                </a>
+                                                <a href="{{ route('complete_services.show', $service) }}"
+                                                    class="btn btn-sm btn-info">
+                                                    {{ __('Show') }}
+                                                </a>
+                                                <form action="{{ route('complete_services.destroy', $service) }}"
+                                                    method="POST" style="display: inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger"
+                                                        onclick="return confirm('Are you sure?')">
+                                                        {{ __('Delete') }}
+                                                    </button>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach

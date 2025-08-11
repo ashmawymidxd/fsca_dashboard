@@ -50,8 +50,8 @@
                                                 <img src="{{ asset($fleet->cover_image) }}" alt="{{ $fleet->title }}"
                                                     class="img-thumbnail" style="max-width: 100px;">
                                             </td>
-                                            <td>{{ $fleet->title }}</td>
-                                            <td>{{ Str::limit($fleet->description, 50) }}</td>
+                                            <td>{{ $fleet->title_en }}</td>
+                                            <td>{{ Str::limit($fleet->description_en, 50) }}</td>
                                             <td>{{ $fleet->created_at->format('d/m/Y') }}</td>
                                             <td>
                                                 <div class="d-flex">
