@@ -16,8 +16,7 @@ class Hero extends Model
         'button_text_en',
         'button_text_ar',
         'cover_image',
-        'slug_en',
-        'slug_ar',
+        'service_page_slug',
     ];
 
 }

@@ -20,8 +20,7 @@ return new class extends Migration
         $table->string('button_text_en');
         $table->string('button_text_ar');
         $table->string('cover_image');
-        $table->string('slug_en');
-        $table->string('slug_ar');
+        $table->string('service_page_slug');
         $table->timestamps();
     });
     }

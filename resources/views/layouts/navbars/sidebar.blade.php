@@ -111,18 +111,18 @@
 
                     </a>
 
-                    <div class="collapse {{ Request::is('complete_services*') || Request::is('sectors*') ? 'show' : '' }}"
+                    <div class="collapse {{ Request::is('complete_services*') || Request::is('heroes*') || Request::is('sectors*') ? 'show' : '' }}"
                         id="navbar-examples">
                         <ul class="nav nav-sm flex-column ps-4">
                             <li class="nav-item">
                                 <a class="nav-link {{ Request::is('heroes*') ? 'active' : '' }}"
-                                    href="{{route('heroes.index')}}">
+                                    href="{{ route('heroes.index') }}">
                                     <i class="ni ni-tv-2 text-primary"></i>
                                     <span class="nav-link-text">{{ __('Hero') }}</span>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ Request::is('complete_services*') ? 'active' : '' }}"
+                                <a class="nav-link"
                                     href="#">
                                     <i class="ni ni-paper-diploma text-primary"></i>
                                     <span class="nav-link-text">{{ __('Who we are') }}</span>

@@ -22,7 +22,8 @@ class SettingController extends Controller
             'email' => 'required|email|max:255',
             'phone' => 'nullable|string|max:20',
             'whatsapp' => 'nullable|string|max:20',
-            'location_name' => 'nullable|string|max:255',
+            'location_name_ar' => 'nullable|string|max:255',
+            'location_name_en' => 'nullable|string|max:255',
             'location_link' => 'nullable|url',
             'facebook' => 'nullable|url',
             'twitter' => 'nullable|url',
@@ -43,10 +44,21 @@ class SettingController extends Controller
     /**
      * Get settings data as JSON organized by categories
      *
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function apiIndex()
+    public function apiIndex(Request $request)
     {
+        $lang = $request->query('lang', 'en');
+
+        // Validate language parameter
+        if (!in_array($lang, ['en', 'ar'])) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid language parameter. Use "en" or "ar".',
+            ], 400);
+        }
+
         $settings = Setting::first() ?? new Setting();
 
         $response = [
@@ -60,7 +72,7 @@ class SettingController extends Controller
                 'whatsapp' => $settings->whatsapp,
             ],
             'location_info' => [
-                'location_name' => $settings->location_name,
+                'location_name' => $settings->{"location_name_$lang"},
                 'location_link' => $settings->location_link,
             ],
             'social_media' => [
@@ -72,6 +84,7 @@ class SettingController extends Controller
         ];
 
         return response()->json([
+            'success' => true,
             'data' => $response,
         ]);
     }

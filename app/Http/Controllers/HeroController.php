@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Hero;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use App\Models\Service;
 
 class HeroController extends Controller
 {
@@ -16,7 +16,8 @@ class HeroController extends Controller
 
     public function create()
     {
-        return view('pages.heroes.create');
+        $services = Service::get();
+        return view('pages.heroes.create',compact('services'));
     }
 
     public function store(Request $request)
@@ -28,6 +29,7 @@ class HeroController extends Controller
             'description_ar' => 'required|string',
             'button_text_en' => 'required|string|max:255',
             'button_text_ar' => 'required|string|max:255',
+            'service_page_slug' => 'required|string|max:255',
             'cover_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120', // 5MB
         ]);
 
@@ -41,8 +43,7 @@ class HeroController extends Controller
             'button_text_en' => $request->button_text_en,
             'button_text_ar' => $request->button_text_ar,
             'cover_image' => $imagePath,
-            'slug_en' => Str::slug($request->title_en),
-            'slug_ar' => Str::slug($request->title_ar),
+            'service_page_slug' => $request->service_page_slug,
         ]);
 
         return redirect()->route('heroes.index')->with('success', 'Hero created successfully.');
@@ -67,6 +68,7 @@ class HeroController extends Controller
             'description_ar' => 'required|string',
             'button_text_en' => 'required|string|max:255',
             'button_text_ar' => 'required|string|max:255',
+            'service_page_slug' => 'required|string|max:255',
             'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120', // 5MB
         ]);
 
@@ -77,8 +79,7 @@ class HeroController extends Controller
             'description_ar' => $request->description_ar,
             'button_text_en' => $request->button_text_en,
             'button_text_ar' => $request->button_text_ar,
-            'slug_en' => Str::slug($request->title_en),
-            'slug_ar' => Str::slug($request->title_ar),
+            'service_page_slug' => $request->service_page_slug,
         ];
 
         if ($request->hasFile('cover_image')) {
@@ -129,6 +130,7 @@ class HeroController extends Controller
         return response()->json(
             Hero::select([
                 "title_$lang as title",
+                "service_page_slug as service_page_slug",
                 "description_$lang as description",
                 "button_text_$lang as button_text",
                 'cover_image'
@@ -137,6 +139,7 @@ class HeroController extends Controller
             ->map(function ($hero) {
                 return [
                     'title' => $hero->title,
+                    'service_page_slug' => $hero->service_page_slug,
                     'description' => $hero->description,
                     'button_text' => $hero->button_text,
                     'cover_image_url' => $hero->cover_image ? asset($hero->cover_image) : null,
