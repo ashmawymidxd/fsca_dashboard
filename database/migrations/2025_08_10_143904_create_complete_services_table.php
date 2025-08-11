@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('complete_services', function (Blueprint $table) {
             $table->id();
+            $table->enum('status', ['active', 'inactive'])->default('inactive');
             $table->string('title_en');
             $table->string('title_ar');
             $table->string('image_path');

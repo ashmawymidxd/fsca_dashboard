@@ -103,7 +103,7 @@
     @include('layouts.headers.cards')
 
     <div class="container-fluid mt--6" data-aos="fade-out" data-aos-delay="200">
-        <div class="row">
+        <div class="row my-4">
             <div class="col-xl-12 order-xl-1">
                 <div class="bg-white rounded">
                     <div class="card-header bg-white border-0" data-aos="zoom-in" data-aos-delay="200">
@@ -139,9 +139,9 @@
                         </div>
 
                         <!-- Stats Cards with Hover Effects -->
-                        <div class="row mb-4">
+                        <div class="row my-4">
                             <!-- Projects Card -->
-                            <div class="col-md-4 mb-4 mb-md-0" data-aos="fade-up" data-aos-delay="400">
+                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
                                 <div class="card stat-card card-hover border-0 shadow-sm h-100">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -169,7 +169,7 @@
                             </div>
 
                             <!-- Sustainabilities Card -->
-                            <div class="col-md-4 mb-4 mb-md-0" data-aos="fade-up" data-aos-delay="500">
+                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="500">
                                 <div class="card stat-card card-hover border-0 shadow-sm h-100">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -199,7 +199,7 @@
                             </div>
 
                             <!-- Support & Help Card -->
-                            <div class="col-md-4 mb-4 mb-md-0" data-aos="fade-up" data-aos-delay="600">
+                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="600">
                                 <div class="card stat-card card-hover border-0 shadow-sm h-100">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -230,9 +230,9 @@
                         </div>
 
                         <!-- Second Row -->
-                        <div class="row mb-4">
+                        <div class="row my-4">
                             <!-- Services Card -->
-                            <div class="col-md-4 mb-4 mb-md-0" data-aos="fade-up" data-aos-delay="700">
+                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="700">
                                 <div class="card stat-card card-hover border-0 shadow-sm h-100">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -262,7 +262,7 @@
                             </div>
 
                             <!-- Service Categories Card -->
-                            <div class="col-md-4 mb-4 mb-md-0" data-aos="fade-up" data-aos-delay="800">
+                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="800">
                                 <div class="card stat-card card-hover border-0 shadow-sm h-100">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -317,6 +317,193 @@
                                             <a href="{{ route('contacts.index') }}"
                                                 class="btn btn-sm btn-outline-danger">
                                                 {{ __('View Contacts') }} <i class="fas fa-arrow-right ml-1"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Complete Services Card -->
+                        </div>
+                        <div class="row my-4">
+                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                                <div class="card stat-card card-hover border-0 shadow-sm h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="text-uppercase text-muted mb-2">{{ __('Complete Services') }}
+                                                </h6>
+                                                <h2 class="mb-0 text-primary">{{ $completeServicesCount ?? 0 }}</h2>
+                                                <div class="mt-2">
+                                                    <span
+                                                        class="badge badge-pill badge-soft-{{ ($completeServicesGrowth ?? 0) >= 0 ? 'success' : 'danger' }}">
+                                                        <i
+                                                            class="fas fa-arrow-{{ ($completeServicesGrowth ?? 0) >= 0 ? 'up' : 'down' }} mr-1"></i>
+                                                        {{ abs($completeServicesGrowth ?? 0) }}% from last month
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="icon-shape icon-lg bg-primary-soft rounded-circle text-primary">
+                                                <i class="ni ni-briefcase-24"></i>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <a href="{{ route('complete_services.index') }}"
+                                                class="btn btn-sm btn-outline-primary">
+                                                {{ __('View Services') }} <i class="fas fa-arrow-right ml-1"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Common Units Card -->
+                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+                                <div class="card stat-card card-hover border-0 shadow-sm h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="text-uppercase text-muted mb-2">{{ __('Common Units') }}</h6>
+                                                <h2 class="mb-0 text-info">{{ $commonUnitsCount ?? 0 }}</h2>
+                                                <div class="mt-2">
+                                                    <span
+                                                        class="badge badge-pill badge-soft-{{ ($commonUnitsGrowth ?? 0) >= 0 ? 'success' : 'danger' }}">
+                                                        <i
+                                                            class="fas fa-arrow-{{ ($commonUnitsGrowth ?? 0) >= 0 ? 'up' : 'down' }} mr-1"></i>
+                                                        {{ abs($commonUnitsGrowth ?? 0) }}% from last month
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="icon-shape icon-lg bg-info-soft rounded-circle text-info">
+                                                <i class="ni ni-ui-04"></i>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <a href="{{ route('common-units.index') }}"
+                                                class="btn btn-sm btn-outline-info">
+                                                {{ __('View Units') }} <i class="fas fa-arrow-right ml-1"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Fleets Card -->
+                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="500">
+                                <div class="card stat-card card-hover border-0 shadow-sm h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="text-uppercase text-muted mb-2">{{ __('Fleet Management') }}
+                                                </h6>
+                                                <h2 class="mb-0 text-warning">{{ $fleetsCount ?? 0 }}</h2>
+                                                <div class="mt-2">
+                                                    <span
+                                                        class="badge badge-pill badge-soft-{{ ($fleetsGrowth ?? 0) >= 0 ? 'success' : 'danger' }}">
+                                                        <i
+                                                            class="fas fa-arrow-{{ ($fleetsGrowth ?? 0) >= 0 ? 'up' : 'down' }} mr-1"></i>
+                                                        {{ abs($fleetsGrowth ?? 0) }}% from last month
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="icon-shape icon-lg bg-warning-soft rounded-circle text-warning">
+                                                <i class="ni ni-ambulance"></i>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <a href="{{ route('fleets.index') }}" class="btn btn-sm btn-outline-warning">
+                                                {{ __('View Fleet') }} <i class="fas fa-arrow-right ml-1"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row my-4">
+                            <!-- Trains Card -->
+                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="600">
+                                <div class="card stat-card card-hover border-0 shadow-sm h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="text-uppercase text-muted mb-2">{{ __('Training Centers') }}
+                                                </h6>
+                                                <h2 class="mb-0 text-success">{{ $trainsCount ?? 0 }}</h2>
+                                                <div class="mt-2">
+                                                    <span
+                                                        class="badge badge-pill badge-soft-{{ ($trainsGrowth ?? 0) >= 0 ? 'success' : 'danger' }}">
+                                                        <i
+                                                            class="fas fa-arrow-{{ ($trainsGrowth ?? 0) >= 0 ? 'up' : 'down' }} mr-1"></i>
+                                                        {{ abs($trainsGrowth ?? 0) }}% from last month
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="icon-shape icon-lg bg-success-soft rounded-circle text-success">
+                                                <i class="ni ni-user-run"></i>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <a href="{{ route('trains.index') }}" class="btn btn-sm btn-outline-success">
+                                                {{ __('View Centers') }} <i class="fas fa-arrow-right ml-1"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sectors Card -->
+                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="700">
+                                <div class="card stat-card card-hover border-0 shadow-sm h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="text-uppercase text-muted mb-2">{{ __('Sectors') }}</h6>
+                                                <h2 class="mb-0 text-purple">{{ $sectorsCount ?? 0 }}</h2>
+                                                <div class="mt-2">
+                                                    <span
+                                                        class="badge badge-pill badge-soft-{{ ($sectorsGrowth ?? 0) >= 0 ? 'success' : 'danger' }}">
+                                                        <i
+                                                            class="fas fa-arrow-{{ ($sectorsGrowth ?? 0) >= 0 ? 'up' : 'down' }} mr-1"></i>
+                                                        {{ abs($sectorsGrowth ?? 0) }}% from last month
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="icon-shape icon-lg bg-purple-soft rounded-circle text-purple">
+                                                <i class="ni ni-books"></i>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <a href="{{ route('sectors.index') }}" class="btn btn-sm btn-outline-purple">
+                                                {{ __('View Sectors') }} <i class="fas fa-arrow-right ml-1"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Admins Card -->
+                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="800">
+                                <div class="card stat-card card-hover border-0 shadow-sm h-100">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="text-uppercase text-muted mb-2">{{ __('Administrators') }}</h6>
+                                                <h2 class="mb-0 text-indigo">{{ $adminsCount ?? 0 }}</h2>
+                                                <div class="mt-2">
+                                                    <span
+                                                        class="badge badge-pill badge-soft-{{ ($adminsGrowth ?? 0) >= 0 ? 'success' : 'danger' }}">
+                                                        <i
+                                                            class="fas fa-arrow-{{ ($adminsGrowth ?? 0) >= 0 ? 'up' : 'down' }} mr-1"></i>
+                                                        {{ abs($adminsGrowth ?? 0) }}% from last month
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="icon-shape icon-lg bg-indigo-soft rounded-circle text-indigo">
+                                                <i class="ni ni-single-02"></i>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <a href="{{ route('admins.index') }}" class="btn btn-sm btn-outline-indigo">
+                                                {{ __('View Admins') }} <i class="fas fa-arrow-right ml-1"></i>
                                             </a>
                                         </div>
                                     </div>

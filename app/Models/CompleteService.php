@@ -11,6 +11,7 @@ class CompleteService extends Model
 
     protected $fillable = [
         'title_en',
+        'status',
         'title_ar',
         'image_path'
     ];

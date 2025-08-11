@@ -37,10 +37,10 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col">{{ __('Image') }}</th>
-                                        <th scope="col">{{ __('Title') }}</th>
                                         <th scope="col">{{ __('English Title') }}</th>
                                         <th scope="col">{{ __('Arabic Title') }}</th>
                                         <th scope="col">{{ __('Created At') }}</th>
+                                        <th scope="col">{{ __('Status') }}</th>
                                         <th scope="col">{{ __('Actions') }}</th>
                                     </tr>
                                 </thead>
@@ -48,14 +48,23 @@
                                     @foreach ($services as $service)
                                         <tr>
                                             <td>
-                                                <img src="{{ asset($service->image_path) }}"
-                                                    alt="{{ $service->title }}" class="img-thumbnail"
-                                                    style="max-width: 100px;">
+                                                <img src="{{ asset($service->image_path) }}" alt="{{ $service->title }}"
+                                                    class="img-thumbnail" style="max-width: 100px;">
                                             </td>
-                                            <td>{{ $service->title }}</td>
-                                            <td>{{ $service->title_en }}</td>
+                                            <td>{{ $service->title_ar }}</td>
                                             <td>{{ $service->title_ar }}</td>
                                             <td>{{ $service->created_at->format('d/m/Y') }}</td>
+                                            <td>
+                                                @if ($service->status == 'active')
+                                                    <span class="badge badge-success">
+                                                        <i class="fas fa-check-circle mr-1"></i> Active
+                                                    </span>
+                                                @else
+                                                    <span class="badge badge-warning">
+                                                        <i class="fas fa-times-circle mr-1"></i> Inactive
+                                                    </span>
+                                                @endif
+                                            </td>
                                             <td>
                                                 <div class="d-flex">
                                                     <a href="{{ route('complete_services.show', $service) }}"
@@ -66,7 +75,8 @@
                                                         class="btn btn-sm btn-primary mr-2" title="Edit">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
-                                                    <form action="{{ route('complete_services.destroy', $service) }}" method="POST"
+                                                    <form action="{{ route('complete_services.destroy', $service) }}"
+                                                        method="POST"
                                                         onsubmit="return confirm('Are you sure you want to delete this service?');">
                                                         @csrf
                                                         @method('DELETE')

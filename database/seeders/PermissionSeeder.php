@@ -57,6 +57,26 @@ class PermissionSeeder extends Seeder
             // Permissions
             ['name' => 'View Permissions', 'slug' => 'view-permissions'],
             ['name' => 'Manage Permissions', 'slug' => 'manage-permissions'],
+
+            // Complete Services
+            ['name' => 'View Complete Services', 'slug' => 'view-complete-services'],
+            ['name' => 'Manage Complete Services', 'slug' => 'manage-complete-services'],
+
+            // Fleets
+            ['name' => 'View Fleets', 'slug' => 'view-fleets'],
+            ['name' => 'Manage Fleets', 'slug' => 'manage-fleets'],
+
+            // Sectors
+            ['name' => 'View Sectors', 'slug' => 'view-sectors'],
+            ['name' => 'Manage Sectors', 'slug' => 'manage-sectors'],
+
+            // Trains
+            ['name' => 'View Trains', 'slug' => 'view-trains'],
+            ['name' => 'Manage Trains', 'slug' => 'manage-trains'],
+
+            // Common Units
+            ['name' => 'View Common Units', 'slug' => 'view-common-units'],
+            ['name' => 'Manage Common Units', 'slug' => 'manage-common-units'],
         ];
 
         foreach ($permissions as $permission) {

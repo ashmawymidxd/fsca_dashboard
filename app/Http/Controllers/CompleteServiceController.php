@@ -24,6 +24,7 @@ class CompleteServiceController extends Controller
             'title_en' => 'required|string|max:255',
             'title_ar' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status' => 'required|in:active,inactive',
         ]);
 
         $imageName = time().'.'.$request->image->extension();
@@ -34,6 +35,7 @@ class CompleteServiceController extends Controller
             'title_en' => $request->title_en,
             'title_ar' => $request->title_ar,
             'image_path' => $imagePath,
+            'status' => $request->status,
         ]);
 
         return redirect()->route('complete_services.index')->with('success', 'Service created successfully.');
@@ -55,11 +57,13 @@ class CompleteServiceController extends Controller
             'title_en' => 'required|string|max:255',
             'title_ar' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status' => 'required|in:active,inactive',
         ]);
 
         $data = [
             'title_en' => $request->title_en,
             'title_ar' => $request->title_ar,
+            'status' => $request->status,
         ];
 
         if ($request->hasFile('image')) {
@@ -92,20 +96,21 @@ class CompleteServiceController extends Controller
             ], 400);
         }
 
-        $services = CompleteService::get([
-            "title_$lang as title",
-            'image_path',
-
-        ])->map(function ($service) {
-            return [
-                'title' => $service->title,
-                'image_url' => $service->image_path ? asset($service->image_path) : null,
-            ];
-        });
+        $services = CompleteService::where('status', 'active')
+            ->select([
+                "title_$lang as title",
+                'image_path',
+            ])
+            ->get()
+            ->map(function ($service) {
+                return [
+                    'title' => $service->title,
+                    'image_url' => $service->image_path ? asset($service->image_path) : null,
+                ];
+            });
 
         return response()->json($services);
     }
-
 
     public function destroy(CompleteService $completeService)
     {

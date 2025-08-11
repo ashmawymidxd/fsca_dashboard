@@ -104,26 +104,65 @@ Route::group(['middleware' => ['auth', 'admin.permission:manage-contacts']], fun
     Route::post('contacts/{contact}/reply', [ContactController::class,'sendReply'])->name('contacts.reply');
 });
 
-// complete services routes with permission
-Route::resource('complete_services', CompleteServiceController::class)
-    ->middleware(['auth','admin.permission:manage-complete-services']);
+// Complete Services Routes
+Route::prefix('complete_services')->group(function () {
+    Route::get('/', [CompleteServiceController::class, 'index'])
+        ->middleware(['auth', 'admin.permission:view-complete-services'])
+        ->name('complete_services.index');
+    
+    Route::resource('/', CompleteServiceController::class)
+        ->except(['index'])
+        ->middleware(['auth', 'admin.permission:manage-complete-services'])
+        ->names('complete_services');
+});
 
+// Fleets Routes
+Route::prefix('fleets')->group(function () {
+    Route::get('/', [FleetController::class, 'index'])
+        ->middleware(['auth', 'admin.permission:view-fleets'])
+        ->name('fleets.index');
+    
+    Route::resource('/', FleetController::class)
+        ->except(['index'])
+        ->middleware(['auth', 'admin.permission:manage-fleets'])
+        ->names('fleets');
+});
 
-// fleets routes with permission
-Route::resource('fleets', FleetController::class)
-    ->middleware(['auth','admin.permission:manage-fleets']);
+// Sectors Routes
+Route::prefix('sectors')->group(function () {
+    Route::get('/', [SectorController::class, 'index'])
+        ->middleware(['auth', 'admin.permission:view-sectors'])
+        ->name('sectors.index');
+    
+    Route::resource('/', SectorController::class)
+        ->except(['index'])
+        ->middleware(['auth', 'admin.permission:manage-sectors'])
+        ->names('sectors');
+});
 
-// fleets routes with permission
-Route::resource('sectors', SectorController::class)
-    ->middleware(['auth','admin.permission:manage-sectors']);
+// Trains Routes
+Route::prefix('trains')->group(function () {
+    Route::get('/', [TrainController::class, 'index'])
+        ->middleware(['auth', 'admin.permission:view-trains'])
+        ->name('trains.index');
+    
+    Route::resource('/', TrainController::class)
+        ->except(['index'])
+        ->middleware(['auth', 'admin.permission:manage-trains'])
+        ->names('trains');
+});
 
-// fleets routes with permission
-Route::resource('trains', trainController::class)
-    ->middleware(['auth','admin.permission:manage-train']);
-
-// fleets routes with permission
-Route::resource('common-units', CommonUnitController::class)
-    ->middleware(['auth','admin.permission:manage-commons-unit']);
+// Common Units Routes
+Route::prefix('common-units')->group(function () {
+    Route::get('/', [CommonUnitController::class, 'index'])
+        ->middleware(['auth', 'admin.permission:view-common-units'])
+        ->name('common-units.index');
+    
+    Route::resource('/', CommonUnitController::class)
+        ->except(['index'])
+        ->middleware(['auth', 'admin.permission:manage-common-units'])
+        ->names('common-units');
+});
 
 // Admins routes with permissions
 Route::group(['middleware' => ['auth', 'admin.permission:manage-admins']], function () {

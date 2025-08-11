@@ -9,7 +9,7 @@
 
         <!-- Brand -->
         <a class="navbar-brand pt-0" href="{{ route('home') }}">
-            <img src="{{ asset('argon') }}/img/brand/blue.png" class="navbar-brand-img" alt="...">
+            <img src="{{ asset('argon') }}/img/brand/blue.png" class="navbar-brand-img" alt="Xamble Logo">
         </a>
 
         <!-- User (Mobile View) -->
@@ -48,7 +48,7 @@
                 <div class="row">
                     <div class="col-6 collapse-brand">
                         <a href="{{ route('home') }}">
-                            <img src="{{ asset('argon') }}/img/brand/blue.png">
+                            <img src="{{ asset('argon') }}/img/brand/blue.png" alt="Xamble Logo">
                         </a>
                     </div>
                     <div class="col-6 collapse-close">
@@ -63,116 +63,149 @@
 
             <!-- Navigation -->
             <ul class="navbar-nav">
-                <!-- Dashboard with dropdown -->
-                <li class="nav-item">
-                    <div class="nav-link d-flex justify-content-between align-items-center" data-toggle="collapse"
-                        href="#dashboardCollapse" role="button" aria-expanded="false"
-                        aria-controls="dashboardCollapse">
-                        <div>
-                            <i class="ni ni-collection text-primary mr-4"></i>Home
-                        </div>
-                    </div>
-                    <div class="collapse pl-4" id="dashboardCollapse">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link text-left pl-4 {{ Request::is('complete_services*') ? 'active' : '' }}"
-                                    href="{{ route('complete_services.index') }}">
-                                    <i class="ni ni-briefcase-24 text-primary "></i> Services
-                                </a>
-                            </li>
-                            {{-- sectors --}}
-                            <li class="nav-item">
-                                <a class="nav-link text-left pl-4 {{ Request::is('sectors*') ? 'active' : '' }}"
-                                    href="{{ route('sectors.index') }}">
-                                    <i class="ni ni-bullet-list-67 text-primary"></i> Sectors
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link text-left pl-4 {{ Request::is('home') ? 'active' : '' }}"
                         href="{{ route('home') }}">
-                        <i class="ni ni-chart-bar-32 text-primary"></i> Overview
+                        <i class="ni ni-chart-bar-32 text-primary"></i>
+                        <span class="nav-link-text">Overview</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('services*') ? 'active' : '' }}"
                         href="{{ route('services.index') }}">
-                        <i class="ni ni-settings text-primary"></i> Services Pages
+                        <i class="ni ni-settings text-primary"></i>
+                        <span class="nav-link-text">Services Pages</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('common-units*') ? 'active' : '' }}"
                         href="{{ route('common-units.index') }}">
-                        <i class="ni ni-ui-04 text-primary"></i> Common Units
+                        <i class="ni ni-ui-04 text-primary"></i>
+                        <span class="nav-link-text">Common Units</span>
                     </a>
                 </li>
 
-                <li class="nav-item">
-                    <span class="nav-link">Pages Content</span>
+                <!-- Section Header -->
+                <li class="nav-item mt-3 mb-1">
+                    <span class="nav-link text-uppercase text-xs font-weight-bold">Categories</span>
                 </li>
 
+                <!-- Collapsible Menu Item with auto-open based on active child -->
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('projects*') ? 'active' : '' }}"
-                        href="{{ route('projects.index') }}">
-                        <i class="ni ni-collection text-primary"></i> Projects
+                    <a class="nav-link {{ Request::is('complete_services*') || Request::is('sectors*') ? 'active' : '' }}"
+                        href="#navbar-examples" data-toggle="collapse" role="button"
+                        aria-expanded="{{ Request::is('complete_services*') || Request::is('sectors*') ? 'true' : 'false' }}"
+                        aria-controls="navbar-examples">
+                        <i class="ni ni-compass-04 text-primary"></i>
+                        <span class="nav-link-text">{{ __('Landing Page') }}</span>
+
                     </a>
+
+                    <div class="collapse {{ Request::is('complete_services*') || Request::is('sectors*') ? 'show' : '' }}"
+                        id="navbar-examples">
+                        <ul class="nav nav-sm flex-column ps-4">
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('complete_services*') ? 'active' : '' }}"
+                                    href="{{ route('complete_services.index') }}">
+                                    <i class="ni ni-briefcase-24 text-primary"></i>
+                                    <span class="nav-link-text">{{ __('Services') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('sectors*') ? 'active' : '' }}"
+                                    href="{{ route('sectors.index') }}">
+                                    <i class="ni ni-books text-primary"></i>
+                                    <span class="nav-link-text">{{ __('Sectors') }}</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
 
+                <!-- Collapsible Menu Item with auto-open based on active child -->
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::is('support-and-helps*') ? 'active' : '' }}"
-                        href="{{ route('support-and-helps.index') }}">
-                        <i class="ni ni-shop text-primary"></i> Support & Help
+                    <a class="nav-link {{ Request::is('projects*') || Request::is('support-and-helps*') || Request::is('sustainabilities*') || Request::is('fleets*') || Request::is('trains*') ? 'active' : '' }}"
+                        href="#navbar-examples2" data-toggle="collapse" role="button"
+                        aria-expanded="{{ Request::is('projects*') || Request::is('support-and-helps*') || Request::is('sustainabilities*') || Request::is('fleets*') || Request::is('trains*') ? 'true' : 'false' }}"
+                        aria-controls="navbar-examples2">
+                        <i class="ni ni-collection text-primary"></i>
+                        <span class="nav-link-text">{{ __('Pages Content') }}</span>
+
                     </a>
+
+                    <div class="collapse {{ Request::is('projects*') || Request::is('support-and-helps*') || Request::is('sustainabilities*') || Request::is('fleets*') || Request::is('trains*') ? 'show' : '' }}"
+                        id="navbar-examples2">
+                        <ul class="nav nav-sm flex-column ps-4">
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('projects*') ? 'active' : '' }}"
+                                    href="{{ route('projects.index') }}">
+                                    <i class="ni ni-collection text-primary"></i>
+                                    <span class="nav-link-text">Projects</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('support-and-helps*') ? 'active' : '' }}"
+                                    href="{{ route('support-and-helps.index') }}">
+                                    <i class="ni ni-shop text-primary"></i>
+                                    <span class="nav-link-text">Support & Help</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('sustainabilities*') ? 'active' : '' }}"
+                                    href="{{ route('sustainabilities.index') }}">
+                                    <i class="ni ni-planet text-primary"></i>
+                                    <span class="nav-link-text">Sustainabilities</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('fleets*') ? 'active' : '' }}"
+                                    href="{{ route('fleets.index') }}">
+                                    <i class="ni ni-ambulance text-primary"></i>
+                                    <span class="nav-link-text">Fleet Manage</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('trains*') ? 'active' : '' }}"
+                                    href="{{ route('trains.index') }}">
+                                    <i class="ni ni-user-run text-primary"></i>
+                                    <span class="nav-link-text">Trains Centers</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('sustainabilities*') ? 'active' : '' }}"
-                        href="{{ route('sustainabilities.index') }}">
-                        <i class="ni ni-planet text-primary"></i> Sustainabilities
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('fleets*') ? 'active' : '' }}"
-                        href="{{ route('fleets.index') }}">
-                        <i class="ni ni-ambulance text-primary"></i> Fleet Management
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::is('trains*') ? 'active' : '' }}"
-                        href="{{ route('trains.index') }}">
-                        <i class="ni ni-user-run text-primary"></i> Trains Centers
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <span class="nav-link">Clients & Staff</span>
+                <!-- Section Header -->
+                <li class="nav-item mt-3 mb-1">
+                    <span class="nav-link text-uppercase text-xs font-weight-bold">Clients & Staff</span>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('admins*') ? 'active' : '' }}"
                         href="{{ route('admins.index') }}">
-                        <i class="ni ni-bullet-list-67 text-primary"></i> Admins
+                        <i class="ni ni-bullet-list-67 text-primary"></i>
+                        <span class="nav-link-text">Admins</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link {{ Request::is('contacts*') ? 'active' : '' }}"
                         href="{{ route('contacts.index') }}">
-                        <i class="ni ni-email-83 text-primary"></i> Clients Contacts
+                        <i class="ni ni-email-83 text-primary"></i>
+                        <span class="nav-link-text">Clients Contacts</span>
                     </a>
                 </li>
             </ul>
 
-
-            {{-- <div class="mt-auto d-none d-md-block border bg-secondary rounded">
-                <a href="{{ route('profile.edit') }}" class="nav-link py-1" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
+            <!-- User Profile (Desktop) -->
+            <div class="mt-auto d-none d-md-block border bg-secondary rounded p-3">
+                <a href="{{ route('profile.edit') }}" class="nav-link p-0" role="button">
                     <div class="media align-items-center">
                         <span class="avatar avatar-sm rounded-circle mr-3">
                             <img alt="Profile Image" style="object-fit:cover"
@@ -185,7 +218,7 @@
                         </div>
                     </div>
                 </a>
-            </div> --}}
+            </div>
         </div>
     </div>
 </nav>
