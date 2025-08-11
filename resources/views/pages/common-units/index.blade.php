@@ -37,8 +37,6 @@
                                     <tr>
                                         <th scope="col">{{ __('Title (EN)') }}</th>
                                         <th scope="col">{{ __('Title (AR)') }}</th>
-                                        <th scope="col">{{ __('Banner Image') }}</th>
-                                        <th scope="col">{{ __('Cover Image') }}</th>
                                         <th scope="col">{{ __('Actions') }}</th>
                                     </tr>
                                 </thead>
@@ -47,14 +45,6 @@
                                         <tr>
                                             <td>{{ $commonUnit->title_en }}</td>
                                             <td>{{ $commonUnit->title_ar }}</td>
-                                            <td>
-                                                <img src="{{ asset($commonUnit->banner_image) }}" width="50"
-                                                    height="50" alt="Banner">
-                                            </td>
-                                            <td>
-                                                <img src="{{ asset($commonUnit->cover_image) }}" width="50"
-                                                    height="50" alt="Cover">
-                                            </td>
                                             <td>
                                                 <a href="{{ route('common-units.edit', $commonUnit) }}"
                                                     class="btn btn-sm btn-primary">

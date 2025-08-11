@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('common_units', function (Blueprint $table) {
             $table->id();
             $table->string('page_name');
-            $table->string('banner_image');
-            $table->string('cover_image');
             $table->string('title_en');
             $table->string('title_ar');
             $table->text('description_en');

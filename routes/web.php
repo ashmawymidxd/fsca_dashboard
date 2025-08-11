@@ -109,7 +109,7 @@ Route::prefix('complete_services')->group(function () {
     Route::get('/', [CompleteServiceController::class, 'index'])
         ->middleware(['auth', 'admin.permission:view-complete-services'])
         ->name('complete_services.index');
-    
+
     Route::resource('/', CompleteServiceController::class)
         ->except(['index'])
         ->middleware(['auth', 'admin.permission:manage-complete-services'])
@@ -121,7 +121,7 @@ Route::prefix('fleets')->group(function () {
     Route::get('/', [FleetController::class, 'index'])
         ->middleware(['auth', 'admin.permission:view-fleets'])
         ->name('fleets.index');
-    
+
     Route::resource('/', FleetController::class)
         ->except(['index'])
         ->middleware(['auth', 'admin.permission:manage-fleets'])
@@ -133,7 +133,7 @@ Route::prefix('sectors')->group(function () {
     Route::get('/', [SectorController::class, 'index'])
         ->middleware(['auth', 'admin.permission:view-sectors'])
         ->name('sectors.index');
-    
+
     Route::resource('/', SectorController::class)
         ->except(['index'])
         ->middleware(['auth', 'admin.permission:manage-sectors'])
@@ -145,7 +145,7 @@ Route::prefix('trains')->group(function () {
     Route::get('/', [TrainController::class, 'index'])
         ->middleware(['auth', 'admin.permission:view-trains'])
         ->name('trains.index');
-    
+
     Route::resource('/', TrainController::class)
         ->except(['index'])
         ->middleware(['auth', 'admin.permission:manage-trains'])
@@ -154,14 +154,17 @@ Route::prefix('trains')->group(function () {
 
 // Common Units Routes
 Route::prefix('common-units')->group(function () {
+    // Index route
     Route::get('/', [CommonUnitController::class, 'index'])
         ->middleware(['auth', 'admin.permission:view-common-units'])
         ->name('common-units.index');
-    
-    Route::resource('/', CommonUnitController::class)
+
+    // Resource routes with proper path
+    Route::resource('unit', CommonUnitController::class)
         ->except(['index'])
         ->middleware(['auth', 'admin.permission:manage-common-units'])
-        ->names('common-units');
+        ->names('common-units')
+        ->parameters(['unit' => 'commonUnit']); // This tells Laravel to use commonUnit as route parameter name
 });
 
 // Admins routes with permissions

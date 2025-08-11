@@ -13,7 +13,7 @@ class CheckAdminPermissions
         $admin = Auth::guard('web')->user();
 
         if (!$admin->hasPermission($permission) && !$admin->is_super_admin) {
-            abort(403, 'Unauthorized action contact administrator !!');
+            abort(403, 'Unauthorized action contact administrator !');
         }
 
         return $next($request);

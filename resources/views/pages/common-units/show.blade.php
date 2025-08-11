@@ -24,16 +24,6 @@
                     </div>
                     <div class="card-body">
                         <div class="pl-lg-4">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h4>{{ __('Banner Image') }}</h4>
-                                    <img src="{{ asset($commonUnit->banner_image) }}" class="img-fluid" alt="Banner Image">
-                                </div>
-                                <div class="col-md-6">
-                                    <h4>{{ __('Cover Image') }}</h4>
-                                    <img src="{{ asset($commonUnit->cover_image) }}" class="img-fluid" alt="Cover Image">
-                                </div>
-                            </div>
                             <div class="row mt-4">
                                 <div class="col-md-6">
                                     <h4>{{ __('Title (English)') }}</h4>
