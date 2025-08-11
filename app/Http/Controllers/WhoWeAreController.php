@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Sector;
+use App\Models\WhoWeAre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
-class SectorController extends Controller
+class WhoWeAreController extends Controller
 {
     public function index()
     {
-        $sectors = Sector::latest()->get();
-        return view('pages.sectors.index', compact('sectors'));
+        $whoWeAres = WhoWeAre::latest()->get();
+        return view('pages.who_we_are.index', compact('whoWeAres'));
     }
 
     public function create()
     {
-        return view('pages.sectors.create');
+        return view('pages.who_we_are.create');
     }
 
     public function store(Request $request)
@@ -34,31 +34,31 @@ class SectorController extends Controller
         if ($request->hasFile('cover_image')) {
             $image = $request->file('cover_image');
             $imageName = Str::random(20) . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('assets/images/sectors'), $imageName);
+            $image->move(public_path('assets/images/who_we_are'), $imageName);
         }
 
-        Sector::create([
+        WhoWeAre::create([
             'title_en' => $request->title_en,
             'title_ar' => $request->title_ar,
             'description_en' => $request->description_en,
             'description_ar' => $request->description_ar,
-            'cover_image' => 'assets/images/sectors/' . $imageName,
+            'cover_image' => 'assets/images/who_we_are/' . $imageName,
         ]);
 
-        return redirect()->route('sectors.index')->with('success', 'Sector created successfully.');
+        return redirect()->route('who_we_are.index')->with('success', 'Who We Are entry created successfully.');
     }
 
-    public function show(Sector $sector)
+    public function show(WhoWeAre $whoWeAre)
     {
-        return view('pages.sectors.show', compact('sector'));
+        return view('pages.who_we_are.show', compact('whoWeAre'));
     }
 
-    public function edit(Sector $sector)
+    public function edit(WhoWeAre $whoWeAre)
     {
-        return view('pages.sectors.edit', compact('sector'));
+        return view('pages.who_we_are.edit', compact('whoWeAre'));
     }
 
-    public function update(Request $request, Sector $sector)
+    public function update(Request $request, WhoWeAre $whoWeAre)
     {
         $request->validate([
             'title_en' => 'required|string|max:255',
@@ -78,32 +78,32 @@ class SectorController extends Controller
         // Handle image update
         if ($request->hasFile('cover_image')) {
             // Delete old image
-            if (File::exists(public_path($sector->cover_image))) {
-                File::delete(public_path($sector->cover_image));
+            if (File::exists(public_path($whoWeAre->cover_image))) {
+                File::delete(public_path($whoWeAre->cover_image));
             }
 
             // Upload new image
             $image = $request->file('cover_image');
             $imageName = Str::random(20) . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('assets/images/sectors'), $imageName);
-            $data['cover_image'] = 'assets/images/sectors/' . $imageName;
+            $image->move(public_path('assets/images/who_we_are'), $imageName);
+            $data['cover_image'] = 'assets/images/who_we_are/' . $imageName;
         }
 
-        $sector->update($data);
+        $whoWeAre->update($data);
 
-        return redirect()->route('sectors.index')->with('success', 'Sector updated successfully.');
+        return redirect()->route('who_we_are.index')->with('success', 'Who We Are entry updated successfully.');
     }
 
-    public function destroy(Sector $sector)
+    public function destroy(WhoWeAre $whoWeAre)
     {
         // Delete image
-        if (File::exists(public_path($sector->cover_image))) {
-            File::delete(public_path($sector->cover_image));
+        if (File::exists(public_path($whoWeAre->cover_image))) {
+            File::delete(public_path($whoWeAre->cover_image));
         }
 
-        $sector->delete();
+        $whoWeAre->delete();
 
-        return redirect()->route('sectors.index')->with('success', 'Sector deleted successfully.');
+        return redirect()->route('who_we_are.index')->with('success', 'Who We Are entry deleted successfully.');
     }
 
     public function apiIndex(Request $request)
@@ -119,15 +119,15 @@ class SectorController extends Controller
         }
 
         return response()->json(
-            Sector::get([
+            WhoWeAre::get([
                 "title_$lang as title",
                 "description_$lang as description",
                 'cover_image'
-            ])->map(function ($sector) {
+            ])->map(function ($whoWeAre) {
                 return [
-                    'title' => $sector->title,
-                    'description' => $sector->description,
-                    'cover_image_url' => $sector->cover_image ? asset($sector->cover_image) : null
+                    'title' => $whoWeAre->title,
+                    'description' => $whoWeAre->description,
+                    'cover_image_url' => $whoWeAre->cover_image ? asset($whoWeAre->cover_image) : null
                 ];
             })
         );

@@ -111,7 +111,7 @@
 
                     </a>
 
-                    <div class="collapse {{ Request::is('complete_services*') || Request::is('heroes*') || Request::is('sectors*') ? 'show' : '' }}"
+                    <div class="collapse {{ Request::is('complete_services*') || Request::is('who_we_are*') || Request::is('heroes*') || Request::is('sectors*') ? 'show' : '' }}"
                         id="navbar-examples">
                         <ul class="nav nav-sm flex-column ps-4">
                             <li class="nav-item">
@@ -122,8 +122,8 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link"
-                                    href="#">
+                                <a class="nav-link {{ Request::is('who_we_are*') ? 'active' : '' }}"
+                                    href="{{ route('who_we_are.index') }}">
                                     <i class="ni ni-paper-diploma text-primary"></i>
                                     <span class="nav-link-text">{{ __('Who we are') }}</span>
                                 </a>

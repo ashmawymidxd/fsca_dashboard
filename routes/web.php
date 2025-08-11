@@ -15,6 +15,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\FleetController;
 use App\Http\Controllers\SectorController;
+use App\Http\Controllers\WhoWeAreController;
 use App\Http\Controllers\TrainController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\CommonUnitController;
@@ -149,6 +150,21 @@ Route::prefix('sectors')->group(function () {
         ->middleware(['auth', 'admin.permission:manage-sectors'])
         ->names('sectors')
         ->parameters(['sector' => 'sector']); // Explicit parameter name
+});
+
+// Who We Are Routes
+Route::prefix('who_we_are')->group(function () {
+    // Index route
+    Route::get('/', [WhoWeAreController::class, 'index'])
+        ->middleware(['auth', 'admin.permission:view-who-we-are'])
+        ->name('who_we_are.index');
+
+    // Resource routes with proper path
+    Route::resource('entry', WhoWeAreController::class)
+        ->except(['index'])
+        ->middleware(['auth', 'admin.permission:manage-who-we-are'])
+        ->names('who_we_are')
+        ->parameters(['entry' => 'whoWeAre']); // Explicit parameter name
 });
 
 // Trains Routes

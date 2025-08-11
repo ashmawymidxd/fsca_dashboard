@@ -77,6 +77,18 @@ class PermissionSeeder extends Seeder
             // Common Units
             ['name' => 'View Common Units', 'slug' => 'view-common-units'],
             ['name' => 'Manage Common Units', 'slug' => 'manage-common-units'],
+
+            // heroes
+            ['name' => 'View Hero', 'slug' => 'view-heroes'],
+            ['name' => 'Manage Hero', 'slug' => 'manage-heroes'],
+
+            // who we are
+            ['name' => 'View Who We Are', 'slug' => 'view-who-we-are'],
+            ['name' => 'Manage Who We Are', 'slug' => 'manage-who-we-are'],
+
+            // settings
+            ['name' => 'View Settings', 'slug' => 'view-settings'],
+            ['name' => 'Manage Settings', 'slug' => 'manage-settings'],
         ];
 
         foreach ($permissions as $permission) {

@@ -89,7 +89,8 @@
                                             <input type="file" id="profile_img" name="profile_image" hidden>
                                             <label for="profile_img"
                                                 class="text-start border rounded bg-white shadow-sm w-100 p-2 input-group-text">
-                                                <i class="ni ni-album-2"></i> <span class="mx-2">{{ __('Profile Img') }}</span>
+                                                <i class="ni ni-album-2"></i> <span
+                                                    class="mx-2">{{ __('Profile Img') }}</span>
                                             </label>
                                         </div>
                                     </div>
@@ -151,13 +152,31 @@
                                         </div>
 
                                         <div class="row">
+                                            <div class="col-12 mb-3">
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input class="custom-control-input" type="checkbox"
+                                                            id="select_all_permissions">
+                                                        <label class="custom-control-label" for="select_all_permissions">
+                                                            <strong>Select All</strong>
+                                                        </label>
+                                                    </div>
+                                                    <button type="button" class="btn btn-sm btn-outline-danger"
+                                                        id="clear_all_permissions">
+                                                        <strong>Clear All</strong>
+                                                    </button>
+                                                </div>
+                                            </div>
+
                                             @foreach ($permissions->chunk(ceil($permissions->count() / 3)) as $chunk)
                                                 <div class="col-md-4">
                                                     @foreach ($chunk as $permission)
                                                         <div class="custom-control custom-checkbox mb-3">
-                                                            <input class="custom-control-input" type="checkbox"
-                                                                name="permissions[]" value="{{ $permission->id }}"
-                                                                id="permission_{{ $permission->id }}">
+                                                            <input class="custom-control-input permission-checkbox"
+                                                                type="checkbox" name="permissions[]"
+                                                                value="{{ $permission->id }}"
+                                                                id="permission_{{ $permission->id }}"
+                                                                @if (isset($role) && $role->hasPermissionTo($permission)) checked @endif>
                                                             <label class="custom-control-label"
                                                                 for="permission_{{ $permission->id }}">
                                                                 {{ $permission->name }}
@@ -170,8 +189,6 @@
                                     </div>
                                 </div>
                             </div>
-
-
 
                             <div class="text-center mt-4">
                                 <button type="submit" class="btn btn-success">
@@ -202,6 +219,39 @@
                     'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.'
                 );
             }
+        });
+    </script>
+@endpush
+
+
+@push('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Select All functionality
+            document.getElementById('select_all_permissions').addEventListener('change', function() {
+                const checkboxes = document.querySelectorAll('.permission-checkbox');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = this.checked;
+                });
+            });
+
+            // Clear All functionality
+            document.getElementById('clear_all_permissions').addEventListener('click', function() {
+                const checkboxes = document.querySelectorAll('.permission-checkbox');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                document.getElementById('select_all_permissions').checked = false;
+            });
+
+            // Update "Select All" checkbox when individual checkboxes change
+            const permissionCheckboxes = document.querySelectorAll('.permission-checkbox');
+            permissionCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const allChecked = Array.from(permissionCheckboxes).every(cb => cb.checked);
+                    document.getElementById('select_all_permissions').checked = allChecked;
+                });
+            });
         });
     </script>
 @endpush
