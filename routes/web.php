@@ -21,6 +21,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\CommonUnitController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\HeroController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\VideoController;
 
 /*
@@ -136,6 +137,24 @@ Route::prefix('fleets')->group(function () {
         ->middleware(['auth', 'admin.permission:manage-fleets'])
         ->names('fleets')
         ->parameters(['fleet' => 'fleet']); // Explicit parameter naming
+});
+
+// Customers Routes
+Route::prefix('customers')->group(function () {
+    // Index route
+    Route::get('/', [CustomerController::class, 'index'])
+        ->middleware(['auth', 'admin.permission:view-customers'])
+        ->name('customers.index');
+
+    // Resource routes with proper path
+    Route::resource('customer', CustomerController::class)
+        ->except(['index'])
+        ->middleware(['auth', 'admin.permission:manage-customers'])
+        ->names('customers')
+        ->parameters(['customer' => 'customer']); // Explicit parameter naming
+
+    // API route
+    Route::get('/api/customers', [CustomerController::class, 'apiIndex']);
 });
 
 // Sectors Routes

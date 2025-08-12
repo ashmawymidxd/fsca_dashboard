@@ -111,7 +111,7 @@
 
                     </a>
 
-                    <div class="collapse {{ Request::is('complete_services*') || Request::is('videos*') || Request::is('who_we_are*') || Request::is('heroes*') || Request::is('sectors*') ? 'show' : '' }}"
+                    <div class="collapse {{ Request::is('complete_services*') || Request::is('customers*') || Request::is('videos*') || Request::is('who_we_are*') || Request::is('heroes*') || Request::is('sectors*') ? 'show' : '' }}"
                         id="navbar-examples">
                         <ul class="nav nav-sm flex-column ps-4">
                             <li class="nav-item">
@@ -147,6 +147,13 @@
                                     href="{{ route('sectors.index') }}">
                                     <i class="ni ni-books text-primary"></i>
                                     <span class="nav-link-text">{{ __('Sectors') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('customers*') ? 'active' : '' }}"
+                                    href="{{ route('customers.index') }}">
+                                    <i class="ni ni-single-02 text-primary"></i>
+                                    <span class="nav-link-text">{{ __('Customers') }}</span>
                                 </a>
                             </li>
                         </ul>

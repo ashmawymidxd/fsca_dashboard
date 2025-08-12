@@ -17,6 +17,7 @@ use App\Http\Controllers\CommonUnitController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\HeroController;
 use App\Http\Controllers\VideoController;
+use App\Http\Controllers\CustomerController;
 
 
 /*
@@ -37,6 +38,7 @@ Route::get('/sustainabilities', [SustainabilityController::class, 'apiIndex']);
 Route::get('/complete-services', [CompleteServiceController::class, 'apiIndex']);
 Route::get('/fleets', [FleetController::class, 'apiIndex']);
 Route::get('/sectors', [SectorController::class, 'apiIndex']);
+Route::get('/customers', [CustomerController::class, 'apiIndex']);
 Route::get('/who_we_are', [WhoWeAreController::class, 'apiIndex']);
 Route::get('/trains', [TrainController::class, 'apiIndex']);
 Route::get('/commons', [CommonUnitController::class, 'apiIndex']);
