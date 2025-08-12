@@ -16,6 +16,7 @@ use App\Http\Controllers\TrainController;
 use App\Http\Controllers\CommonUnitController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\HeroController;
+use App\Http\Controllers\VideoController;
 
 
 /*
@@ -45,4 +46,5 @@ Route::get('/services', [ServiceApiController::class, 'index']);
 Route::get('/services/{slug}', [ServiceApiController::class, 'show']);
 Route::get('/settings', [SettingController::class, 'apiIndex']);
 Route::get('/heros', [HeroController::class, 'apiIndex']);
+Route::get('/videos', [VideoController::class, 'apiIndex']);
 

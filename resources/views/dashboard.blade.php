@@ -103,7 +103,7 @@
     @include('layouts.headers.cards')
 
     <div class="container-fluid mt--6" data-aos="fade-out" data-aos-delay="200">
-        <div class="row my-4">
+        <div class="row my-3">
             <div class="col-xl-12 order-xl-1">
                 <div class="bg-white rounded">
                     <div class="card-header bg-white border-0" data-aos="zoom-in" data-aos-delay="200">
@@ -139,9 +139,9 @@
                         </div>
 
                         <!-- Stats Cards with Hover Effects -->
-                        <div class="row my-4">
+                        <div class="row my-3">
                             <!-- Projects Card -->
-                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+                            <div class="col-md-4 my-2" data-aos="fade-up" data-aos-delay="400">
                                 <div class="card stat-card card-hover border-0 shadow-sm h-100">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -169,7 +169,7 @@
                             </div>
 
                             <!-- Sustainabilities Card -->
-                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="500">
+                            <div class="col-md-4 my-2" data-aos="fade-up" data-aos-delay="500">
                                 <div class="card stat-card card-hover border-0 shadow-sm h-100">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -199,7 +199,7 @@
                             </div>
 
                             <!-- Support & Help Card -->
-                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="600">
+                            <div class="col-md-4 my-2" data-aos="fade-up" data-aos-delay="600">
                                 <div class="card stat-card card-hover border-0 shadow-sm h-100">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -228,11 +228,10 @@
                                 </div>
                             </div>
                         </div>
-
                         <!-- Second Row -->
-                        <div class="row my-4">
+                        <div class="row my-3">
                             <!-- Services Card -->
-                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="700">
+                            <div class="col-md-4 my-2" data-aos="fade-up" data-aos-delay="700">
                                 <div class="card stat-card card-hover border-0 shadow-sm h-100">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -262,7 +261,7 @@
                             </div>
 
                             <!-- Service Categories Card -->
-                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="800">
+                            <div class="col-md-4 my-2" data-aos="fade-up" data-aos-delay="800">
                                 <div class="card stat-card card-hover border-0 shadow-sm h-100">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -293,7 +292,7 @@
                             </div>
 
                             <!-- Contacts Card -->
-                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="900">
+                            <div class="col-md-4 my-2" data-aos="fade-up" data-aos-delay="900">
                                 <div class="card stat-card card-hover border-0 shadow-sm h-100">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -324,8 +323,8 @@
                             </div>
                             <!-- Complete Services Card -->
                         </div>
-                        <div class="row my-4">
-                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                        <div class="row my-3">
+                            <div class="col-md-4 my-2" data-aos="fade-up" data-aos-delay="300">
                                 <div class="card stat-card card-hover border-0 shadow-sm h-100">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -357,7 +356,7 @@
                             </div>
 
                             <!-- Common Units Card -->
-                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+                            <div class="col-md-4 my-2" data-aos="fade-up" data-aos-delay="400">
                                 <div class="card stat-card card-hover border-0 shadow-sm h-100">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -388,7 +387,7 @@
                             </div>
 
                             <!-- Fleets Card -->
-                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="500">
+                            <div class="col-md-4 my-2" data-aos="fade-up" data-aos-delay="500">
                                 <div class="card stat-card card-hover border-0 shadow-sm h-100">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -418,9 +417,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row my-4">
+                        <div class="row my-3">
                             <!-- Trains Card -->
-                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="600">
+                            <div class="col-md-4 my-2" data-aos="fade-up" data-aos-delay="600">
                                 <div class="card stat-card card-hover border-0 shadow-sm h-100">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -451,7 +450,7 @@
                             </div>
 
                             <!-- Sectors Card -->
-                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="700">
+                            <div class="col-md-4 my-2" data-aos="fade-up" data-aos-delay="700">
                                 <div class="card stat-card card-hover border-0 shadow-sm h-100">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">
@@ -481,7 +480,7 @@
                             </div>
 
                             <!-- Admins Card -->
-                            <div class="col-md-4" data-aos="fade-up" data-aos-delay="800">
+                            <div class="col-md-4 my-2" data-aos="fade-up" data-aos-delay="800">
                                 <div class="card stat-card card-hover border-0 shadow-sm h-100">
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between align-items-center">

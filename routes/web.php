@@ -21,6 +21,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\CommonUnitController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\HeroController;
+use App\Http\Controllers\VideoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -235,6 +236,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::put('/settings', [SettingController::class, 'update'])->name('settings.update')
         ->middleware('admin.permission:manage-settings');
 });
+//
+Route::resource('videos', VideoController::class)->middleware('auth');
 
 require __DIR__.'/auth.php';
 

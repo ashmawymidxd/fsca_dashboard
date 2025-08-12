@@ -111,7 +111,7 @@
 
                     </a>
 
-                    <div class="collapse {{ Request::is('complete_services*') || Request::is('who_we_are*') || Request::is('heroes*') || Request::is('sectors*') ? 'show' : '' }}"
+                    <div class="collapse {{ Request::is('complete_services*') || Request::is('videos*') || Request::is('who_we_are*') || Request::is('heroes*') || Request::is('sectors*') ? 'show' : '' }}"
                         id="navbar-examples">
                         <ul class="nav nav-sm flex-column ps-4">
                             <li class="nav-item">
@@ -133,6 +133,13 @@
                                     href="{{ route('complete_services.index') }}">
                                     <i class="ni ni-briefcase-24 text-primary"></i>
                                     <span class="nav-link-text">{{ __('Services') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('videos*') ? 'active' : '' }}"
+                                    href="{{ route('videos.index') }}">
+                                    <i class="ni ni-button-play text-primary"></i>
+                                    <span class="nav-link-text">{{ __('Videos') }}</span>
                                 </a>
                             </li>
                             <li class="nav-item">
