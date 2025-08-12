@@ -43,9 +43,6 @@ class PermissionSeeder extends Seeder
             // Notifications
             ['name' => 'Manage Notifications', 'slug' => 'manage-notifications'],
 
-            // Icons
-            ['name' => 'View Icons', 'slug' => 'view-icons'],
-
             // Contacts
             ['name' => 'View Contacts', 'slug' => 'view-contacts'],
             ['name' => 'Manage Contacts', 'slug' => 'manage-contacts'],
@@ -81,6 +78,13 @@ class PermissionSeeder extends Seeder
             // heroes
             ['name' => 'View Hero', 'slug' => 'view-heroes'],
             ['name' => 'Manage Hero', 'slug' => 'manage-heroes'],
+
+            // customers
+            ['name' => 'View Customers', 'slug' => 'view-customers'],
+            ['name' => 'Manage Customers', 'slug' => 'manage-customers'],
+
+            // videos
+            ['name' => 'View Videos', 'slug' => 'manage-videos'],
 
             // who we are
             ['name' => 'View Who We Are', 'slug' => 'view-who-we-are'],

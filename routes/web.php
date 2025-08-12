@@ -255,8 +255,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::put('/settings', [SettingController::class, 'update'])->name('settings.update')
         ->middleware('admin.permission:manage-settings');
 });
-//
-Route::resource('videos', VideoController::class)->middleware('auth');
+// videos outes with permissions
+Route::resource('videos', VideoController::class)->middleware(['auth','permission:manage-videos']);
 
 require __DIR__.'/auth.php';
 
