@@ -17,7 +17,7 @@ class SettingController extends Controller
     public function update(Request $request)
     {
         $validated = $request->validate([
-            'website_name' => 'required|string|max:255',
+            'website_name' => 'nullable|string|max:255',
             'website_description' => 'nullable|string',
             'email' => 'required|email|max:255',
             'phone' => 'nullable|string|max:20',
@@ -62,10 +62,10 @@ class SettingController extends Controller
         $settings = Setting::first() ?? new Setting();
 
         $response = [
-            'basic_info' => [
-                'website_name' => $settings->website_name,
-                'website_description' => $settings->website_description,
-            ],
+            // 'basic_info' => [
+            //     'website_name' => $settings->website_name,
+            //     'website_description' => $settings->website_description,
+            // ],
             'contact_info' => [
                 'email' => $settings->email,
                 'phone' => $settings->phone,

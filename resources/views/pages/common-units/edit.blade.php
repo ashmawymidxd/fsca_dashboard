@@ -34,9 +34,16 @@
                                         value="{{ $commonUnit->title_ar }}" required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label" for="title_ar">{{ __('Page Name') }}</label>
-                                    <input type="text" name="page_name" id="page_name" class="form-control"
-                                        value="{{ $commonUnit->page_name }}" required>
+                                    <label class="form-control-label" for="page_name">{{ __('Page Name') }}</label>
+                                    <select name="page_name" id="page_name" class="form-control" required>
+                                        <option value="">-- Select Page Name --</option>
+                                        <option value="home">Home</option>
+                                        <option value="projects">Projects</option>
+                                        <option value="support_help">Support & Help</option>
+                                        <option value="sustainability">Sustainability</option>
+                                        <option value="fleet">Fleet</option>
+                                        <option value="train">Train</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label"

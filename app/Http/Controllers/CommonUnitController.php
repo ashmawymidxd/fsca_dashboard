@@ -24,7 +24,7 @@ class CommonUnitController extends Controller
             'title_en' => 'required|string|max:255',
             'title_ar' => 'required|string|max:255',
             'description_en' => 'required|string',
-            'page_name' => 'required|string|unique:common_units,page_name',
+            'page_name' => 'required|string',
             'description_ar' => 'required|string',
         ]);
 
@@ -50,7 +50,7 @@ class CommonUnitController extends Controller
             'title_en' => 'required|string|max:255',
             'title_ar' => 'required|string|max:255',
             'description_en' => 'required|string',
-            'page_name' => 'required|string|unique:common_units,page_name,'.$commonUnit->id,
+            'page_name' => 'required|string',
             'description_ar' => 'required|string',
         ]);
 

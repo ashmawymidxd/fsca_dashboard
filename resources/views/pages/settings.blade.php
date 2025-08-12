@@ -18,14 +18,14 @@
                             @csrf
                             @method('put')
 
-                            <h6 class="heading-small text-muted mb-4">{{ __('Basic Information') }}</h6>
-                            <div class="pl-lg-4">
+                            {{-- <h6 class="heading-small text-muted mb-4">{{ __('Basic Information') }}</h6> --}}
+                            {{-- <div class="pl-lg-4">
                                 <div class="form-group{{ $errors->has('website_name') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="website_name">{{ __('Website Name') }}</label>
                                     <input type="text" name="website_name" id="website_name"
                                         class="form-control form-control-alternative{{ $errors->has('website_name') ? ' is-invalid' : '' }}"
                                         placeholder="{{ __('Website Name') }}"
-                                        value="{{ old('website_name', $settings->website_name ?? '') }}" required>
+                                        value="{{ old('website_name', $settings->website_name ?? '') }}">
                                     @if ($errors->has('website_name'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('website_name') }}</strong>
@@ -44,9 +44,9 @@
                                         </span>
                                     @endif
                                 </div>
-                            </div>
+                            </div> --}}
 
-                            <hr class="my-4" />
+                            {{-- <hr class="my-4" /> --}}
                             <h6 class="heading-small text-muted mb-4">{{ __('Contact Information') }}</h6>
                             <div class="pl-lg-4">
                                 <div class="row">
