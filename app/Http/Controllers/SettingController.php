@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 
 class SettingController extends Controller
 {
@@ -17,8 +19,10 @@ class SettingController extends Controller
     public function update(Request $request)
     {
         $validated = $request->validate([
-            'website_name' => 'nullable|string|max:255',
-            'website_description' => 'nullable|string',
+            'website_name_ar' => 'nullable|string|max:255',
+            'website_name_en' => 'nullable|string|max:255',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'pdf' => 'nullable|file|mimes:pdf|max:5120',
             'email' => 'required|email|max:255',
             'phone' => 'nullable|string|max:20',
             'whatsapp' => 'nullable|string|max:20',
@@ -31,11 +35,44 @@ class SettingController extends Controller
             'linkedin' => 'nullable|url',
         ]);
 
-        DB::transaction(function () use ($validated) {
-            Setting::updateOrCreate(
-                ['id' => 1], // Assuming you only have one settings record
-                $validated
-            );
+        DB::transaction(function () use ($validated, $request) {
+            $settings = Setting::firstOrNew(['id' => 1]);
+            $data = $validated;
+
+            // Handle logo upload
+            if ($request->hasFile('logo')) {
+                // Delete old logo if exists
+                if ($settings->logo && File::exists(public_path($settings->logo))) {
+                    File::delete(public_path($settings->logo));
+                }
+
+                $logo = $request->file('logo');
+                $logoName = 'logo-' . time() . '.' . $logo->getClientOriginalExtension();
+                $logoPath = 'assets/images/settings/' . $logoName;
+                $logo->move(public_path('assets/images/settings'), $logoName);
+                $data['logo'] = $logoPath;
+            } else {
+                unset($data['logo']);
+            }
+
+            // Handle PDF upload
+            if ($request->hasFile('pdf')) {
+                // Delete old PDF if exists
+                if ($settings->pdf && File::exists(public_path($settings->pdf))) {
+                    File::delete(public_path($settings->pdf));
+                }
+
+                $pdf = $request->file('pdf');
+                $pdfName = 'document-' . time() . '.' . $pdf->getClientOriginalExtension();
+                $pdfPath = 'assets/images/settings/' . $pdfName;
+                $pdf->move(public_path('assets/images/settings'), $pdfName);
+                $data['pdf'] = $pdfPath;
+            } else {
+                unset($data['pdf']);
+            }
+
+            $settings->fill($data);
+            $settings->save();
         });
 
         return redirect()->route('settings.index')->with('success', 'Settings updated successfully!');
@@ -62,10 +99,11 @@ class SettingController extends Controller
         $settings = Setting::first() ?? new Setting();
 
         $response = [
-            // 'basic_info' => [
-            //     'website_name' => $settings->website_name,
-            //     'website_description' => $settings->website_description,
-            // ],
+            'basic_info' => [
+                'website_name' => $settings->{"website_name_$lang"},
+                'logo' => $settings->logo ? url($settings->logo) : null,
+                'pdf' => $settings->pdf ? url($settings->pdf) : null,
+            ],
             'contact_info' => [
                 'email' => $settings->email,
                 'phone' => $settings->phone,

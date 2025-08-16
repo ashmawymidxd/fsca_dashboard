@@ -1,1 +1,1 @@
-Get http://127.0.0.1:8000/api/complete-services?lang=en
+Get http://127.0.0.1:8000/api/common/home?lang=en

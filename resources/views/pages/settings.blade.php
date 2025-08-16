@@ -14,39 +14,93 @@
                         <h3 class="mb-0">{{ __('Website Configuration') }}</h3>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('settings.update') }}" autocomplete="off">
+                        <form method="post" action="{{ route('settings.update') }}" autocomplete="off"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('put')
 
-                            {{-- <h6 class="heading-small text-muted mb-4">{{ __('Basic Information') }}</h6> --}}
-                            {{-- <div class="pl-lg-4">
-                                <div class="form-group{{ $errors->has('website_name') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="website_name">{{ __('Website Name') }}</label>
-                                    <input type="text" name="website_name" id="website_name"
-                                        class="form-control form-control-alternative{{ $errors->has('website_name') ? ' is-invalid' : '' }}"
-                                        placeholder="{{ __('Website Name') }}"
-                                        value="{{ old('website_name', $settings->website_name ?? '') }}">
-                                    @if ($errors->has('website_name'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('website_name') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                                <div class="form-group{{ $errors->has('website_description') ? ' has-danger' : '' }}">
+                            <h6 class="heading-small text-muted mb-4">{{ __('Basic Information') }}</h6>
+                            <div class="pl-lg-4">
+                                <div class="form-group{{ $errors->has('website_name_en') ? ' has-danger' : '' }}">
                                     <label class="form-control-label"
-                                        for="website_description">{{ __('Website Description') }}</label>
-                                    <textarea name="website_description" id="website_description"
-                                        class="form-control form-control-alternative{{ $errors->has('website_description') ? ' is-invalid' : '' }}"
-                                        placeholder="{{ __('Website Description') }}" rows="3">{{ old('website_description', $settings->website_description ?? '') }}</textarea>
-                                    @if ($errors->has('website_description'))
+                                        for="website_name_en">{{ __('Website Name English') }}</label>
+                                    <input type="text" name="website_name_en" id="website_name_en"
+                                        class="form-control form-control-alternative{{ $errors->has('website_name_en') ? ' is-invalid' : '' }}"
+                                        placeholder="{{ __('Website Name') }}"
+                                        value="{{ old('website_name_en', $settings->website_name_en ?? '') }}">
+                                    @if ($errors->has('website_name_en'))
                                         <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('website_description') }}</strong>
+                                            <strong>{{ $errors->first('website_name_en') }}</strong>
                                         </span>
                                     @endif
                                 </div>
-                            </div> --}}
+                            </div>
 
-                            {{-- <hr class="my-4" /> --}}
+                            <div class="pl-lg-4">
+                                <div class="form-group{{ $errors->has('website_name_ar') ? ' has-danger' : '' }}">
+                                    <label class="form-control-label"
+                                        for="website_name_ar">{{ __('Website Name Arabic') }}</label>
+                                    <input type="text" name="website_name_ar" id="website_name_ar"
+                                        class="form-control form-control-alternative{{ $errors->has('website_name_ar') ? ' is-invalid' : '' }}"
+                                        placeholder="{{ __('Website Name') }}"
+                                        value="{{ old('website_name_ar', $settings->website_name_ar ?? '') }}">
+                                    @if ($errors->has('website_name_ar'))
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $errors->first('website_name_ar') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="pl-lg-4">
+                                <!-- Logo Upload Section -->
+                                <div class="form-group">
+                                    <label class="form-control-label" for="logo">{{ __('Website Logo') }}</label>
+                                    @if($settings->logo ?? false)
+                                        <div class="mb-3">
+                                            <img src="{{ asset($settings->logo) }}" alt="Current Logo" class="img-thumbnail" style="max-height: 150px;">
+                                            <div class="mt-2">
+                                                <a href="{{ asset($settings->logo) }}" target="_blank" class="btn btn-sm btn-info">
+                                                    <i class="fas fa-eye"></i> View Full Size
+                                                </a>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    <div class="custom-file">
+                                        <input type="file" name="logo" id="logo" class="custom-file-input">
+                                        <label class="custom-file-label" for="logo">{{ __('Choose new logo') }}</label>
+                                    </div>
+                                    <small class="form-text text-muted">
+                                        {{ __('Recommended size: 300x100 pixels. Allowed formats: jpeg, png, jpg, gif, svg.') }}
+                                    </small>
+                                </div>
+
+                                <!-- PDF Upload Section -->
+                                <div class="form-group">
+                                    <label class="form-control-label" for="pdf">{{ __('PDF File') }}</label>
+                                    @if($settings->pdf ?? false)
+                                        <div class="mb-3">
+                                            <div class="alert alert-secondary d-flex align-items-center">
+                                                <i class="fas fa-file-pdf fa-2x text-danger mr-3"></i>
+                                                <div>
+                                                    <h5 class="mb-0">{{ __('Current PDF File') }}</h5>
+                                                    <a href="{{ asset($settings->pdf) }}" target="_blank" class="btn btn-sm btn-primary mt-1">
+                                                        <i class="fas fa-download"></i> Download PDF
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    <div class="custom-file">
+                                        <input type="file" name="pdf" id="pdf" class="custom-file-input">
+                                        <label class="custom-file-label" for="pdf">{{ __('Choose new PDF file') }}</label>
+                                    </div>
+                                    <small class="form-text text-muted">
+                                        {{ __('Maximum file size: 5MB. Allowed format: PDF.') }}
+                                    </small>
+                                </div>
+                            </div>
+
                             <h6 class="heading-small text-muted mb-4">{{ __('Contact Information') }}</h6>
                             <div class="pl-lg-4">
                                 <div class="row">
@@ -116,7 +170,8 @@
                                     @endif
                                 </div>
                                 <div class="form-group{{ $errors->has('location_name_ar') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label" for="location_name_ar">{{ __('Location Name Arabic') }}</label>
+                                    <label class="form-control-label"
+                                        for="location_name_ar">{{ __('Location Name Arabic') }}</label>
                                     <input type="text" name="location_name_ar" id="location_name_ar"
                                         class="form-control form-control-alternative{{ $errors->has('location_name_ar') ? ' is-invalid' : '' }}"
                                         placeholder="{{ __('e.g. Company Headquarters') }}"
@@ -222,6 +277,38 @@
 
 @push('js')
     <script>
-        AOS.init()
+        AOS.init();
+
+        // Show file names when files are selected
+        document.querySelectorAll('.custom-file-input').forEach(function(input) {
+            input.addEventListener('change', function(e) {
+                var fileName = e.target.files[0] ? e.target.files[0].name : '{{ __("Choose file") }}';
+                var label = e.target.nextElementSibling;
+                label.textContent = fileName;
+            });
+        });
+
+        // Preview image before upload
+        document.getElementById('logo').addEventListener('change', function(e) {
+            if (e.target.files && e.target.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    var preview = document.createElement('div');
+                    preview.className = 'mb-3';
+                    preview.innerHTML = `
+                        <img src="${event.target.result}" alt="New logo preview" class="img-thumbnail" style="max-height: 150px;">
+                        <div class="mt-2">
+                            <span class="badge badge-info">New logo preview</span>
+                        </div>
+                    `;
+                    var container = e.target.closest('.form-group');
+                    var existingPreview = container.querySelector('.mb-3');
+                    if (existingPreview) {
+                        container.insertBefore(preview, existingPreview.nextSibling);
+                    }
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
     </script>
 @endpush

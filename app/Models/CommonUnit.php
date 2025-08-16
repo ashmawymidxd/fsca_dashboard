@@ -10,10 +10,12 @@ class CommonUnit extends Model
     use HasFactory;
 
     protected $fillable = [
-        'page_name',
+        'banner_image',
+        'cover_image',
         'title_en',
         'title_ar',
         'description_en',
-        'description_ar'
+        'description_ar',
+        'page_name'
     ];
 }

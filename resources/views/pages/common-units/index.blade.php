@@ -32,21 +32,31 @@
                             </div>
                         @endif
                         <div class="table-responsive">
-                            <table class="table align-items-center table-flush mt-3 w-100" id="commonTable">
+                            <table class="table align-items-center table-flush">
                                 <thead class="thead-light">
                                     <tr>
+                                        <th scope="col">{{ __('Page Name') }}</th>
                                         <th scope="col">{{ __('Title (EN)') }}</th>
                                         <th scope="col">{{ __('Title (AR)') }}</th>
-                                        <th scope="col">{{ __('Page Name') }}</th>
+                                        <th scope="col">{{ __('Banner Image') }}</th>
+                                        <th scope="col">{{ __('Cover Image') }}</th>
                                         <th scope="col">{{ __('Actions') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($commonUnits as $commonUnit)
                                         <tr>
+                                            <td>{{ $commonUnit->page_name }}</td>
                                             <td>{{ $commonUnit->title_en }}</td>
                                             <td>{{ $commonUnit->title_ar }}</td>
-                                            <td>{{ $commonUnit->page_name }}</td>
+                                            <td>
+                                                <img src="{{ asset($commonUnit->banner_image) }}" width="50"
+                                                    height="50" alt="Banner">
+                                            </td>
+                                            <td>
+                                                <img src="{{ asset($commonUnit->cover_image) }}" width="50"
+                                                    height="50" alt="Cover">
+                                            </td>
                                             <td>
                                                 <a href="{{ route('common-units.edit', $commonUnit) }}"
                                                     class="btn btn-sm btn-primary">
@@ -82,9 +92,5 @@
 @push('js')
     <script>
         AOS.init()
-    </script>
-
-    <script>
-        new DataTable("#commonTable")
     </script>
 @endpush

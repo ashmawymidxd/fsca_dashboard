@@ -68,7 +68,7 @@ class HeroController extends Controller
             'description_ar' => 'required|string',
             'button_text_en' => 'required|string|max:255',
             'button_text_ar' => 'required|string|max:255',
-            'service_page_slug' => 'required|string|max:255',
+            'service_page_slug' => 'nullable|string|max:255',
             'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120', // 5MB
         ]);
 

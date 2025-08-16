@@ -24,14 +24,18 @@
                             @method('PUT')
                             <div class="pl-lg-4">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="title_en">{{ __('Title (English)') }}</label>
-                                    <input type="text" name="title_en" id="title_en" class="form-control"
-                                        value="{{ $commonUnit->title_en }}" required>
+                                    <label class="form-control-label" for="banner_image">{{ __('Banner Image') }}</label>
+                                    <input type="file" name="banner_image" id="banner_image" class="form-control">
+                                    @if ($commonUnit->banner_image)
+                                        <img src="{{ asset($commonUnit->banner_image) }}" width="100" class="mt-2">
+                                    @endif
                                 </div>
                                 <div class="form-group">
-                                    <label class="form-control-label" for="title_ar">{{ __('Title (Arabic)') }}</label>
-                                    <input type="text" name="title_ar" id="title_ar" class="form-control"
-                                        value="{{ $commonUnit->title_ar }}" required>
+                                    <label class="form-control-label" for="cover_image">{{ __('Cover Image') }}</label>
+                                    <input type="file" name="cover_image" id="cover_image" class="form-control">
+                                    @if ($commonUnit->cover_image)
+                                        <img src="{{ asset($commonUnit->cover_image) }}" width="100" class="mt-2">
+                                    @endif
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label" for="page_name">{{ __('Page Name') }}</label>
@@ -44,6 +48,16 @@
                                         <option value="fleet">Fleet</option>
                                         <option value="train">Train</option>
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="title_en">{{ __('Title (English)') }}</label>
+                                    <input type="text" name="title_en" id="title_en" class="form-control"
+                                        value="{{ $commonUnit->title_en }}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="title_ar">{{ __('Title (Arabic)') }}</label>
+                                    <input type="text" name="title_ar" id="title_ar" class="form-control"
+                                        value="{{ $commonUnit->title_ar }}" required>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-control-label"
