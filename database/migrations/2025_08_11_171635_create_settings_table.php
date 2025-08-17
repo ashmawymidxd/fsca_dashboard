@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('website_name_ar')->nullable();
             $table->string('website_name_en')->nullable();
+            $table->boolean('maintenance_mode')->default(false);
             $table->string('logo');
             $table->string('pdf');
             $table->string('email');

@@ -14,93 +14,142 @@
                         <h3 class="mb-0">{{ __('Website Configuration') }}</h3>
                     </div>
                     <div class="card-body">
+                        {{-- errors --}}
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <form method="post" action="{{ route('settings.update') }}" autocomplete="off"
                             enctype="multipart/form-data">
                             @csrf
                             @method('put')
 
                             <h6 class="heading-small text-muted mb-4">{{ __('Basic Information') }}</h6>
-                            <div class="pl-lg-4">
-                                <div class="form-group{{ $errors->has('website_name_en') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label"
-                                        for="website_name_en">{{ __('Website Name English') }}</label>
-                                    <input type="text" name="website_name_en" id="website_name_en"
-                                        class="form-control form-control-alternative{{ $errors->has('website_name_en') ? ' is-invalid' : '' }}"
-                                        placeholder="{{ __('Website Name') }}"
-                                        value="{{ old('website_name_en', $settings->website_name_en ?? '') }}">
-                                    @if ($errors->has('website_name_en'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('website_name_en') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="pl-lg-4">
-                                <div class="form-group{{ $errors->has('website_name_ar') ? ' has-danger' : '' }}">
-                                    <label class="form-control-label"
-                                        for="website_name_ar">{{ __('Website Name Arabic') }}</label>
-                                    <input type="text" name="website_name_ar" id="website_name_ar"
-                                        class="form-control form-control-alternative{{ $errors->has('website_name_ar') ? ' is-invalid' : '' }}"
-                                        placeholder="{{ __('Website Name') }}"
-                                        value="{{ old('website_name_ar', $settings->website_name_ar ?? '') }}">
-                                    @if ($errors->has('website_name_ar'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('website_name_ar') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="pl-lg-4">
-                                <!-- Logo Upload Section -->
-                                <div class="form-group">
-                                    <label class="form-control-label" for="logo">{{ __('Website Logo') }}</label>
-                                    @if($settings->logo ?? false)
-                                        <div class="mb-3">
-                                            <img src="{{ asset($settings->logo) }}" alt="Current Logo" class="img-thumbnail" style="max-height: 150px;">
-                                            <div class="mt-2">
-                                                <a href="{{ asset($settings->logo) }}" target="_blank" class="btn btn-sm btn-info">
-                                                    <i class="fas fa-eye"></i> View Full Size
-                                                </a>
-                                            </div>
+                            <div class="row pl-lg-4">
+                                <div class="col-md-6">
+                                    <div class="">
+                                        <div class="form-group{{ $errors->has('website_name_en') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label"
+                                                for="website_name_en">{{ __('Website Name English') }}</label>
+                                            <input type="text" name="website_name_en" id="website_name_en"
+                                                class="form-control form-control-alternative{{ $errors->has('website_name_en') ? ' is-invalid' : '' }}"
+                                                placeholder="{{ __('Website Name') }}"
+                                                value="{{ old('website_name_en', $settings->website_name_en ?? '') }}">
+                                            @if ($errors->has('website_name_en'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('website_name_en') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
-                                    @endif
-                                    <div class="custom-file">
-                                        <input type="file" name="logo" id="logo" class="custom-file-input">
-                                        <label class="custom-file-label" for="logo">{{ __('Choose new logo') }}</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="">
+                                        <div class="form-group{{ $errors->has('website_name_ar') ? ' has-danger' : '' }}">
+                                            <label class="form-control-label"
+                                                for="website_name_ar">{{ __('Website Name Arabic') }}</label>
+                                            <input type="text" name="website_name_ar" id="website_name_ar"
+                                                class="form-control form-control-alternative{{ $errors->has('website_name_ar') ? ' is-invalid' : '' }}"
+                                                placeholder="{{ __('Website Name') }}"
+                                                value="{{ old('website_name_ar', $settings->website_name_ar ?? '') }}">
+                                            @if ($errors->has('website_name_ar'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('website_name_ar') }}</strong>
+                                                </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Add Maintenance Mode Switch Here -->
+                            <div class="pl-lg-4">
+                                <div class="form-group">
+                                    <label class="form-control-label">{{ __('Maintenance Mode') }}</label>
+                                    <div class="custom-control custom-switch">
+                                        <input type="hidden" name="maintenance_mode" value="0">
+                                        <input type="checkbox" name="maintenance_mode" id="maintenance_mode"
+                                            class="custom-control-input" value="1"
+                                            {{ old('maintenance_mode', $settings->maintenance_mode ?? false) ? 'checked' : '' }}>
+                                        <label class="custom-control-label" for="maintenance_mode">
+                                            {{ __('Enable Maintenance Mode') }}
+                                        </label>
                                     </div>
                                     <small class="form-text text-muted">
-                                        {{ __('Recommended size: 300x100 pixels. Allowed formats: jpeg, png, jpg, gif, svg.') }}
+                                        {{ __('When enabled, the website will display a maintenance page to visitors.') }}
                                     </small>
                                 </div>
+                            </div>
 
-                                <!-- PDF Upload Section -->
-                                <div class="form-group">
-                                    <label class="form-control-label" for="pdf">{{ __('PDF File') }}</label>
-                                    @if($settings->pdf ?? false)
-                                        <div class="mb-3">
-                                            <div class="alert alert-secondary d-flex align-items-center">
-                                                <i class="fas fa-file-pdf fa-2x text-danger mr-3"></i>
-                                                <div>
-                                                    <h5 class="mb-0">{{ __('Current PDF File') }}</h5>
-                                                    <a href="{{ asset($settings->pdf) }}" target="_blank" class="btn btn-sm btn-primary mt-1">
-                                                        <i class="fas fa-download"></i> Download PDF
-                                                    </a>
+                            <div class="pl-lg-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <!-- Logo Upload Section -->
+                                        <div class="form-group border rounded p-2 bg-white">
+                                            <label class="form-control-label"
+                                                for="logo">{{ __('Website Logo') }}</label>
+                                            @if ($settings->logo ?? false)
+                                                <div class="mb-3">
+                                                    <img src="{{ asset($settings->logo) }}" alt="Current Logo"
+                                                        class="img-thumbnail" style="max-height: 100px;">
+                                                    <div class="mt-2">
+                                                        <a href="{{ asset($settings->logo) }}" target="_blank"
+                                                            class="btn btn-sm btn-info">
+                                                            <i class="fas fa-eye"></i> View Full Size
+                                                        </a>
+                                                    </div>
                                                 </div>
+                                            @endif
+                                            <div class="custom-file">
+                                                <input type="file" name="logo" id="logo"
+                                                    class="custom-file-input">
+                                                <label class="custom-file-label"
+                                                    for="logo">{{ __('Choose new logo') }}</label>
                                             </div>
+                                            <small class="form-text text-muted">
+                                                {{ __('Recommended size: 300x100 pixels. Allowed formats: jpeg, png, jpg, gif, svg.') }}
+                                            </small>
                                         </div>
-                                    @endif
-                                    <div class="custom-file">
-                                        <input type="file" name="pdf" id="pdf" class="custom-file-input">
-                                        <label class="custom-file-label" for="pdf">{{ __('Choose new PDF file') }}</label>
                                     </div>
-                                    <small class="form-text text-muted">
-                                        {{ __('Maximum file size: 5MB. Allowed format: PDF.') }}
-                                    </small>
+                                    <div class="col-md-6">
+                                        <!-- PDF Upload Section -->
+                                        <div class="form-group border rounded p-2 bg-white">
+                                            <label class="form-control-label" for="pdf">{{ __('PDF File') }}</label>
+                                            @if ($settings->pdf ?? false)
+                                                <div class="mb-3">
+                                                    <div class="alert alert-secondary d-flex align-items-center">
+                                                        <i class="fas fa-file-pdf fa-2x text-danger mr-3"
+                                                            style="font-size: 100px"></i>
+                                                        <div>
+                                                            <h5 class="mb-0">{{ __('Current PDF File') }}</h5>
+                                                            <a href="{{ asset($settings->pdf) }}" target="_blank"
+                                                                class="btn btn-sm btn-primary mt-1">
+                                                                <i class="fas fa-download"></i> Download PDF
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                            <div class="custom-file">
+                                                <input type="file" name="pdf" id="pdf"
+                                                    class="custom-file-input">
+                                                <label class="custom-file-label"
+                                                    for="pdf">{{ __('Choose new PDF file') }}</label>
+                                            </div>
+                                            <small class="form-text text-muted">
+                                                {{ __('Maximum file size: 5MB. Allowed format: PDF.') }}
+                                            </small>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
+                            <!-- Rest of your form remains the same -->
                             <h6 class="heading-small text-muted mb-4">{{ __('Contact Information') }}</h6>
                             <div class="pl-lg-4">
                                 <div class="row">
@@ -282,7 +331,7 @@
         // Show file names when files are selected
         document.querySelectorAll('.custom-file-input').forEach(function(input) {
             input.addEventListener('change', function(e) {
-                var fileName = e.target.files[0] ? e.target.files[0].name : '{{ __("Choose file") }}';
+                var fileName = e.target.files[0] ? e.target.files[0].name : '{{ __('Choose file') }}';
                 var label = e.target.nextElementSibling;
                 label.textContent = fileName;
             });

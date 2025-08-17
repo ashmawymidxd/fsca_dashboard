@@ -12,6 +12,7 @@ class Setting extends Model
     protected $fillable = [
         'website_name_en',
         'website_name_ar',
+        'maintenance_mode',
         'logo',
         'pdf',
         'email',

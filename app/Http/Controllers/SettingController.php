@@ -33,11 +33,15 @@ class SettingController extends Controller
             'twitter' => 'nullable|url',
             'instagram' => 'nullable|url',
             'linkedin' => 'nullable|url',
+            'maintenance_mode' => 'nullable|boolean',
         ]);
 
         DB::transaction(function () use ($validated, $request) {
             $settings = Setting::firstOrNew(['id' => 1]);
             $data = $validated;
+
+            // Convert maintenance_mode to boolean if not set
+            $data['maintenance_mode'] = $request->input('maintenance_mode', false);
 
             // Handle logo upload
             if ($request->hasFile('logo')) {
@@ -103,6 +107,7 @@ class SettingController extends Controller
                 'website_name' => $settings->{"website_name_$lang"},
                 'logo' => $settings->logo ? url($settings->logo) : null,
                 'pdf' => $settings->pdf ? url($settings->pdf) : null,
+                'maintenance_mode' => (bool)$settings->maintenance_mode,
             ],
             'contact_info' => [
                 'email' => $settings->email,

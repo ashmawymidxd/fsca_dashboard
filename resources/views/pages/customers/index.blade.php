@@ -40,8 +40,8 @@
                                             <td>{{ $customer->name_ar }}</td>
                                             <td>
                                                 @if ($customer->logo)
-                                                    <img src="{{ asset($customer->logo) }}" width="50" height="50"
-                                                        class="rounded-circle">
+                                                    <img src="{{ asset($customer->logo) }}" width="100" height="50"
+                                                        class="rounded object-cover">
                                                 @else
                                                     No Logo
                                                 @endif
