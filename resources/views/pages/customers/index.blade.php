@@ -47,10 +47,14 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <div class="btn-group">
+                                                <div>
                                                     <a href="{{ route('customers.edit', $customer) }}"
                                                         class="btn btn-sm btn-primary">
                                                         {{ __('Edit') }}
+                                                    </a>
+                                                    <a href="{{ route('customers.show', $customer) }}"
+                                                        class="btn btn-sm btn-success">
+                                                        {{ __('Show') }}
                                                     </a>
                                                     <form action="{{ route('customers.destroy', $customer) }}"
                                                         method="POST" class="d-inline">

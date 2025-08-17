@@ -256,7 +256,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->middleware('admin.permission:manage-settings');
 });
 // videos outes with permissions
-Route::resource('videos', VideoController::class)->middleware(['auth','permission:manage-videos']);
+Route::resource('videos', VideoController::class)->middleware(['auth','admin.permission:manage-videos']);
 
 require __DIR__.'/auth.php';
 

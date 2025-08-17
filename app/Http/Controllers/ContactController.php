@@ -9,6 +9,7 @@ use App\Mail\ContactReplyMail;
 use Illuminate\Support\Facades\Validator;
 use App\Notifications\NewContactSubmission;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 class ContactController extends Controller
 {
     /**
@@ -103,9 +104,17 @@ class ContactController extends Controller
      * @param  \App\Models\Contact  $contact
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Contact $contact)
+   public function destroy(Contact $contact)
     {
+        // Delete all notifications related to this contact
+        DB::table('notifications')
+            ->where('type', NewContactSubmission::class)
+            ->whereJsonContains('data->contact_id', $contact->id)
+            ->delete();
+
+        // Delete the contact message
         $contact->delete();
+
         return redirect()->route('contacts.index')->with('success', 'Contact deleted successfully');
     }
 
