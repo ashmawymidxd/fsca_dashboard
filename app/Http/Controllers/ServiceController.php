@@ -113,4 +113,29 @@ class ServiceController extends Controller
         $image->move(public_path($path), $imageName);
         return $path . $imageName;
     }
+
+    public function duplicate(Service $service)
+    {
+        // Duplicate the service
+        $newService = $service->replicate();
+        $newService->title_en = $service->title_en . ' (Copy)';
+        $newService->title_ar = $service->title_ar . ' (نسخة)';
+        $newService->slug_en = Str::slug($newService->title_en);
+        $newService->slug_ar = Str::slug($newService->title_ar);
+
+        // Set placeholder image for service
+        $newService->cover_image = 'https://operaparallele.org/wp-content/uploads/2023/09/Placeholder_Image.png'; // Make sure this path exists
+
+        $newService->save();
+
+        // Duplicate categories with placeholder images
+        foreach ($service->categories as $category) {
+            $newCategory = $category->replicate();
+            $newCategory->service_id = $newService->id;
+            $newCategory->cover_image = 'https://operaparallele.org/wp-content/uploads/2023/09/Placeholder_Image.png'; // Make sure this path exists
+            $newCategory->save();
+        }
+
+        return redirect()->route('services.index')->with('success', 'Service duplicated successfully.');
+    }
 };

@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('slug_en');
             $table->string('slug_ar');
             $table->foreignId('service_id')->constrained()->onDelete('cascade');
+            $table->unsignedInteger('order');
             $table->timestamps();
         });
     }
@@ -37,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sub_service_categories');
+        Schema::dropIfExists('service_categories');
     }
 };

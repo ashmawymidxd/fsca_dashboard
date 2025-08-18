@@ -76,6 +76,8 @@ Route::middleware(['auth', 'admin.permission:manage-sustainability'])->group(fun
 // Services routes with individual permissions
 Route::middleware(['auth', 'admin.permission:manage-services'])->group(function () {
     Route::resource('services', ServiceController::class)->except(['show']);
+    Route::post('/services/{service}/duplicate', [ServiceController::class, 'duplicate'])
+        ->name('services.duplicate');
     Route::get('services/{service}', [ServiceController::class, 'show'])
         ->middleware('admin.permission:view-services')
         ->name('services.show');
@@ -115,6 +117,9 @@ Route::prefix('complete_services')->group(function () {
     Route::get('/', [CompleteServiceController::class, 'index'])
         ->middleware(['auth', 'admin.permission:view-complete-services'])
         ->name('complete_services.index');
+
+    Route::post('/services/{service}/categories/reorder', [ServiceCategoryController::class, 'reorder'])
+        ->name('services.categories.reorder');
 
     // Resource routes with proper path
     Route::resource('service', CompleteServiceController::class)

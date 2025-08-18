@@ -17,7 +17,8 @@ class ServiceCategory extends Model
         'focus_en', 'focus_ar',
         'slug_en', 'slug_ar',
         'button_text_en', 'button_text_ar',
-        'service_id'
+        'service_id',
+        'order',
     ];
 
     public function service()

@@ -11,7 +11,7 @@ class ServiceCategoryController extends Controller
 {
     public function index(Service $service)
     {
-        $categories = $service->categories;
+        $categories = $service->categories()->orderBy('order')->get();
         return view('services.categories.index', compact('service', 'categories'));
     }
 
@@ -55,6 +55,7 @@ class ServiceCategoryController extends Controller
             'slug_ar' => Str::slug($request->main_header_ar),
             'cover_image' => $imagePath,
             'service_id' => $service->id,
+            'order' => $service->categories()->count() + 1
         ]);
 
         return redirect()->route('services.categories.index', $service)->with('success', 'Category created successfully.');
@@ -125,7 +126,7 @@ class ServiceCategoryController extends Controller
 
         $category->delete();
 
-        return redirect()->route('services.categories.index', $service)->with('success', 'Category deleted successfully.');
+        return redirect()->route('services.show', $service)->with('success', 'Category deleted successfully.');
     }
 
     private function uploadImage($image, $folder)
@@ -134,5 +135,22 @@ class ServiceCategoryController extends Controller
         $path = 'uploads/' . $folder . '/';
         $image->move(public_path($path), $imageName);
         return $path . $imageName;
+    }
+
+    // Add a new method to handle the reordering
+    public function reorder(Request $request, Service $service)
+    {
+        $request->validate([
+            'categories' => 'required|array',
+            'categories.*' => 'exists:service_categories,id',
+        ]);
+
+        foreach ($request->categories as $index => $categoryId) {
+            ServiceCategory::where('id', $categoryId)
+                ->where('service_id', $service->id)
+                ->update(['order' => $index + 1]);
+        }
+
+        return response()->json(['success' => true]);
     }
 }

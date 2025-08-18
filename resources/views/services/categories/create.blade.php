@@ -101,14 +101,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="order">{{ __('Display Order') }}</label>
-                                        <input type="number" name="order" id="order"
-                                            class="form-control form-control-alternative"
-                                            placeholder="{{ __('Lower numbers appear first') }}"
-                                            value="{{ old('order', 0) }}" min="0">
-                                    </div>
-
                                     <div class="text-center mt-4">
                                         <button type="button" class="btn btn-primary next-step">
                                             {{ __('Next') }} <i class="fas fa-arrow-right ml-2"></i>

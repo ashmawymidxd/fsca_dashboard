@@ -27,7 +27,7 @@ class ServiceApiController extends Controller
 
         $service = Service::with(['categories' => function($query) use ($lang) {
             $query->select(
-                'id', 'service_id', 'type', 'cover_image',
+                'id','order','service_id', 'type', 'cover_image',
                 "main_header_$lang as main_header",
                 "sub_header_$lang as sub_header",
                 "description_$lang as description",

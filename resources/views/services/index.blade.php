@@ -54,26 +54,43 @@
                                             <td>{{ $service->categories->count() }}</td>
                                             <td>
                                                 <a href="{{ route('services.show', $service) }}"
-                                                    class="btn btn-sm btn-info">
+                                                    class="btn btn-success btn-sm">
                                                     {{ __('View') }}
                                                 </a>
-                                                <a href="{{ route('services.edit', $service) }}"
-                                                    class="btn btn-sm btn-warning">
-                                                    {{ __('Edit') }}
-                                                </a>
-                                                <a href="{{ route('services.categories.index', $service) }}"
-                                                    class="btn btn-sm btn-success">
-                                                    {{ __('Categories') }}
-                                                </a>
-                                                <form action="{{ route('services.destroy', $service) }}" method="POST"
-                                                    style="display: inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger"
-                                                        onclick="return confirm('Are you sure?')">
-                                                        {{ __('Delete') }}
-                                                    </button>
-                                                </form>
+                                                <div class="dropdown">
+                                                    <a class="btn btn-default btn-sm" href="#" role="button"
+                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        more options..
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                        <a href="https://sfcl.sa/services/{{ $service->slug_en }}"
+                                                            class="dropdown-item" target="__blank">
+                                                            {{ __('View on Site') }}
+                                                        </a>
+                                                        <form action="{{ route('services.duplicate', $service) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <button type="submit" class="dropdown-item">Duplicate</button>
+                                                        </form>
+                                                        <a href="{{ route('services.edit', $service) }}"
+                                                            class="dropdown-item">
+                                                            {{ __('Edit') }}
+                                                        </a>
+                                                        <a href="{{ route('services.categories.index', $service) }}"
+                                                            class="dropdown-item">
+                                                            {{ __('Categories') }}
+                                                        </a>
+                                                        <form action="{{ route('services.destroy', $service) }}"
+                                                            method="POST" style="display: inline;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="dropdown-item"
+                                                                onclick="return confirm('Are you sure?')">
+                                                                {{ __('Delete') }}
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach

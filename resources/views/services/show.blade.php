@@ -127,15 +127,19 @@
                                 <table class="table align-items-center table-flush table-hover w-100 mt-3" id="showTable">
                                     <thead class="thead-light">
                                         <tr>
+                                            <th scope="col" width="5%">{{ __('Order') }}</th>
                                             <th scope="col" width="15%">{{ __('Type') }}</th>
                                             <th scope="col">{{ __('Main Header') }}</th>
                                             <th scope="col" width="10%">{{ __('Image') }}</th>
                                             <th scope="col" width="25%">{{ __('Actions') }}</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @foreach($service->categories as $category)
-                                            <tr>
+                                    <tbody id="sortable">
+                                        @foreach($service->categories->sortBy('order') as $category)
+                                            <tr data-id="{{ $category->id }}">
+                                                <td class="sortable-handle text-center" style="cursor: move;">
+                                                    <i class="fas fa-arrows-alt-v"></i>
+                                                </td>
                                                 <td>
                                                     <span class="badge badge-{{ $category->type == 'category' ? 'primary' : 'info' }}">
                                                         {{ ucfirst($category->type) }}
@@ -242,6 +246,9 @@
 @endsection
 
 @push('js')
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
+
     <script>
         function copyShareLink() {
             const copyText = document.getElementById("shareLink");
@@ -256,11 +263,51 @@
         // Initialize tooltips
         $(function () {
             $('[data-toggle="tooltip"]').tooltip()
-        })
-    </script>
+        });
 
-    <script>
-        new DataTable("#showTable");
+        // Initialize DataTable
+        $(document).ready(function() {
+            new DataTable("#showTable", {
+                // Disable sorting for the first and last columns (order and actions)
+                columnDefs: [
+                    { orderable: false, targets: [0, 4] }
+                ]
+            });
+
+            // Make table rows sortable
+            const sortable = new Sortable(document.getElementById('sortable'), {
+                handle: '.sortable-handle',
+                animation: 150,
+                onEnd: function() {
+                    // Get the new order
+                    const rows = $('#sortable tr');
+                    const order = [];
+
+                    rows.each(function(index) {
+                        order.push($(this).data('id'));
+                    });
+
+                    // Send AJAX request to update order
+                    $.ajax({
+                        url: "{{ route('services.categories.reorder', $service) }}",
+                        type: 'POST',
+                        data: {
+                            categories: order,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                // Optional: Show a success message
+                                toastr.success('Order updated successfully');
+                            }
+                        },
+                        error: function(xhr) {
+                            toastr.error('Error updating order');
+                        }
+                    });
+                }
+            });
+        });
     </script>
 @endpush
 
@@ -288,6 +335,21 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
+        }
+
+        /* Sortable styles */
+        .sortable-handle {
+            cursor: move;
+            cursor: -webkit-grabbing;
+        }
+
+        #sortable tr {
+            cursor: move;
+        }
+
+        #sortable tr.sortable-selected {
+            background-color: #f8f9fa;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
     </style>
 @endpush
