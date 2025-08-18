@@ -58,7 +58,7 @@ class ServiceCategoryController extends Controller
             'order' => $service->categories()->count() + 1
         ]);
 
-        return redirect()->route('services.categories.index', $service)->with('success', 'Category created successfully.');
+        return redirect()->route('services.show', $service)->with('success', 'Category created successfully.');
     }
 
     public function show(Service $service, ServiceCategory $category)
@@ -114,7 +114,7 @@ class ServiceCategoryController extends Controller
 
         $category->update($data);
 
-        return redirect()->route('services.categories.index', $service)->with('success', 'Category updated successfully.');
+        return redirect()->route('services.show', $service)->with('success', 'Category updated successfully.');
     }
 
     public function destroy(Service $service, ServiceCategory $category)

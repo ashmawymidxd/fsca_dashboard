@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             // ContactSeeder::class,
             // ProjectSeeder::class,
-            // ServiceSeeder::class,
+            ServiceSeeder::class,
             PermissionSeeder::class,
             // Add other seeders here
         ]);

@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('slug_en');
             $table->string('slug_ar');
             $table->foreignId('service_id')->constrained()->onDelete('cascade');
-            $table->unsignedInteger('order');
+            $table->unsignedInteger('order')->default(1);
             $table->timestamps();
         });
     }

@@ -4,7 +4,7 @@
     @include('users.partials.header', [
         'title' => __('Service Details'),
         'description' => __('View detailed information about this service'),
-        'class' => 'col-lg-12'
+        'class' => 'col-lg-12',
     ])
 
     <div class="container-fluid mt--7">
@@ -28,7 +28,7 @@
                                     </ol>
                                 </nav>
                                 <h3 class="mb-0 mt-2">{{ $service->title_en }}</h3>
-                                @if($service->title_ar)
+                                @if ($service->title_ar)
                                     <p class="text-muted mb-0">{{ $service->title_ar }}</p>
                                 @endif
                             </div>
@@ -37,18 +37,23 @@
                                     <a href="{{ route('services.edit', $service) }}" class="btn btn-sm btn-primary">
                                         <i class="fas fa-edit"></i> {{ __('Edit') }}
                                     </a>
-                                    <button type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button type="button"
+                                        class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <span class="sr-only">Toggle Dropdown</span>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#shareModal">
+                                        <a class="dropdown-item" href="#" data-toggle="modal"
+                                            data-target="#shareModal">
                                             <i class="fas fa-share-alt"></i> {{ __('Share') }}
                                         </a>
                                         <div class="dropdown-divider"></div>
-                                        <form action="{{ route('services.destroy', $service) }}" method="POST" class="dropdown-item p-0">
+                                        <form action="{{ route('services.destroy', $service) }}" method="POST"
+                                            class="dropdown-item p-0">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-link text-danger" onclick="return confirm('Are you sure you want to delete this service?')">
+                                            <button type="submit" class="btn btn-link text-danger"
+                                                onclick="return confirm('Are you sure you want to delete this service?')">
                                                 <i class="fas fa-trash"></i> {{ __('Delete') }}
                                             </button>
                                         </form>
@@ -63,10 +68,11 @@
                         <div class="row mb-4">
                             <div class="col-md-4 mb-4 mb-md-0">
                                 <div class="card card-lift--hover shadow border-0">
-                                    <img src="{{ url($service->cover_image) }}" class="card-img-top rounded" alt="{{ $service->title_en }}">
+                                    <img src="{{ url($service->cover_image) }}" class="card-img-top rounded"
+                                        alt="{{ $service->title_en }}">
                                     <div class="card-body text-center">
                                         <h5 class="h3 card-title mb-0">{{ $service->title_en }}</h5>
-                                        @if($service->title_ar)
+                                        @if ($service->title_ar)
                                             <p class="text-muted mt-1">{{ $service->title_ar }}</p>
                                         @endif
                                     </div>
@@ -74,7 +80,8 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="tab-content" id="serviceDescriptionTabs">
-                                    <div class="tab-pane fade show active" id="english" role="tabpanel" aria-labelledby="english-tab">
+                                    <div class="tab-pane fade show active" id="english" role="tabpanel"
+                                        aria-labelledby="english-tab">
                                         <div class="d-flex justify-content-between align-items-center mb-3">
                                             <h4>{{ __('English Version') }}</h4>
                                             <span class="badge badge-pill badge-primary">EN</span>
@@ -88,7 +95,8 @@
                                             <h4>{{ __('Arabic Version') }}</h4>
                                             <span class="badge badge-pill badge-primary">AR</span>
                                         </div>
-                                        <div class="description-content bg-white border p-4 rounded shadow-sm" dir="rtl">
+                                        <div class="description-content bg-white border p-4 rounded shadow-sm"
+                                            dir="rtl">
                                             {!! nl2br(e($service->description_ar)) !!}
                                         </div>
                                     </div>
@@ -96,12 +104,14 @@
 
                                 <ul class="nav nav-tabs mt-4" id="descriptionTabs" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="english-tab" data-toggle="tab" href="#english" role="tab" aria-controls="english" aria-selected="true">
+                                        <a class="nav-link active" id="english-tab" data-toggle="tab" href="#english"
+                                            role="tab" aria-controls="english" aria-selected="true">
                                             {{ __('English') }}
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="arabic-tab" data-toggle="tab" href="#arabic" role="tab" aria-controls="arabic" aria-selected="false">
+                                        <a class="nav-link" id="arabic-tab" data-toggle="tab" href="#arabic" role="tab"
+                                            aria-controls="arabic" aria-selected="false">
                                             {{ __('Arabic') }}
                                         </a>
                                     </li>
@@ -122,7 +132,7 @@
                             </a>
                         </div>
 
-                        @if($service->categories->count() > 0)
+                        @if ($service->categories->count() > 0)
                             <div class="table-responsive">
                                 <table class="table align-items-center table-flush table-hover w-100 mt-3" id="showTable">
                                     <thead class="thead-light">
@@ -135,41 +145,53 @@
                                         </tr>
                                     </thead>
                                     <tbody id="sortable">
-                                        @foreach($service->categories->sortBy('order') as $category)
+                                        @foreach ($service->categories->sortBy('order') as $category)
                                             <tr data-id="{{ $category->id }}">
                                                 <td class="sortable-handle text-center" style="cursor: move;">
                                                     <i class="fas fa-arrows-alt-v"></i>
                                                 </td>
                                                 <td>
-                                                    <span class="badge badge-{{ $category->type == 'category' ? 'primary' : 'info' }}">
+                                                    <span
+                                                        class="badge badge-{{ $category->type == 'category' ? 'info' : 'warning' }}">
                                                         {{ ucfirst($category->type) }}
                                                     </span>
                                                 </td>
                                                 <td>
                                                     <div class="font-weight-bold">{{ $category->main_header_en }}</div>
-                                                    @if($category->main_header_ar)
-                                                        <div class="small text-muted">{{ $category->main_header_ar }}</div>
+                                                    @if ($category->main_header_ar)
+                                                        <div class="small text-muted">{{ $category->main_header_ar }}
+                                                        </div>
                                                     @endif
                                                 </td>
                                                 <td>
                                                     <div class="avatar-group">
-                                                        <a href="#" class="" data-toggle="tooltip" data-original-title="{{ $category->main_header_en }}">
-                                                            <img width="100" class="rounded" alt="Image placeholder" src="{{ url($category->cover_image) }}">
+                                                        <a href="#" class="" data-toggle="tooltip"
+                                                            data-original-title="{{ $category->main_header_en }}">
+                                                            <img width="100" class="rounded" alt="Image placeholder"
+                                                                src="{{ url($category->cover_image) }}">
                                                         </a>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="d-flex">
-                                                        <a href="{{ route('services.categories.show', [$service, $category]) }}" class="btn btn-sm btn-info mr-2" data-toggle="tooltip" title="View">
+                                                        <a href="{{ route('services.categories.show', [$service, $category]) }}"
+                                                            class="btn btn-sm btn-info mr-2" data-toggle="tooltip"
+                                                            title="View">
                                                             <i class="fas fa-eye"></i>
                                                         </a>
-                                                        <a href="{{ route('services.categories.edit', [$service, $category]) }}" class="btn btn-sm btn-warning mr-2" data-toggle="tooltip" title="Edit">
+                                                        <a href="{{ route('services.categories.edit', [$service, $category]) }}"
+                                                            class="btn btn-sm btn-warning mr-2" data-toggle="tooltip"
+                                                            title="Edit">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
-                                                        <form action="{{ route('services.categories.destroy', [$service, $category]) }}" method="POST">
+                                                        <form
+                                                            action="{{ route('services.categories.destroy', [$service, $category]) }}"
+                                                            method="POST">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')" data-toggle="tooltip" title="Delete">
+                                                            <button type="submit" class="btn btn-sm btn-danger"
+                                                                onclick="return confirm('Are you sure?')"
+                                                                data-toggle="tooltip" title="Delete">
                                                                 <i class="fas fa-trash"></i>
                                                             </button>
                                                         </form>
@@ -186,7 +208,8 @@
                                     <i class="fas fa-folder-open fa-3x text-muted mb-3"></i>
                                     <h4 class="text-muted">{{ __('No Categories Found') }}</h4>
                                     <p class="text-muted">{{ __('This service doesn\'t have any categories yet.') }}</p>
-                                    <a href="{{ route('services.categories.create', $service) }}" class="btn btn-success btn-sm">
+                                    <a href="{{ route('services.categories.create', $service) }}"
+                                        class="btn btn-success btn-sm">
                                         <i class="fas fa-plus"></i> {{ __('Create First Category') }}
                                     </a>
                                 </div>
@@ -201,7 +224,8 @@
     </div>
 
     <!-- Share Modal -->
-    <div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel" aria-hidden="true">
+    <div class="modal fade" id="shareModal" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -214,7 +238,8 @@
                     <div class="form-group">
                         <label for="shareLink">{{ __('Shareable Link') }}</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="shareLink" value="{{ url()->current() }}" readonly>
+                            <input type="text" class="form-control" id="shareLink" value="{{ url()->current() }}"
+                                readonly>
                             <div class="input-group-append">
                                 <button class="btn btn-outline-primary" type="button" onclick="copyShareLink()">
                                     <i class="fas fa-copy"></i>
@@ -261,7 +286,7 @@
         }
 
         // Initialize tooltips
-        $(function () {
+        $(function() {
             $('[data-toggle="tooltip"]').tooltip()
         });
 
@@ -269,9 +294,10 @@
         $(document).ready(function() {
             new DataTable("#showTable", {
                 // Disable sorting for the first and last columns (order and actions)
-                columnDefs: [
-                    { orderable: false, targets: [0, 4] }
-                ]
+                columnDefs: [{
+                    orderable: false,
+                    targets: [0, 4]
+                }]
             });
 
             // Make table rows sortable
@@ -349,7 +375,7 @@
 
         #sortable tr.sortable-selected {
             background-color: #f8f9fa;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
     </style>
 @endpush
