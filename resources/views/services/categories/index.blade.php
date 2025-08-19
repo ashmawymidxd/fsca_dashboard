@@ -4,7 +4,7 @@
     @include('users.partials.header', [
         'title' => __('Categories for Service: ') . $service->title_en,
         'description' => __('Manage categories and banners for this service'),
-        'class' => 'col-lg-12'
+        'class' => 'col-lg-12',
     ])
 
     <div class="container-fluid mt--7">
@@ -17,7 +17,8 @@
                                 <h3 class="mb-0">{{ __('Categories Management') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('services.categories.create', $service) }}" class="btn btn-sm btn-primary">
+                                <a href="{{ route('services.categories.create', $service) }}"
+                                    class="btn btn-sm btn-primary">
                                     {{ __('Add New Category') }}
                                 </a>
                                 <a href="{{ route('services.index') }}" class="btn btn-sm btn-secondary">
@@ -42,7 +43,8 @@
                                 <img src="{{ url($service->cover_image) }}" width="80" class="rounded mr-3">
                                 <div>
                                     <h5>{{ $service->title_en }} / {{ $service->title_ar }}</h5>
-                                    <p class="mb-0 text-muted">{{ __('Total Categories: ') }} <strong>{{ $service->categories->count() }}</strong></p>
+                                    <p class="mb-0 text-muted">{{ __('Total Categories: ') }}
+                                        <strong>{{ $service->categories->count() }}</strong></p>
                                 </div>
                             </div>
                         </div>
@@ -61,16 +63,18 @@
                                     </tr>
                                 </thead>
                                 <tbody id="sortable">
-                                    @forelse ($categories as $category)
+                                    @foreach ($categories as $category)
                                         <tr data-id="{{ $category->id }}">
                                             <td class="sortable-handle text-center" style="cursor: move;">
                                                 <i class="fas fa-arrows-alt-v"></i>
                                             </td>
                                             <td>
-                                                <img src="{{ url($category->cover_image) }}" width="100" class="rounded">
+                                                <img src="{{ url($category->cover_image) }}" width="100"
+                                                    class="rounded">
                                             </td>
                                             <td>
-                                                <span class="badge badge-{{ $category->type == 'category' ? 'info' : 'warning' }}">
+                                                <span
+                                                    class="badge badge-{{ $category->type == 'category' ? 'info' : 'warning' }}">
                                                     {{ ucfirst($category->type) }}
                                                 </span>
                                             </td>
@@ -88,38 +92,27 @@
                                             </td>
                                             <td>
                                                 <a href="{{ route('services.categories.show', [$service, $category]) }}"
-                                                   class="btn btn-sm btn-info"
-                                                   title="{{ __('View') }}">
+                                                    class="btn btn-sm btn-info" title="{{ __('View') }}">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
                                                 <a href="{{ route('services.categories.edit', [$service, $category]) }}"
-                                                   class="btn btn-sm btn-warning"
-                                                   title="{{ __('Edit') }}">
+                                                    class="btn btn-sm btn-warning" title="{{ __('Edit') }}">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <form action="{{ route('services.categories.destroy', [$service, $category]) }}"
-                                                      method="POST"
-                                                      style="display: inline-block;">
+                                                <form
+                                                    action="{{ route('services.categories.destroy', [$service, $category]) }}"
+                                                    method="POST" style="display: inline-block;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit"
-                                                            class="btn btn-sm btn-danger"
-                                                            title="{{ __('Delete') }}"
-                                                            onclick="return confirm('Are you sure you want to delete this category?')">
+                                                    <button type="submit" class="btn btn-sm btn-danger"
+                                                        title="{{ __('Delete') }}"
+                                                        onclick="return confirm('Are you sure you want to delete this category?')">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </form>
                                             </td>
                                         </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="7" class="text-center">
-                                                <div class="alert alert-warning mb-0">
-                                                    {{ __('No categories found for this service.') }}
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforelse
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -145,7 +138,7 @@
 
         #sortable tr.sortable-selected {
             background-color: #f8f9fa;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
     </style>
 @endpush

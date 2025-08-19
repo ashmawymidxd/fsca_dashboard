@@ -4,7 +4,7 @@
     @include('users.partials.header', [
         'title' => __('Edit Category: ') . $category->main_header_en,
         'description' => __('Update category information'),
-        'class' => 'col-lg-12'
+        'class' => 'col-lg-12',
     ])
 
     <div class="container-fluid mt--7">
@@ -18,9 +18,7 @@
                             </div>
                             <div class="col-4 text-right">
                                 <a href="{{ route('services.categories.show', [$service, $category]) }}"
-                                   class="btn btn-sm btn-info"
-                                   data-toggle="tooltip"
-                                   title="View this category">
+                                    class="btn btn-sm btn-info" data-toggle="tooltip" title="View this category">
                                     <i class="fas fa-eye"></i>
                                 </a>
                             </div>
@@ -28,9 +26,7 @@
                     </div>
                     <div class="card-body bg-white">
                         <form method="post" action="{{ route('services.categories.update', [$service, $category]) }}"
-                              autocomplete="off"
-                              enctype="multipart/form-data"
-                              id="categoryForm">
+                            autocomplete="off" enctype="multipart/form-data" id="categoryForm">
                             @csrf
                             @method('put')
 
@@ -45,7 +41,8 @@
                             <!-- Language Tabs -->
                             <ul class="nav nav-tabs" id="languageTabs" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="settings-tab" data-toggle="tab" href="#settings" role="tab">
+                                    <a class="nav-link active" id="settings-tab" data-toggle="tab" href="#settings"
+                                        role="tab">
                                         <i class="fas fa-cog mr-1"></i> {{ __('Settings') }}
                                     </a>
                                 </li>
@@ -72,11 +69,16 @@
                                     <div class="pl-lg-4">
                                         <div class="form-group">
                                             <label class="form-control-label" for="type">{{ __('Type') }}</label>
-                                            <select name="type" id="type" class="form-control form-control-alternative" required>
-                                                <option value="category" {{ $category->type == 'category' ? 'selected' : '' }}>{{ __('Category') }}</option>
-                                                <option value="banner" {{ $category->type == 'banner' ? 'selected' : '' }}>{{ __('Banner') }}</option>
+                                            <select name="type" id="type"
+                                                class="form-control form-control-alternative" required>
+                                                <option value="category"
+                                                    {{ $category->type == 'category' ? 'selected' : '' }}>
+                                                    {{ __('Category') }}</option>
+                                                <option value="banner" {{ $category->type == 'banner' ? 'selected' : '' }}>
+                                                    {{ __('Banner') }}</option>
                                             </select>
-                                            <small class="form-text text-muted">{{ __('Select whether this is a category or banner') }}</small>
+                                            <small
+                                                class="form-text text-muted">{{ __('Select whether this is a category or banner') }}</small>
                                         </div>
                                     </div>
                                 </div>
@@ -85,41 +87,49 @@
                                 <div class="tab-pane fade" id="english" role="tabpanel">
                                     <div class="pl-lg-4">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="main_header_en">{{ __('Main Header') }}</label>
+                                            <label class="form-control-label"
+                                                for="main_header_en">{{ __('Main Header') }}</label>
                                             <input type="text" name="main_header_en" id="main_header_en"
-                                                   class="form-control form-control-alternative"
-                                                   placeholder="{{ __('Enter main header in English') }}"
-                                                   value="{{ old('main_header_en', $category->main_header_en) }}"
-                                                   required>
+                                                class="form-control form-control-alternative"
+                                                placeholder="{{ __('Enter main header in English') }}"
+                                                value="{{ old('main_header_en', $category->main_header_en) }}" required>
                                             <div class="invalid-feedback"></div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="sub_header_en">{{ __('Sub Header') }}</label>
-                                            <input type="text" name="sub_header_en" id="sub_header_en"
-                                                   class="form-control form-control-alternative"
-                                                   placeholder="{{ __('Enter sub header in English') }}"
-                                                   value="{{ old('sub_header_en', $category->sub_header_en) }}"
-                                                   required>
-                                            <div class="invalid-feedback"></div>
+                                        <div class="notBanner">
+                                            <div class="form-group">
+                                                <label class="form-control-label"
+                                                    for="sub_header_en">{{ __('Sub Header') }}</label>
+                                                <input type="text" name="sub_header_en" id="sub_header_en"
+                                                    class="form-control form-control-alternative"
+                                                    placeholder="{{ __('Enter sub header in English') }}"
+                                                    value="{{ old('sub_header_en', $category->sub_header_en) }}" required>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-control-label"
+                                                    for="focus_en">{{ __('Focus Area') }}</label>
+                                                <input type="text" name="focus_en" id="focus_en"
+                                                    class="form-control form-control-alternative"
+                                                    placeholder="{{ __('Enter focus area in English') }}"
+                                                    value="{{ old('focus_en', $category->focus_en) }}">
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group banner d-none">
+                                            <label class="form-control-label" for="button_text_en">
+                                                {{ __('Button Text (English)') }}
+                                            </label>
+                                            <input type="text" name="button_text_en" id="button_text_en"
+                                                class="form-control" placeholder="{{ __('e.g. Quality Assurance') }}"
+                                                value="{{ old('button_text_en', $category->button_text_en) }}">
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-control-label" for="description_en">{{ __('Description') }}</label>
-                                            <textarea name="description_en" id="description_en"
-                                                      class="form-control form-control-alternative"
-                                                      rows="5"
-                                                      placeholder="{{ __('Enter detailed description in English') }}"
-                                                      required>{{ old('description_en', $category->description_en) }}</textarea>
+                                            <label class="form-control-label"
+                                                for="description_en">{{ __('Description') }}</label>
+                                            <textarea name="description_en" id="description_en" class="form-control form-control-alternative" rows="5"
+                                                placeholder="{{ __('Enter detailed description in English') }}" required>{{ old('description_en', $category->description_en) }}</textarea>
                                             <div class="invalid-feedback"></div>
                                             <small class="form-text text-muted">{{ __('Minimum 50 characters') }}</small>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="focus_en">{{ __('Focus Area') }}</label>
-                                            <input type="text" name="focus_en" id="focus_en"
-                                                   class="form-control form-control-alternative"
-                                                   placeholder="{{ __('Enter focus area in English') }}"
-                                                   value="{{ old('focus_en', $category->focus_en) }}"
-                                                   required>
-                                            <div class="invalid-feedback"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -128,41 +138,50 @@
                                 <div class="tab-pane fade" id="arabic" role="tabpanel">
                                     <div class="pl-lg-4" dir="rtl" style="text-align: right;">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="main_header_ar">{{ __('Main Header') }}</label>
+                                            <label class="form-control-label"
+                                                for="main_header_ar">{{ __('Main Header') }}</label>
                                             <input type="text" name="main_header_ar" id="main_header_ar"
-                                                   class="form-control form-control-alternative"
-                                                   placeholder="{{ __('Enter main header in Arabic') }}"
-                                                   value="{{ old('main_header_ar', $category->main_header_ar) }}"
-                                                   required>
+                                                class="form-control form-control-alternative"
+                                                placeholder="{{ __('Enter main header in Arabic') }}"
+                                                value="{{ old('main_header_ar', $category->main_header_ar) }}" required>
                                             <div class="invalid-feedback"></div>
                                         </div>
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="sub_header_ar">{{ __('Sub Header') }}</label>
-                                            <input type="text" name="sub_header_ar" id="sub_header_ar"
-                                                   class="form-control form-control-alternative"
-                                                   placeholder="{{ __('Enter sub header in Arabic') }}"
-                                                   value="{{ old('sub_header_ar', $category->sub_header_ar) }}"
-                                                   required>
-                                            <div class="invalid-feedback"></div>
+                                        <div class="notBanner">
+                                            <div class="form-group">
+                                                <label class="form-control-label"
+                                                    for="sub_header_ar">{{ __('Sub Header') }}</label>
+                                                <input type="text" name="sub_header_ar" id="sub_header_ar"
+                                                    class="form-control form-control-alternative"
+                                                    placeholder="{{ __('Enter sub header in Arabic') }}"
+                                                    value="{{ old('sub_header_ar', $category->sub_header_ar) }}" required>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-control-label"
+                                                    for="focus_ar">{{ __('Focus Area') }}</label>
+                                                <input type="text" name="focus_ar" id="focus_ar"
+                                                    class="form-control form-control-alternative"
+                                                    placeholder="{{ __('Enter focus area in Arabic') }}"
+                                                    value="{{ old('focus_ar', $category->focus_ar) }}">
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group banner d-none">
+                                            <label class="form-control-label" for="button_text_ar">
+                                                {{ __('Button Text (عربي)') }}
+                                            </label>
+                                            <input type="text" name="button_text_ar" id="button_text_ar"
+                                                class="form-control text-right" dir="rtl"
+                                                placeholder="{{ __('e.g. ضمان الجودة') }}"
+                                                value="{{ old('button_text_ar', $category->button_text_ar) }}">
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-control-label" for="description_ar">{{ __('Description') }}</label>
-                                            <textarea name="description_ar" id="description_ar"
-                                                      class="form-control form-control-alternative"
-                                                      rows="5"
-                                                      placeholder="{{ __('Enter detailed description in Arabic') }}"
-                                                      required>{{ old('description_ar', $category->description_ar) }}</textarea>
+                                            <label class="form-control-label"
+                                                for="description_ar">{{ __('Description') }}</label>
+                                            <textarea name="description_ar" id="description_ar" class="form-control form-control-alternative" rows="5"
+                                                placeholder="{{ __('Enter detailed description in Arabic') }}" required>{{ old('description_ar', $category->description_ar) }}</textarea>
                                             <div class="invalid-feedback"></div>
                                             <small class="form-text text-muted">{{ __('Minimum 50 characters') }}</small>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-control-label" for="focus_ar">{{ __('Focus Area') }}</label>
-                                            <input type="text" name="focus_ar" id="focus_ar"
-                                                   class="form-control form-control-alternative"
-                                                   placeholder="{{ __('Enter focus area in Arabic') }}"
-                                                   value="{{ old('focus_ar', $category->focus_ar) }}"
-                                                   required>
-                                            <div class="invalid-feedback"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -171,15 +190,17 @@
                                 <div class="tab-pane fade" id="media" role="tabpanel">
                                     <div class="pl-lg-4">
                                         <div class="form-group">
-                                            <label class="form-control-label" for="cover_image">{{ __('Cover Image') }}</label>
+                                            <label class="form-control-label"
+                                                for="cover_image">{{ __('Cover Image') }}</label>
                                             <div class="custom-file">
                                                 <input type="file" name="cover_image" id="cover_image"
-                                                       class="custom-file-input"
-                                                       accept="image/*"
-                                                       onchange="previewImage(this)">
-                                                <label class="custom-file-label" for="cover_image">{{ __('Choose new image...') }}</label>
+                                                    class="custom-file-input" accept="image/*"
+                                                    onchange="previewImage(this)">
+                                                <label class="custom-file-label"
+                                                    for="cover_image">{{ __('Choose new image...') }}</label>
                                             </div>
-                                            <small class="form-text text-muted">{{ __('Recommended size: 1200x630 pixels') }}</small>
+                                            <small
+                                                class="form-text text-muted">{{ __('Recommended size: 1200x630 pixels') }}</small>
                                             <div class="invalid-feedback"></div>
                                         </div>
 
@@ -189,11 +210,10 @@
                                             </div>
                                             <div class="card-body text-center">
                                                 <img id="imagePreview" src="{{ url($category->cover_image) }}"
-                                                     class="img-fluid rounded"
-                                                     style="max-height: 200px;">
+                                                    class="img-fluid rounded" style="max-height: 200px;">
                                                 <div class="mt-2">
                                                     <button type="button" class="btn btn-sm btn-outline-danger"
-                                                            onclick="removeImage()">
+                                                        onclick="removeImage()">
                                                         <i class="fas fa-trash-alt mr-1"></i> {{ __('Remove Image') }}
                                                     </button>
                                                 </div>
@@ -209,7 +229,7 @@
                                     <i class="fas fa-save mr-2"></i> {{ __('Update Category') }}
                                 </button>
                                 <a href="{{ route('services.categories.index', $service) }}"
-                                   class="btn btn-secondary px-5">
+                                    class="btn btn-secondary px-5">
                                     <i class="fas fa-times mr-2"></i> {{ __('Cancel') }}
                                 </a>
                             </div>
@@ -224,129 +244,156 @@
 @endsection
 
 @push('js')
-<script>
-    // Initialize tabs
-    $(document).ready(function() {
-        $('#languageTabs a').on('click', function(e) {
-            e.preventDefault();
-            $(this).tab('show');
-        });
-
-        // Form progress tracking
-        $('#categoryForm input, #categoryForm textarea, #categoryForm select').on('input change', function() {
-            updateFormProgress();
-        });
-
-        // Initialize tooltips
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-
-    // Update form progress
-    function updateFormProgress() {
-        const totalFields = $('#categoryForm :input[required]').length;
-        let filledFields = 0;
-
-        $('#categoryForm :input[required]').each(function() {
-            if ($(this).val() !== '') {
-                filledFields++;
+    <script>
+        // Initialize tabs
+        $(document).ready(function() {
+            // alert();
+            if ($("#type").val() == "banner") {
+                $(".notBanner").hide();
+                $(".banner").removeClass('d-none');
+            } else {
+                $(".notBanner").show();
+                $(".banner").addClass('d-none');
             }
+            $("#type").change(function() {
+                // alert(this.value);
+                if (this.value == 'banner') {
+                    $(".notBanner").hide();
+                    $(".banner").removeClass('d-none');
+                } else {
+                    $(".notBanner").show();
+                    $(".banner").addClass('d-none');
+                }
+            })
+            $('#languageTabs a').on('click', function(e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+
+            // Form progress tracking
+            $('#categoryForm input, #categoryForm textarea, #categoryForm select').on('input change', function() {
+                updateFormProgress();
+            });
+
+            // Initialize tooltips
+            $('[data-toggle="tooltip"]').tooltip();
         });
 
-        const progress = Math.round((filledFields / totalFields) * 100);
-        $('.progress-bar').css('width', progress + '%').attr('aria-valuenow', progress);
-        $('.form-progress-text').text(progress + '% Complete');
-    }
+        // Update form progress
+        function updateFormProgress() {
+            const totalFields = $('#categoryForm :input[required]').length;
+            let filledFields = 0;
 
-    // Image preview functionality
-    function previewImage(input) {
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                $('#imagePreview').attr('src', e.target.result);
-                $('.custom-file-label').text(input.files[0].name);
-            }
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    // Remove image functionality
-    function removeImage() {
-        $('#imagePreview').attr('src', '{{ asset("img/no-image.png") }}');
-        $('.custom-file-label').text('{{ __("No image selected") }}');
-        $('#cover_image').val('');
-    }
-
-    // Form validation
-    $(document).ready(function() {
-        $('#categoryForm').on('submit', function(e) {
-            let isValid = true;
-
-            // Clear previous errors
-            $('.is-invalid').removeClass('is-invalid');
-            $('.invalid-feedback').text('');
-
-            // Validate required fields
             $('#categoryForm :input[required]').each(function() {
-                if ($(this).val() === '') {
-                    $(this).addClass('is-invalid');
-                    $(this).next('.invalid-feedback').text('{{ __("This field is required") }}');
-                    isValid = false;
+                if ($(this).val() !== '') {
+                    filledFields++;
                 }
             });
 
-            // Validate text lengths
-            if ($('#description_en').val().length < 50) {
-                $('#description_en').addClass('is-invalid');
-                $('#description_en').next('.invalid-feedback').text('{{ __("Description must be at least 50 characters") }}');
-                isValid = false;
-            }
+            const progress = Math.round((filledFields / totalFields) * 100);
+            $('.progress-bar').css('width', progress + '%').attr('aria-valuenow', progress);
+            $('.form-progress-text').text(progress + '% Complete');
+        }
 
-            if ($('#description_ar').val().length < 50) {
-                $('#description_ar').addClass('is-invalid');
-                $('#description_ar').next('.invalid-feedback').text('{{ __("Description must be at least 50 characters") }}');
-                isValid = false;
-            }
+        // Image preview functionality
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
 
-            if (!isValid) {
-                e.preventDefault();
-                // Show first tab with error
-                $('.nav-tabs a[href="#' + $('.is-invalid').first().closest('.tab-pane').attr('id') + '"]').tab('show');
-                $('html, body').animate({
-                    scrollTop: $('.is-invalid').first().offset().top - 100
-                }, 500);
+                reader.onload = function(e) {
+                    $('#imagePreview').attr('src', e.target.result);
+                    $('.custom-file-label').text(input.files[0].name);
+                }
+
+                reader.readAsDataURL(input.files[0]);
             }
+        }
+
+        // Remove image functionality
+        function removeImage() {
+            $('#imagePreview').attr('src', '{{ asset('img/no-image.png') }}');
+            $('.custom-file-label').text('{{ __('No image selected') }}');
+            $('#cover_image').val('');
+        }
+
+        // Form validation
+        $(document).ready(function() {
+            $('#categoryForm').on('submit', function(e) {
+                let isValid = true;
+
+                // Clear previous errors
+                $('.is-invalid').removeClass('is-invalid');
+                $('.invalid-feedback').text('');
+
+                // Validate required fields
+                $('#categoryForm :input[required]').each(function() {
+                    if ($(this).val() === '') {
+                        $(this).addClass('is-invalid');
+                        $(this).next('.invalid-feedback').text(
+                            '{{ __('This field is required') }}');
+                        isValid = false;
+                    }
+                });
+
+                // Validate text lengths
+                if ($('#description_en').val().length < 50) {
+                    $('#description_en').addClass('is-invalid');
+                    $('#description_en').next('.invalid-feedback').text(
+                        '{{ __('Description must be at least 50 characters') }}');
+                    isValid = false;
+                }
+
+                if ($('#description_ar').val().length < 50) {
+                    $('#description_ar').addClass('is-invalid');
+                    $('#description_ar').next('.invalid-feedback').text(
+                        '{{ __('Description must be at least 50 characters') }}');
+                    isValid = false;
+                }
+
+                if (!isValid) {
+                    e.preventDefault();
+                    // Show first tab with error
+                    $('.nav-tabs a[href="#' + $('.is-invalid').first().closest('.tab-pane').attr('id') +
+                        '"]').tab('show');
+                    $('html, body').animate({
+                        scrollTop: $('.is-invalid').first().offset().top - 100
+                    }, 500);
+                }
+            });
         });
-    });
-</script>
+    </script>
 @endpush
 
 @push('css')
-<style>
-    .form-progress {
-        margin-bottom: 20px;
-    }
-    .progress {
-        height: 10px;
-        margin-bottom: 5px;
-    }
-    .custom-file-label::after {
-        content: "{{ __('Browse') }}";
-    }
-    .tab-pane {
-        padding: 15px;
-        border-left: 1px solid #dee2e6;
-        border-right: 1px solid #dee2e6;
-        border-bottom: 1px solid #dee2e6;
-        border-radius: 0 0 4px 4px;
-    }
-    .is-invalid {
-        border-color: #fb6340;
-    }
-    .invalid-feedback {
-        display: block;
-        color: #fb6340;
-    }
-</style>
+    <style>
+        .form-progress {
+            margin-bottom: 20px;
+        }
+
+        .progress {
+            height: 10px;
+            margin-bottom: 5px;
+        }
+
+        .custom-file-label::after {
+            content: "{{ __('Browse') }}";
+        }
+
+        .tab-pane {
+            padding: 15px;
+            border-left: 1px solid #dee2e6;
+            border-right: 1px solid #dee2e6;
+            border-bottom: 1px solid #dee2e6;
+            border-radius: 0 0 4px 4px;
+        }
+
+        .is-invalid {
+            border-color: #fb6340;
+        }
+
+        .invalid-feedback {
+            display: block;
+            color: #fb6340;
+        }
+    </style>
 @endpush

@@ -12,7 +12,7 @@ class ServiceCategoryController extends Controller
     public function index(Service $service)
     {
         $categories = $service->categories()->orderBy('order')->get();
-        return view('services.categories.index', compact('service', 'categories'));
+        return view('services.show', compact('service', 'categories'));
     }
 
     public function create(Service $service)
@@ -77,8 +77,8 @@ class ServiceCategoryController extends Controller
             'type' => 'required|in:category,banner',
             'main_header_en' => 'required|string|max:255',
             'main_header_ar' => 'required|string|max:255',
-            'sub_header_en' => 'required|string|max:255',
-            'sub_header_ar' => 'required|string|max:255',
+            'sub_header_en' => 'nullable|string|max:255',
+            'sub_header_ar' => 'nullable|string|max:255',
             'description_en' => 'required|string',
             'description_ar' => 'required|string',
             'focus_en' => 'nullable|string|max:255',
