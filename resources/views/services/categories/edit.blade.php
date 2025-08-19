@@ -129,7 +129,7 @@
                                             <textarea name="description_en" id="description_en" class="form-control form-control-alternative" rows="5"
                                                 placeholder="{{ __('Enter detailed description in English') }}" required>{{ old('description_en', $category->description_en) }}</textarea>
                                             <div class="invalid-feedback"></div>
-                                            <small class="form-text text-muted">{{ __('Minimum 50 characters') }}</small>
+                                            <small class="form-text text-muted">{{ __('Minimum 10 characters') }}</small>
                                         </div>
                                     </div>
                                 </div>
@@ -181,7 +181,7 @@
                                             <textarea name="description_ar" id="description_ar" class="form-control form-control-alternative" rows="5"
                                                 placeholder="{{ __('Enter detailed description in Arabic') }}" required>{{ old('description_ar', $category->description_ar) }}</textarea>
                                             <div class="invalid-feedback"></div>
-                                            <small class="form-text text-muted">{{ __('Minimum 50 characters') }}</small>
+                                            <small class="form-text text-muted">{{ __('Minimum 10 characters') }}</small>
                                         </div>
                                     </div>
                                 </div>
@@ -247,24 +247,15 @@
     <script>
         // Initialize tabs
         $(document).ready(function() {
-            // alert();
-            if ($("#type").val() == "banner") {
-                $(".notBanner").hide();
-                $(".banner").removeClass('d-none');
-            } else {
-                $(".notBanner").show();
-                $(".banner").addClass('d-none');
-            }
+            // Initialize based on current type
+            toggleFieldsBasedOnType();
+
+            // Handle type change
             $("#type").change(function() {
-                // alert(this.value);
-                if (this.value == 'banner') {
-                    $(".notBanner").hide();
-                    $(".banner").removeClass('d-none');
-                } else {
-                    $(".notBanner").show();
-                    $(".banner").addClass('d-none');
-                }
-            })
+                toggleFieldsBasedOnType();
+                updateFormProgress();
+            });
+
             $('#languageTabs a').on('click', function(e) {
                 e.preventDefault();
                 $(this).tab('show');
@@ -278,6 +269,37 @@
             // Initialize tooltips
             $('[data-toggle="tooltip"]').tooltip();
         });
+
+        // Toggle fields based on selected type
+        function toggleFieldsBasedOnType() {
+            const type = $("#type").val();
+
+            if (type === "banner") {
+                $(".notBanner").hide();
+                $(".banner").removeClass('d-none');
+
+                // Make banner-specific fields NOT required (this is the change)
+                $("#button_text_en").prop('required', false);
+                $("#button_text_ar").prop('required', false);
+
+                // Make category-specific fields not required
+                $("#sub_header_en").prop('required', false);
+                $("#sub_header_ar").prop('required', false);
+                $("#focus_en").prop('required', false);
+                $("#focus_ar").prop('required', false);
+            } else {
+                $(".notBanner").show();
+                $(".banner").addClass('d-none');
+
+                // Make category-specific fields required
+                $("#sub_header_en").prop('required', true);
+                $("#sub_header_ar").prop('required', true);
+
+                // Make banner-specific fields not required
+                $("#button_text_en").prop('required', false);
+                $("#button_text_ar").prop('required', false);
+            }
+        }
 
         // Update form progress
         function updateFormProgress() {
@@ -302,7 +324,6 @@
 
                 reader.onload = function(e) {
                     $('#imagePreview').attr('src', e.target.result);
-                    $('.custom-file-label').text(input.files[0].name);
                 }
 
                 reader.readAsDataURL(input.files[0]);
@@ -311,8 +332,7 @@
 
         // Remove image functionality
         function removeImage() {
-            $('#imagePreview').attr('src', '{{ asset('img/no-image.png') }}');
-            $('.custom-file-label').text('{{ __('No image selected') }}');
+            $('#imagePreview').attr('src', 'https://via.placeholder.com/1200x630?text=No+Image');
             $('#cover_image').val('');
         }
 
@@ -325,28 +345,41 @@
                 $('.is-invalid').removeClass('is-invalid');
                 $('.invalid-feedback').text('');
 
-                // Validate required fields
-                $('#categoryForm :input[required]').each(function() {
-                    if ($(this).val() === '') {
-                        $(this).addClass('is-invalid');
-                        $(this).next('.invalid-feedback').text(
-                            '{{ __('This field is required') }}');
-                        isValid = false;
-                    }
-                });
+                // Validate required fields based on type
+                const type = $("#type").val();
+
+                if (type === "banner") {
+                    // Banner validation - button text is NOT required
+                    $('#categoryForm :input[required]').each(function() {
+                        if ($(this).val() === '') {
+                            $(this).addClass('is-invalid');
+                            $(this).next('.invalid-feedback').text('This field is required');
+                            isValid = false;
+                        }
+                    });
+                } else {
+                    // Category validation
+                    $('#categoryForm :input[required]').each(function() {
+                        if ($(this).val() === '') {
+                            $(this).addClass('is-invalid');
+                            $(this).next('.invalid-feedback').text('This field is required');
+                            isValid = false;
+                        }
+                    });
+                }
 
                 // Validate text lengths
-                if ($('#description_en').val().length < 50) {
+                if ($('#description_en').val().length < 10) {
                     $('#description_en').addClass('is-invalid');
                     $('#description_en').next('.invalid-feedback').text(
-                        '{{ __('Description must be at least 50 characters') }}');
+                        'Description must be at least 10 characters');
                     isValid = false;
                 }
 
-                if ($('#description_ar').val().length < 50) {
+                if ($('#description_ar').val().length < 10) {
                     $('#description_ar').addClass('is-invalid');
                     $('#description_ar').next('.invalid-feedback').text(
-                        '{{ __('Description must be at least 50 characters') }}');
+                        'Description must be at least 10 characters');
                     isValid = false;
                 }
 
