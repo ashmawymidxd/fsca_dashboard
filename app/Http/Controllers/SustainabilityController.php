@@ -9,7 +9,8 @@ class SustainabilityController extends Controller
 {
     public function index()
     {
-        $sustainabilities = Sustainability::with('translations')->get();
+        // Order by the order column
+        $sustainabilities = Sustainability::with('translations')->orderBy('order')->get();
         return view('pages.sustainabilities.index', compact('sustainabilities'));
     }
 
@@ -28,14 +29,18 @@ class SustainabilityController extends Controller
             'description_ar' => 'required|string',
         ]);
 
-          // Store image in public directory
+        // Store image in public directory
         $imageName = time().'.'.$request->cover_image->extension();
         $request->cover_image->move(public_path('assets/images/sustainabilities'), $imageName);
         $imagePath = 'assets/images/sustainabilities/'.$imageName;
 
+        // Get the count of existing sustainabilities to set the order
+        $order = Sustainability::count() + 1;
+
         $sustainability = Sustainability::create([
             'cover_image' => $imagePath,
             'is_active' => $request->has('is_active'),
+            'order' => $order,
         ]);
 
         $sustainability->translations()->createMany([
@@ -105,14 +110,35 @@ class SustainabilityController extends Controller
 
     public function destroy(Sustainability $sustainability)
     {
-
         // Delete image
-         if (file_exists(public_path($sustainability->cover_image))) {
+        if (file_exists(public_path($sustainability->cover_image))) {
             unlink(public_path($sustainability->cover_image));
         }
 
         $sustainability->delete();
+
+        // Reorder the remaining items
+        $sustainabilities = Sustainability::orderBy('order')->get();
+        foreach ($sustainabilities as $index => $item) {
+            $item->update(['order' => $index + 1]);
+        }
+
         return redirect()->route('sustainabilities.index')->with('success', 'Sustainability deleted successfully.');
+    }
+
+    // Add this method for reordering
+    public function reorder(Request $request)
+    {
+        $request->validate([
+            'sustainabilities' => 'required|array',
+            'sustainabilities.*' => 'exists:sustainabilities,id',
+        ]);
+
+        foreach ($request->sustainabilities as $index => $sustainabilityId) {
+            Sustainability::where('id', $sustainabilityId)->update(['order' => $index + 1]);
+        }
+
+        return response()->json(['success' => true]);
     }
 
     // API Methods
@@ -121,6 +147,7 @@ class SustainabilityController extends Controller
         $lang = $request->query('lang', 'en'); // Default to English
 
         $sustainabilities = Sustainability::where('is_active', true)
+            ->orderBy('order') // Add ordering for API as well
             ->with(['translations' => function($query) use ($lang) {
                 $query->where('locale', $lang);
             }])
@@ -132,6 +159,7 @@ class SustainabilityController extends Controller
                     'cover_image' => url($sustainability->cover_image),
                     'title' => $translation ? $translation->title : 'No translation available',
                     'description' => $translation ? $translation->description : 'No translation available',
+                    'order' => $sustainability->order,
                 ];
             });
 

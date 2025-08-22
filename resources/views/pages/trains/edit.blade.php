@@ -2,8 +2,8 @@
 
 @section('content')
     @include('users.partials.header', [
-        'title' => __('Edit train Vehicle'),
-        'description' => __('Update the vehicle information.'),
+        'title' => __('Edit Training Center'),
+        'description' => __('Update the Training Center information.'),
         'class' => 'col-lg-12',
     ])
     <div class="container-fluid mt--7">
@@ -13,7 +13,7 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('Vehicle Information') }}</h3>
+                                <h3 class="mb-0">{{ __('Training Center Information') }}</h3>
                             </div>
                             <div class="col-4 text-right">
                                 <a href="{{ route('trains.index') }}" class="btn btn-sm btn-primary">
@@ -27,11 +27,11 @@
                             @csrf
                             @method('PUT')
 
-                            <h6 class="heading-small text-muted mb-4">{{ __('Vehicle details') }}</h6>
+                            <h6 class="heading-small text-muted mb-4">{{ __('Training Center details') }}</h6>
                             <div class="pl-lg-4">
                                 <div class="form-group{{ $errors->has('title_en') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-title-en">{{ __('English Title') }}</label>
-                                    <input type="text" name="title_en" id="input-title-en" class="form-control form-control-alternative{{ $errors->has('title_en') ? ' is-invalid' : '' }}" placeholder="{{ __('Vehicle title in English') }}" value="{{ old('title_en', $train->title_en) }}" required autofocus>
+                                    <input type="text" name="title_en" id="input-title-en" class="form-control form-control-alternative{{ $errors->has('title_en') ? ' is-invalid' : '' }}" placeholder="{{ __('Training Center title in English') }}" value="{{ old('title_en', $train->title_en) }}" required autofocus>
                                     @if ($errors->has('title_en'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('title_en') }}</strong>
@@ -41,7 +41,7 @@
 
                                 <div class="form-group{{ $errors->has('title_ar') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-title-ar">{{ __('Arabic Title') }}</label>
-                                    <input type="text" name="title_ar" id="input-title-ar" class="form-control form-control-alternative{{ $errors->has('title_ar') ? ' is-invalid' : '' }}" placeholder="{{ __('Vehicle title in Arabic') }}" value="{{ old('title_ar', $train->title_ar) }}" required>
+                                    <input type="text" name="title_ar" id="input-title-ar" class="form-control form-control-alternative{{ $errors->has('title_ar') ? ' is-invalid' : '' }}" placeholder="{{ __('Training Center title in Arabic') }}" value="{{ old('title_ar', $train->title_ar) }}" required>
                                     @if ($errors->has('title_ar'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('title_ar') }}</strong>
@@ -51,7 +51,7 @@
 
                                 <div class="form-group{{ $errors->has('description_en') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-description-en">{{ __('English Description') }}</label>
-                                    <textarea name="description_en" id="input-description-en" class="form-control form-control-alternative{{ $errors->has('description_en') ? ' is-invalid' : '' }}" rows="3" placeholder="{{ __('Vehicle description in English') }}" required>{{ old('description_en', $train->description_en) }}</textarea>
+                                    <textarea name="description_en" id="input-description-en" class="form-control form-control-alternative{{ $errors->has('description_en') ? ' is-invalid' : '' }}" rows="3" placeholder="{{ __('Training Center description in English') }}" required>{{ old('description_en', $train->description_en) }}</textarea>
                                     @if ($errors->has('description_en'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('description_en') }}</strong>
@@ -61,7 +61,7 @@
 
                                 <div class="form-group{{ $errors->has('description_ar') ? ' has-danger' : '' }}">
                                     <label class="form-control-label" for="input-description-ar">{{ __('Arabic Description') }}</label>
-                                    <textarea name="description_ar" id="input-description-ar" class="form-control form-control-alternative{{ $errors->has('description_ar') ? ' is-invalid' : '' }}" rows="3" placeholder="{{ __('Vehicle description in Arabic') }}" required>{{ old('description_ar', $train->description_ar) }}</textarea>
+                                    <textarea name="description_ar" id="input-description-ar" class="form-control form-control-alternative{{ $errors->has('description_ar') ? ' is-invalid' : '' }}" rows="3" placeholder="{{ __('Training Center description in Arabic') }}" required>{{ old('description_ar', $train->description_ar) }}</textarea>
                                     @if ($errors->has('description_ar'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('description_ar') }}</strong>

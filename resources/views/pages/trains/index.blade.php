@@ -2,8 +2,8 @@
 
 @section('content')
     @include('users.partials.header', [
-        'title' => __('train Management'),
-        'description' => __('Here you can manage your train vehicles.'),
+        'title' => __('Train Management'),
+        'description' => __('Here you can manage your training programs.'),
         'class' => 'col-lg-12',
     ])
     <div class="container-fluid mt--7">
@@ -13,11 +13,11 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('train Overview') }}</h3>
+                                <h3 class="mb-0">{{ __('Train Overview') }}</h3>
                             </div>
                             <div class="col-4 text-right">
                                 <a href="{{ route('trains.create') }}" class="btn btn-sm btn-primary">
-                                    <i class="fas fa-plus"></i> {{ __('Add New Vehicle') }}
+                                    <i class="fas fa-plus"></i> {{ __('Add New') }}
                                 </a>
                             </div>
                         </div>
@@ -31,11 +31,11 @@
                                 </button>
                             </div>
                         @endif
-
                         <div class="table-responsive">
                             <table class="table align-items-center table-flush mt-3 w-100" id="trainTable">
                                 <thead class="thead-light">
                                     <tr>
+                                        <th scope="col" width="50">{{ __('Order') }}</th>
                                         <th scope="col">{{ __('Image') }}</th>
                                         <th scope="col">{{ __('Title') }}</th>
                                         <th scope="col">{{ __('Description') }}</th>
@@ -43,11 +43,14 @@
                                         <th scope="col">{{ __('Actions') }}</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="sortable">
                                     @foreach ($trains as $train)
-                                        <tr>
+                                        <tr data-id="{{ $train->id }}">
+                                            <td class="sortable-handle text-center" style="cursor: move;">
+                                                <i class="fas fa-arrows-alt-v"></i>
+                                            </td>
                                             <td>
-                                                <img src="{{ asset($train->cover_image) }}" alt="{{ $train->title }}"
+                                                <img src="{{ asset($train->cover_image) }}" alt="{{ $train->title_en }}"
                                                     class="img-thumbnail" style="max-width: 100px;">
                                             </td>
                                             <td>{{ $train->title_en }}</td>
@@ -86,11 +89,84 @@
     </div>
 @endsection
 
+@push('css')
+    <style>
+        .sortable-handle {
+            cursor: move;
+            cursor: -webkit-grabbing;
+        }
+
+        #sortable tr {
+            cursor: move;
+        }
+
+        #sortable tr.sortable-selected {
+            background-color: #f8f9fa;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        #sortable tr:hover {
+            background-color: #f8f9fa;
+        }
+    </style>
+@endpush
+
 @push('js')
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
     <script>
-        AOS.init();
-    </script>
-    <script>
-        new DataTable("#trainTable")
+        // Initialize sortable
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize DataTable
+            new DataTable("#trainTable", {
+                columnDefs: [
+                    { orderable: false, targets: [0, 1, 5] } // Disable sorting on order, image and actions columns
+                ]
+            });
+
+            // Make table rows sortable
+            const sortable = new Sortable(document.getElementById('sortable'), {
+                handle: '.sortable-handle',
+                animation: 150,
+                onEnd: function() {
+                    // Get the new order
+                    const rows = document.querySelectorAll('#sortable tr');
+                    const order = [];
+
+                    rows.forEach(function(row) {
+                        order.push(row.getAttribute('data-id'));
+                    });
+
+                    // Send AJAX request to update order
+                    fetch("{{ route('trains.reorder') }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        },
+                        body: JSON.stringify({trains: order})
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Update order numbers in the table
+                            rows.forEach((row, index) => {
+                                const badge = row.querySelector('.badge');
+                                if (badge) {
+                                    badge.textContent = index + 1;
+                                }
+                            });
+
+                            // Show success message
+                            toastr.success('Order updated successfully');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        toastr.error('Error updating order');
+                    });
+                }
+            });
+
+        });
     </script>
 @endpush

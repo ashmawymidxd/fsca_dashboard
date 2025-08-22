@@ -142,7 +142,7 @@
                                                     for="pdf">{{ __('Choose new PDF file') }}</label>
                                             </div>
                                             <small class="form-text text-muted">
-                                                {{ __('Maximum file size: 5MB. Allowed format: PDF.') }}
+                                                {{ __('Maximum file size: 100MB. Allowed format: PDF.') }}
                                             </small>
                                         </div>
                                     </div>

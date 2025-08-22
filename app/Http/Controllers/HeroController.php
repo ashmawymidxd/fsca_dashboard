@@ -56,7 +56,8 @@ class HeroController extends Controller
 
     public function edit(Hero $hero)
     {
-        return view('pages.heroes.edit', compact('hero'));
+        $services = Service::get();
+        return view('pages.heroes.edit', compact('hero','services'));
     }
 
     public function update(Request $request, Hero $hero)

@@ -17,7 +17,7 @@
                             </div>
                             <div class="col-4 text-right">
                                 <a href="{{ route('complete_services.create') }}" class="btn btn-sm btn-primary">
-                                    <i class="fas fa-plus"></i> {{ __('Add New Service') }}
+                                    <i class="fas fa-plus"></i> {{ __('Add New') }}
                                 </a>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
                                                 <img src="{{ asset($service->image_path) }}" alt="{{ $service->title }}"
                                                     class="img-thumbnail" style="max-width: 100px;">
                                             </td>
-                                            <td>{{ $service->title_ar }}</td>
+                                            <td>{{ $service->title_en }}</td>
                                             <td>{{ $service->title_ar }}</td>
                                             <td>{{ $service->created_at->format('d/m/Y') }}</td>
                                             <td>

@@ -102,7 +102,7 @@
                                                 <input type="text" name="sub_header_en" id="sub_header_en"
                                                     class="form-control form-control-alternative"
                                                     placeholder="{{ __('Enter sub header in English') }}"
-                                                    value="{{ old('sub_header_en', $category->sub_header_en) }}" required>
+                                                    value="{{ old('sub_header_en', $category->sub_header_en) }}">
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                             <div class="form-group">
@@ -153,7 +153,7 @@
                                                 <input type="text" name="sub_header_ar" id="sub_header_ar"
                                                     class="form-control form-control-alternative"
                                                     placeholder="{{ __('Enter sub header in Arabic') }}"
-                                                    value="{{ old('sub_header_ar', $category->sub_header_ar) }}" required>
+                                                    value="{{ old('sub_header_ar', $category->sub_header_ar) }}">
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                             <div class="form-group">
@@ -292,8 +292,8 @@
                 $(".banner").addClass('d-none');
 
                 // Make category-specific fields required
-                $("#sub_header_en").prop('required', true);
-                $("#sub_header_ar").prop('required', true);
+                $("#sub_header_en").prop('required', false);
+                $("#sub_header_ar").prop('required', false);
 
                 // Make banner-specific fields not required
                 $("#button_text_en").prop('required', false);
@@ -345,30 +345,20 @@
                 $('.is-invalid').removeClass('is-invalid');
                 $('.invalid-feedback').text('');
 
-                // Validate required fields based on type
-                const type = $("#type").val();
+                // Validate only main header + description fields
+                const requiredFields = ['#main_header_en', '#description_en', '#main_header_ar',
+                    '#description_ar'
+                ];
 
-                if (type === "banner") {
-                    // Banner validation - button text is NOT required
-                    $('#categoryForm :input[required]').each(function() {
-                        if ($(this).val() === '') {
-                            $(this).addClass('is-invalid');
-                            $(this).next('.invalid-feedback').text('This field is required');
-                            isValid = false;
-                        }
-                    });
-                } else {
-                    // Category validation
-                    $('#categoryForm :input[required]').each(function() {
-                        if ($(this).val() === '') {
-                            $(this).addClass('is-invalid');
-                            $(this).next('.invalid-feedback').text('This field is required');
-                            isValid = false;
-                        }
-                    });
-                }
+                requiredFields.forEach(function(selector) {
+                    if ($(selector).val().trim() === '') {
+                        $(selector).addClass('is-invalid');
+                        $(selector).next('.invalid-feedback').text('This field is required');
+                        isValid = false;
+                    }
+                });
 
-                // Validate text lengths
+                // Validate text length for descriptions
                 if ($('#description_en').val().length < 10) {
                     $('#description_en').addClass('is-invalid');
                     $('#description_en').next('.invalid-feedback').text(

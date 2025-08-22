@@ -22,7 +22,7 @@ class SettingController extends Controller
             'website_name_ar' => 'nullable|string|max:255',
             'website_name_en' => 'nullable|string|max:255',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'pdf' => 'nullable|file|mimes:pdf|max:5120',
+            'pdf' => 'nullable|file|mimes:pdf|max:102400',
             'email' => 'required|email|max:255',
             'phone' => 'nullable|string|max:20',
             'whatsapp' => 'nullable|string|max:20',

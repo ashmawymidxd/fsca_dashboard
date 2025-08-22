@@ -32,9 +32,10 @@
                             </div>
                         @endif
                         <div class="table-responsive">
-                            <table class="table align-items-center table-flush w-100 mt-3 " id="supportTable">
+                            <table class="table align-items-center table-flush w-100 mt-3" id="supportTable">
                                 <thead class="thead-light">
                                     <tr>
+                                        <th scope="col" width="50">{{ __('Order') }}</th>
                                         <th scope="col">{{ __('Cover') }}</th>
                                         <th scope="col">{{ __('Title (EN)') }}</th>
                                         <th scope="col">{{ __('Title (AR)') }}</th>
@@ -42,9 +43,12 @@
                                         <th scope="col">{{ __('Actions') }}</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="sortable">
                                     @foreach ($supportAndHelps as $item)
-                                        <tr>
+                                        <tr data-id="{{ $item->id }}">
+                                            <td class="sortable-handle text-center" style="cursor: move;">
+                                                <i class="fas fa-arrows-alt-v"></i>
+                                            </td>
                                             <td>
                                                 <img src="{{ asset($item->cover_image) }}" width="50" height="50"
                                                     class="rounded">
@@ -82,8 +86,71 @@
     </div>
 @endsection
 
+@push('css')
+    <style>
+        .sortable-handle {
+            cursor: move;
+            cursor: -webkit-grabbing;
+        }
+
+        #sortable tr {
+            cursor: move;
+        }
+
+        #sortable tr.sortable-selected {
+            background-color: #f8f9fa;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .alert-info {
+            margin-bottom: 20px;
+        }
+    </style>
+@endpush
+
 @push('js')
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
     <script>
-        new DataTable('#supportTable');
+        // Initialize sortable
+        $(document).ready(function() {
+            // Make table rows sortable
+            const sortable = new Sortable(document.getElementById('sortable'), {
+                handle: '.sortable-handle',
+                animation: 150,
+                onEnd: function() {
+                    // Get the new order
+                    const rows = $('#sortable tr');
+                    const order = [];
+
+                    rows.each(function(index) {
+                        order.push($(this).data('id'));
+                    });
+
+                    // Send AJAX request to update order
+                    $.ajax({
+                        url: "{{ route('support-and-helps.reorder') }}",
+                        type: 'POST',
+                        data: {
+                            items: order,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                // Update order numbers in the table
+                                rows.each(function(index) {
+                                    $(this).find('.badge').text(index + 1);
+                                });
+
+                                // Show success message
+                                toastr.success('Order updated successfully');
+                            }
+                        },
+                        error: function(xhr) {
+                            toastr.error('Error updating order');
+                        }
+                    });
+                }
+            });
+        });
     </script>
 @endpush

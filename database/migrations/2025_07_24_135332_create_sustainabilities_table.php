@@ -15,6 +15,7 @@ return new class extends Migration
           $table->id();
             $table->string('cover_image');
             $table->boolean('is_active')->default(true);
+            $table->integer('order')->default(1);
             $table->timestamps();
         });
     }

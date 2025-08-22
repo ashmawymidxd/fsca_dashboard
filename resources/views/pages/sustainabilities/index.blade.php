@@ -31,10 +31,12 @@
                                 </button>
                             </div>
                         @endif
+
                         <div class="table-responsive">
                             <table class="table align-items-center table-flush w-100 mt-3" id="sustainabilitiesTable">
                                 <thead class="thead-light">
                                     <tr>
+                                        <th scope="col" width="50">{{ __('Order') }}</th>
                                         <th scope="col">Cover</th>
                                         <th scope="col">Title (EN)</th>
                                         <th scope="col">Title (AR)</th>
@@ -42,9 +44,12 @@
                                         <th scope="col">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="sortable">
                                     @foreach ($sustainabilities as $sustainability)
-                                        <tr>
+                                        <tr data-id="{{ $sustainability->id }}">
+                                            <td class="sortable-handle text-center" style="cursor: move;">
+                                                <i class="fas fa-arrows-alt-v"></i>
+                                            </td>
                                             <td>
                                                 <img src="{{ asset($sustainability->cover_image) }}" width="50"
                                                     height="50" class="rounded">
@@ -83,8 +88,76 @@
     </div>
 @endsection
 
+@push('css')
+    <style>
+        .sortable-handle {
+            cursor: move;
+            cursor: -webkit-grabbing;
+        }
+
+        #sortable tr {
+            cursor: move;
+        }
+
+        #sortable tr.sortable-selected {
+            background-color: #f8f9fa;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+@endpush
+
 @push('js')
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
     <script>
-        new DataTable("#sustainabilitiesTable");
+        // Initialize sortable
+        $(document).ready(function() {
+            // Make table rows sortable
+            const sortable = new Sortable(document.getElementById('sortable'), {
+                handle: '.sortable-handle',
+                animation: 150,
+                onEnd: function() {
+                    // Get the new order
+                    const rows = $('#sortable tr');
+                    const order = [];
+
+                    rows.each(function(index) {
+                        order.push($(this).data('id'));
+                    });
+
+                    // Send AJAX request to update order
+                    $.ajax({
+                        url: "{{ route('sustainabilities.reorder') }}",
+                        type: 'POST',
+                        data: {
+                            sustainabilities: order,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                // Update the order numbers displayed
+                                rows.each(function(index) {
+                                    $(this).find('.sortable-handle small').text('#' + (index + 1));
+                                });
+
+                                // Show success message
+                                toastr.success('Order updated successfully');
+                            }
+                        },
+                        error: function(xhr) {
+                            toastr.error('Error updating order');
+                        }
+                    });
+                }
+            });
+
+            // Initialize DataTables but disable sorting on the first column (order handle)
+            $('#sustainabilitiesTable').DataTable({
+                columnDefs: [
+                    { orderable: false, targets: [0, 5] } // Disable sorting on order and actions columns
+                ],
+                order: [[1, 'asc']] // Default sort by the second column (cover image)
+            });
+
+        });
     </script>
 @endpush

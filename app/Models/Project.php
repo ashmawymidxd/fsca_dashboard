@@ -9,7 +9,7 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['cover_image', 'is_active'];
+    protected $fillable = ['cover_image', 'is_active','order'];
 
     public function translations()
     {

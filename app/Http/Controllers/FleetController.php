@@ -11,13 +11,14 @@ class FleetController extends Controller
 {
     public function index()
     {
-        $fleets = Fleet::latest()->get();
+        $fleets = Fleet::orderBy('order')->get();
         return view('pages.fleets.index', compact('fleets'));
     }
 
     public function create()
     {
-        return view('pages.fleets.create');
+        $nextOrder = Fleet::max('order') + 1;
+        return view('pages.fleets.create', compact('nextOrder'));
     }
 
     public function store(Request $request)
@@ -37,12 +38,16 @@ class FleetController extends Controller
             $image->move(public_path('assets/images/fleets'), $imageName);
         }
 
+        // Get the next order value
+        $nextOrder = Fleet::max('order') + 1;
+
         Fleet::create([
             'title_en' => $request->title_en,
             'title_ar' => $request->title_ar,
             'description_en' => $request->description_en,
             'description_ar' => $request->description_ar,
             'cover_image' => 'assets/images/fleets/' . $imageName,
+            'order' => $nextOrder,
         ]);
 
         return redirect()->route('fleets.index')->with('success', 'Fleet created successfully.');
@@ -103,7 +108,33 @@ class FleetController extends Controller
 
         $fleet->delete();
 
+        // Reorder remaining fleets
+        $this->reorderFleets();
+
         return redirect()->route('fleets.index')->with('success', 'Fleet deleted successfully.');
+    }
+
+    public function reorder(Request $request)
+    {
+        $request->validate([
+            'fleets' => 'required|array',
+            'fleets.*' => 'exists:fleets,id',
+        ]);
+
+        foreach ($request->fleets as $index => $fleetId) {
+            Fleet::where('id', $fleetId)->update(['order' => $index + 1]);
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+    private function reorderFleets()
+    {
+        $fleets = Fleet::orderBy('order')->get();
+
+        foreach ($fleets as $index => $fleet) {
+            $fleet->update(['order' => $index + 1]);
+        }
     }
 
     public function apiIndex(Request $request)
@@ -119,15 +150,17 @@ class FleetController extends Controller
         }
 
         return response()->json(
-            Fleet::get([
+            Fleet::orderBy('order')->get([
                 "title_$lang as title",
                 "description_$lang as description",
-                'cover_image'
+                'cover_image',
+                'order',
             ])->map(function ($fleet) {
                 return [
                     'title' => $fleet->title,
                     'description' => $fleet->description,
-                    'cover_image_url' => $fleet->cover_image ? asset($fleet->cover_image) : null
+                    'cover_image_url' => $fleet->cover_image ? asset($fleet->cover_image) : null,
+                    'order' => $fleet->order,
                 ];
             })
         );

@@ -15,7 +15,8 @@ class Fleet extends Model
         'title_ar',
         'description_en',
         'description_ar',
-        'cover_image'
+        'cover_image',
+        'order'
     ];
 
 }

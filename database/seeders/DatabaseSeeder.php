@@ -10,8 +10,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AdminSeeder::class,
-            // ContactSeeder::class,
-            // ProjectSeeder::class,
+            ContactSeeder::class,
+            ProjectSeeder::class,
             ServiceSeeder::class,
             PermissionSeeder::class,
             // Add other seeders here

@@ -1,6 +1,5 @@
 <?php
 
-// app/Http/Controllers/ProjectController.php
 namespace App\Http\Controllers;
 
 use App\Models\Project;
@@ -10,7 +9,7 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Project::with('translations')->get();
+        $projects = Project::with('translations')->orderBy('order')->get();
         return view('pages.projects.index', compact('projects'));
     }
 
@@ -34,10 +33,15 @@ class ProjectController extends Controller
         $request->cover_image->move(public_path('assets/images/projects'), $imageName);
         $imagePath = 'assets/images/projects/'.$imageName;
 
+        // Get the next order value (count of projects + 1)
+        $nextOrder = Project::count() + 1;
+
         $project = Project::create([
             'cover_image' => $imagePath,
             'is_active' => $request->has('is_active'),
+            'order' => $nextOrder, // Set the order
         ]);
+
         // Create translations
         $project->translations()->createMany([
             [
@@ -108,12 +112,34 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         // Delete image
-         if (file_exists(public_path($project->cover_image))) {
+        if (file_exists(public_path($project->cover_image))) {
             unlink(public_path($project->cover_image));
         }
 
         $project->delete();
+
+        // Reorder remaining projects
+        $projects = Project::orderBy('order')->get();
+        foreach ($projects as $index => $projectItem) {
+            $projectItem->update(['order' => $index + 1]);
+        }
+
         return redirect()->route('projects.index')->with('success', 'Project deleted successfully.');
+    }
+
+    // Add a method to handle reordering
+    public function reorder(Request $request)
+    {
+        $request->validate([
+            'projects' => 'required|array',
+            'projects.*' => 'exists:projects,id',
+        ]);
+
+        foreach ($request->projects as $index => $projectId) {
+            Project::where('id', $projectId)->update(['order' => $index + 1]);
+        }
+
+        return response()->json(['success' => true]);
     }
 
     // API Methods
@@ -122,6 +148,7 @@ class ProjectController extends Controller
         $lang = $request->query('lang', 'en'); // Default to English
 
         $projects = Project::where('is_active', true)
+            ->orderBy('order') // Order by the order field
             ->with(['translations' => function($query) use ($lang) {
                 $query->where('locale', $lang);
             }])
@@ -133,6 +160,7 @@ class ProjectController extends Controller
                     'cover_image' => url($project->cover_image),
                     'title' => $translation ? $translation->title : 'No translation available',
                     'description' => $translation ? $translation->description : 'No translation available',
+                    'order' => $project->order
                 ];
             });
 

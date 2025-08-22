@@ -35,6 +35,7 @@
                             <table class="table align-items-center table-flush w-100 mt-3" id="projectsTable">
                                 <thead class="thead-light">
                                     <tr>
+                                        <th scope="col" width="50">{{ __('Order') }}</th>
                                         <th scope="col">Cover</th>
                                         <th scope="col">Title (EN)</th>
                                         <th scope="col">Title (AR)</th>
@@ -42,9 +43,12 @@
                                         <th scope="col">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="sortable">
                                     @foreach ($projects as $project)
-                                        <tr>
+                                        <tr data-id="{{ $project->id }}">
+                                            <td class="sortable-handle text-center" style="cursor: move;">
+                                                <i class="fas fa-arrows-alt-v"></i>
+                                            </td>
                                             <td>
                                                 <img src="{{ asset($project->cover_image) }}" width="50" height="50"
                                                     class="rounded">
@@ -83,8 +87,66 @@
     </div>
 @endsection
 
+@push('css')
+    <style>
+        .sortable-handle {
+            cursor: move;
+            cursor: -webkit-grabbing;
+        }
+
+        #sortable tr {
+            cursor: move;
+        }
+
+        #sortable tr.sortable-selected {
+            background-color: #f8f9fa;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+@endpush
+
 @push('js')
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
+
     <script>
-        new DataTable('#projectsTable');
+        // Initialize sortable
+        $(document).ready(function() {
+            new DataTable('#projectsTable');
+
+            // Make table rows sortable
+            const sortable = new Sortable(document.getElementById('sortable'), {
+                handle: '.sortable-handle',
+                animation: 150,
+                onEnd: function() {
+                    // Get the new order
+                    const rows = $('#sortable tr');
+                    const order = [];
+
+                    rows.each(function(index) {
+                        order.push($(this).data('id'));
+                    });
+
+                    // Send AJAX request to update order
+                    $.ajax({
+                        url: "{{ route('projects.reorder') }}",
+                        type: 'POST',
+                        data: {
+                            projects: order,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                // Optional: Show a success message
+                                toastr.success('Order updated successfully');
+                            }
+                        },
+                        error: function(xhr) {
+                            toastr.error('Error updating order');
+                        }
+                    });
+                }
+            });
+        });
     </script>
 @endpush

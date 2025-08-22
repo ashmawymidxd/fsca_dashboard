@@ -52,6 +52,8 @@ Route::middleware(['auth','admin.permission:manage-profile'])->group(function ()
 // Projects routes with individual permissions
 Route::middleware(['auth', 'admin.permission:manage-projects'])->group(function () {
     Route::resource('projects', ProjectController::class)->except(['show']);
+    Route::post('/projects/reorder', [ProjectController::class, 'reorder'])
+    ->name('projects.reorder');
     Route::get('projects/{project}', [ProjectController::class, 'show'])
         ->middleware('admin.permission:view-projects')
         ->name('projects.show');
@@ -60,6 +62,8 @@ Route::middleware(['auth', 'admin.permission:manage-projects'])->group(function 
 // Support and Help routes with individual permissions
 Route::middleware(['auth', 'admin.permission:manage-support'])->group(function () {
     Route::resource('support-and-helps', SupportAndHelpController::class)->except(['show']);
+    Route::post('/support-and-helps/reorder', [SupportAndHelpController::class, 'reorder'])
+    ->name('support-and-helps.reorder');
     Route::get('support-and-helps/{support_and_help}', [SupportAndHelpController::class, 'show'])
         ->middleware('admin.permission:view-support')
         ->name('support-and-helps.show');
@@ -68,6 +72,8 @@ Route::middleware(['auth', 'admin.permission:manage-support'])->group(function (
 // Sustainability routes with individual permissions
 Route::middleware(['auth', 'admin.permission:manage-sustainability'])->group(function () {
     Route::resource('sustainabilities', SustainabilityController::class)->except(['show']);
+    Route::post('/sustainabilities/reorder', [SustainabilityController::class, 'reorder'])
+    ->name('sustainabilities.reorder');
     Route::get('sustainabilities/{sustainability}', [SustainabilityController::class, 'show'])
         ->middleware('admin.permission:view-sustainability')
         ->name('sustainabilities.show');
@@ -136,6 +142,9 @@ Route::prefix('fleets')->group(function () {
         ->middleware(['auth', 'admin.permission:view-fleets'])
         ->name('fleets.index');
 
+    Route::post('/fleets/reorder', [FleetController::class, 'reorder'])
+        ->name('fleets.reorder');
+
     // Resource routes with proper path
     Route::resource('fleet', FleetController::class)
         ->except(['index'])
@@ -198,6 +207,8 @@ Route::prefix('trains')->group(function () {
     Route::get('/', [TrainController::class, 'index'])
         ->middleware(['auth', 'admin.permission:view-trains'])
         ->name('trains.index');
+
+    Route::post('/trains/reorder', [TrainController::class, 'reorder'])->name('trains.reorder');
 
     // Resource routes with proper path
     Route::resource('train', TrainController::class)

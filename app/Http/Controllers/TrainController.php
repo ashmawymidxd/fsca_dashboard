@@ -7,11 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
-class trainController extends Controller
+class TrainController extends Controller
 {
     public function index()
     {
-        $trains = Train::latest()->get();
+        $trains = Train::orderBy('order')->get();
         return view('pages.trains.index', compact('trains'));
     }
 
@@ -37,15 +37,19 @@ class trainController extends Controller
             $image->move(public_path('assets/images/trains'), $imageName);
         }
 
+        $nextOrder = Train::max('order') + 1;
+
+        // Order will be set automatically by the model boot method
         Train::create([
             'title_en' => $request->title_en,
             'title_ar' => $request->title_ar,
             'description_en' => $request->description_en,
             'description_ar' => $request->description_ar,
             'cover_image' => 'assets/images/trains/' . $imageName,
+            'order' => $nextOrder
         ]);
 
-        return redirect()->route('trains.index')->with('success', 'train created successfully.');
+        return redirect()->route('trains.index')->with('success', 'Train created successfully.');
     }
 
     public function show(Train $train)
@@ -91,7 +95,7 @@ class trainController extends Controller
 
         $train->update($data);
 
-        return redirect()->route('trains.index')->with('success', 'train updated successfully.');
+        return redirect()->route('trains.index')->with('success', 'Train updated successfully.');
     }
 
     public function destroy(Train $train)
@@ -103,7 +107,27 @@ class trainController extends Controller
 
         $train->delete();
 
-        return redirect()->route('trains.index')->with('success', 'train deleted successfully.');
+        // Reorder the remaining trains
+        $trains = Train::orderBy('order')->get();
+        foreach ($trains as $index => $trainItem) {
+            $trainItem->update(['order' => $index + 1]);
+        }
+
+        return redirect()->route('trains.index')->with('success', 'Train deleted successfully.');
+    }
+
+    public function reorder(Request $request)
+    {
+        $request->validate([
+            'trains' => 'required|array',
+            'trains.*' => 'exists:trains,id',
+        ]);
+
+        foreach ($request->trains as $index => $trainId) {
+            Train::where('id', $trainId)->update(['order' => $index + 1]);
+        }
+
+        return response()->json(['success' => true]);
     }
 
     public function apiIndex(Request $request)
@@ -119,15 +143,17 @@ class trainController extends Controller
         }
 
         return response()->json(
-            Train::get([
+            Train::orderBy('order')->get([
                 "title_$lang as title",
                 "description_$lang as description",
-                'cover_image'
+                'cover_image',
+                'order',
             ])->map(function ($train) {
                 return [
                     'title' => $train->title,
                     'description' => $train->description,
-                    'cover_image_url' => $train->cover_image ? asset($train->cover_image) : null
+                    'cover_image_url' => $train->cover_image ? asset($train->cover_image) : null,
+                    'order' => $train->order
                 ];
             })
         );

@@ -3,7 +3,7 @@
 @section('content')
     @include('users.partials.header', [
         'title' => __('Fleet Management'),
-        'description' => __('Here you can manage your fleet vehicles.'),
+        'description' => __('Here you can manage your fleet'),
         'class' => 'col-lg-12',
     ])
     <div class="container-fluid mt--7">
@@ -17,7 +17,7 @@
                             </div>
                             <div class="col-4 text-right">
                                 <a href="{{ route('fleets.create') }}" class="btn btn-sm btn-primary">
-                                    <i class="fas fa-plus"></i> {{ __('Add New Vehicle') }}
+                                    <i class="fas fa-plus"></i> {{ __('Add New ') }}
                                 </a>
                             </div>
                         </div>
@@ -33,21 +33,25 @@
                         @endif
 
                         <div class="table-responsive">
-                            <table class="table align-items-center table-flush mt-3 w-100" id="FleetTable">
+                            <table class="table align-items-center table-flush mt-3 w-100" id="fleetTable">
                                 <thead class="thead-light">
                                     <tr>
+                                        <th scope="col" width="50">{{ __('Order') }}</th>
                                         <th scope="col">{{ __('Image') }}</th>
                                         <th scope="col">{{ __('Title') }}</th>
                                         <th scope="col">{{ __('Description') }}</th>
                                         <th scope="col">{{ __('Created At') }}</th>
-                                        <th scope="col">{{ __('Actions') }}</th>
+                                        <th scope="col" width="120">{{ __('Actions') }}</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="sortable">
                                     @foreach ($fleets as $fleet)
-                                        <tr>
+                                        <tr data-id="{{ $fleet->id }}">
+                                            <td class="sortable-handle text-center" style="cursor: move;">
+                                                <i class="fas fa-arrows-alt-v"></i>
+                                            </td>
                                             <td>
-                                                <img src="{{ asset($fleet->cover_image) }}" alt="{{ $fleet->title }}"
+                                                <img src="{{ asset($fleet->cover_image) }}" alt="{{ $fleet->title_en }}"
                                                     class="img-thumbnail" style="max-width: 100px;">
                                             </td>
                                             <td>{{ $fleet->title_en }}</td>
@@ -64,7 +68,7 @@
                                                         <i class="fas fa-edit"></i>
                                                     </a>
                                                     <form action="{{ route('fleets.destroy', $fleet) }}" method="POST"
-                                                        onsubmit="return confirm('Are you sure you want to delete this vehicle?');">
+                                                        onsubmit="return confirm('Are you sure you want to delete this ?');">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-sm btn-danger" title="Delete">
@@ -86,11 +90,72 @@
     </div>
 @endsection
 
+@push('css')
+    <style>
+        .sortable-handle {
+            cursor: move;
+            cursor: -webkit-grabbing;
+        }
+
+        #sortable tr {
+            cursor: move;
+        }
+
+        #sortable tr.sortable-selected {
+            background-color: #f8f9fa;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+@endpush
+
 @push('js')
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
     <script>
-        AOS.init();
-    </script>
-    <script>
-        new DataTable("#FleetTable")
+        // Initialize sortable
+        $(document).ready(function() {
+            // Make table rows sortable
+            const sortable = new Sortable(document.getElementById('sortable'), {
+                handle: '.sortable-handle',
+                animation: 150,
+                onEnd: function() {
+                    // Get the new order
+                    const rows = $('#sortable tr');
+                    const order = [];
+
+                    rows.each(function(index) {
+                        order.push($(this).data('id'));
+                    });
+
+                    // Send AJAX request to update order
+                    $.ajax({
+                        url: "{{ route('fleets.reorder') }}",
+                        type: 'POST',
+                        data: {
+                            fleets: order,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                // Update order numbers visually
+                                rows.each(function(index) {
+                                    $(this).find('.badge').text(index + 1);
+                                });
+
+                                // Show success message
+                                toastr.success('Order updated successfully');
+                            }
+                        },
+                        error: function(xhr) {
+                            toastr.error('Error updating order');
+                            // Reload the page to reset the order
+                            location.reload();
+                        }
+                    });
+                }
+            });
+
+            // Initialize DataTable but disable sorting on the first column
+            new DataTable("#fleetTable")
+        });
     </script>
 @endpush

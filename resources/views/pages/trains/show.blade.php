@@ -2,8 +2,8 @@
 
 @section('content')
     @include('users.partials.header', [
-        'title' => __('train Vehicle Details'),
-        'description' => __('View detailed information about this vehicle.'),
+        'title' => __('Training Center Details'),
+        'description' => __('View detailed information about this Training Center.'),
         'class' => 'col-lg-12',
     ])
     <div class="container-fluid mt--7">
@@ -13,7 +13,7 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-8">
-                                <h3 class="mb-0">{{ __('Vehicle Details') }}</h3>
+                                <h3 class="mb-0">{{ __('Training Center Details') }}</h3>
                             </div>
                             <div class="col-4 text-right">
                                 <a href="{{ route('trains.index') }}" class="btn btn-sm btn-primary">
@@ -68,7 +68,7 @@
                                     <a href="{{ route('trains.edit', $train) }}" class="btn btn-primary">
                                         <i class="fas fa-edit"></i> {{ __('Edit') }}
                                     </a>
-                                    <form action="{{ route('trains.destroy', $train) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this vehicle?');">
+                                    <form action="{{ route('trains.destroy', $train) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this Training Center?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">

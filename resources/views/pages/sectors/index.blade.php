@@ -2,8 +2,8 @@
 
 @section('content')
     @include('users.partials.header', [
-        'title' => __('sector Management'),
-        'description' => __('Here you can manage your sector vehicles.'),
+        'title' => __('Sector Management'),
+        'description' => __('Here you can manage your Sector'),
         'class' => 'col-lg-12',
     ])
     <div class="container-fluid mt--7">
@@ -17,7 +17,7 @@
                             </div>
                             <div class="col-4 text-right">
                                 <a href="{{ route('sectors.create') }}" class="btn btn-sm btn-primary">
-                                    <i class="fas fa-plus"></i> {{ __('Add New Vehicle') }}
+                                    <i class="fas fa-plus"></i> {{ __('Add New ') }}
                                 </a>
                             </div>
                         </div>

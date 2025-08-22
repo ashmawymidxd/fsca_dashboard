@@ -9,7 +9,9 @@ class SupportAndHelpController extends Controller
 {
     public function index()
     {
-        $supportAndHelps = SupportAndHelp::with('translations')->get();
+        $supportAndHelps = SupportAndHelp::with('translations')
+            ->orderBy('order')
+            ->get();
         return view('pages.support_and_helps.index', compact('supportAndHelps'));
     }
 
@@ -33,9 +35,13 @@ class SupportAndHelpController extends Controller
         $request->cover_image->move(public_path('assets/images/support_and_helps'), $imageName);
         $imagePath = 'assets/images/support_and_helps/'.$imageName;
 
+        // Get the next order value
+        $order = SupportAndHelp::max('order') + 1;
+
         $supportAndHelp = SupportAndHelp::create([
             'cover_image' => $imagePath,
             'is_active' => $request->has('is_active'),
+            'order' => $order,
         ]);
 
         $supportAndHelp->translations()->createMany([
@@ -130,9 +136,24 @@ class SupportAndHelpController extends Controller
                     'cover_image' => url($supportAndHelp->cover_image),
                     'title' => $translation ? $translation->title : 'No translation available',
                     'description' => $translation ? $translation->description : 'No translation available',
+                    'order' => $supportAndHelp->order
                 ];
             });
 
         return response()->json($supportAndHelps);
+    }
+
+    public function reorder(Request $request)
+    {
+        $request->validate([
+            'items' => 'required|array',
+            'items.*' => 'exists:support_and_helps,id',
+        ]);
+
+        foreach ($request->items as $index => $itemId) {
+            SupportAndHelp::where('id', $itemId)->update(['order' => $index + 1]);
+        }
+
+        return response()->json(['success' => true]);
     }
 }
