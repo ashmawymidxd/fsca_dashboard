@@ -93,6 +93,23 @@ class PermissionSeeder extends Seeder
             // settings
             ['name' => 'View Settings', 'slug' => 'view-settings'],
             ['name' => 'Manage Settings', 'slug' => 'manage-settings'],
+
+            // Tech & Creativity
+            ['name' => 'View Tech Creativity', 'slug' => 'view-tech-creativity'],
+            ['name' => 'Manage Tech Creativity', 'slug' => 'manage-tech-creativity'],
+
+            // Policy Terms
+            ['name' => 'View Policy Terms', 'slug' => 'view-policy-terms'],
+            ['name' => 'Manage Policy Terms', 'slug' => 'manage-policy-terms'],
+
+            // blogs
+            ['name' => 'View Blogs', 'slug' => 'view-blogs'],
+            ['name' => 'Manage Blogs', 'slug' => 'manage-blogs'],
+
+            // banners
+            ['name' => 'View Banners', 'slug' => 'view-banners'],
+            ['name' => 'Manage Banners', 'slug' => 'manage-banners'],
+
         ];
 
         foreach ($permissions as $permission) {

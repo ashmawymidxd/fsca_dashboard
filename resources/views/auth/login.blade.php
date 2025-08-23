@@ -6,20 +6,19 @@
     <div class="container mt--9 pb-5" data-aos="zoom-in" data-aos-delay="200">
         <div class="row justify-content-center">
             <div class="col-lg-5 col-md-7">
-                <div class="card bg-white shadow border-0">
-                    <div class="card-header  bg-transparent pb-3">
+                <div class="card shadow border-0">
+                    <div class="card-header pb-3">
                         <div class="text-center">
                             <img src="{{ asset('argon') }}/img/brand/favicon.png">
                         </div>
                         <div class="text-muted text-center mt-2 mb-3">
                             <small>{{ __('Welcome Back ') }}</small> <br>
-                            <small>{{ __('SFCL dashboard in with') }}</small>
+                            <small>{{ __('SFCL dashboard full access controle') }}</small>
                         </div>
                     </div>
-                    <div class="card-body px-lg-5 py-lg-5">
+                    <div class="card-body bg-secondary py-lg-4">
                         <form role="form" method="POST" action="{{ route('login') }}">
                             @csrf
-
                             <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }} mb-3 ">
                                 <div class="input-group input-group-alternative">
                                     <div class="input-group-prepend">
@@ -58,9 +57,11 @@
                                 </label>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary my-4 w-100">{{ __('Sign in') }}</button>
+                                <button type="submit" class="btn btn-primary mt-4 w-100">{{ __('Sign in') }}</button>
                             </div>
                         </form>
+                    </div>
+                    <div class="card-footer text-center p-4">
                     </div>
                 </div>
             </div>

@@ -54,7 +54,7 @@
                                                     {{ old('status', $completeService->status ?? '') == 'inactive' ? 'checked' : '' }}>
                                                 <label class="custom-control-label text-danger font-weight-bold"
                                                     for="status-inactive">
-                                                    <i class="fas fa-times-circle mr-1"></i>  Hide From Landing Page
+                                                    <i class="fas fa-times-circle mr-1"></i> Hide From Landing Page
                                                 </label>
                                             </div>
                                         </div>
@@ -116,8 +116,8 @@
 
                                             <div class="text-center mb-3">
                                                 <img id="image-preview"
-                                                    src="https://via.placeholder.com/800x600?text=Upload+Image"
-                                                    alt="Service preview" class="img-thumbnail" style="max-height: 300px;">
+                                                    src="https://thfvnext.bing.com/th/id/OIP.tYoZDaFuXWkTOUzy5sxUWAHaHa?o=7&cb=thfvnextrm=3&rs=1&pid=ImgDetMain&o=7&rm=3"
+                                                    alt="Service preview" class="img-thumbnail" style="max-height: 100px;">
                                             </div>
 
                                             <div class="custom-file">

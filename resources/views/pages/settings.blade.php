@@ -66,6 +66,24 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row pl-lg-4">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">{{ __('Description (EN)') }}</label>
+                                        <textarea name="description_en" class="form-control" rows="4">
+                                            {{ old('description_en', $settings->description_en ?? '') }}
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label">{{ __('Description (AR)') }}</label>
+                                        <textarea name="description_ar" class="form-control" rows="4" dir="rtl">
+                                            {{ old('description_ar', $settings->description_ar ?? '') }}
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
 
                             <!-- Add Maintenance Mode Switch Here -->
                             <div class="pl-lg-4">

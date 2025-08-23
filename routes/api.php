@@ -18,6 +18,10 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\HeroController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PolicyTermController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\BannerController;
+use App\Http\Controllers\TechCreativityController as TCC;
 
 
 /*
@@ -49,4 +53,10 @@ Route::get('/services/{slug}', [ServiceApiController::class, 'show']);
 Route::get('/settings', [SettingController::class, 'apiIndex']);
 Route::get('/heros', [HeroController::class, 'apiIndex']);
 Route::get('/videos', [VideoController::class, 'apiIndex']);
+
+Route::get('/tech-creativity', [TCC::class, 'apiIndex']);
+Route::get('/policy-terms', [PolicyTermController::class, 'apiIndex']);
+Route::get('/postes', [BlogController::class, 'apiIndex']);
+Route::get('/banners', [BannerController::class, 'apiIndex']);
+
 

@@ -23,6 +23,10 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\HeroController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\VideoController;
+use App\Http\Controllers\TechCreativityController;
+use App\Http\Controllers\PolicyTermController;
+use App\Http\Controllers\BlogController;
+use App\Http\Controllers\BannerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +57,7 @@ Route::middleware(['auth','admin.permission:manage-profile'])->group(function ()
 Route::middleware(['auth', 'admin.permission:manage-projects'])->group(function () {
     Route::resource('projects', ProjectController::class)->except(['show']);
     Route::post('/projects/reorder', [ProjectController::class, 'reorder'])
-    ->name('projects.reorder');
+        ->name('projects.reorder');
     Route::get('projects/{project}', [ProjectController::class, 'show'])
         ->middleware('admin.permission:view-projects')
         ->name('projects.show');
@@ -63,7 +67,7 @@ Route::middleware(['auth', 'admin.permission:manage-projects'])->group(function 
 Route::middleware(['auth', 'admin.permission:manage-support'])->group(function () {
     Route::resource('support-and-helps', SupportAndHelpController::class)->except(['show']);
     Route::post('/support-and-helps/reorder', [SupportAndHelpController::class, 'reorder'])
-    ->name('support-and-helps.reorder');
+        ->name('support-and-helps.reorder');
     Route::get('support-and-helps/{support_and_help}', [SupportAndHelpController::class, 'show'])
         ->middleware('admin.permission:view-support')
         ->name('support-and-helps.show');
@@ -73,7 +77,7 @@ Route::middleware(['auth', 'admin.permission:manage-support'])->group(function (
 Route::middleware(['auth', 'admin.permission:manage-sustainability'])->group(function () {
     Route::resource('sustainabilities', SustainabilityController::class)->except(['show']);
     Route::post('/sustainabilities/reorder', [SustainabilityController::class, 'reorder'])
-    ->name('sustainabilities.reorder');
+        ->name('sustainabilities.reorder');
     Route::get('sustainabilities/{sustainability}', [SustainabilityController::class, 'show'])
         ->middleware('admin.permission:view-sustainability')
         ->name('sustainabilities.show');
@@ -112,8 +116,8 @@ Route::get('/icons', [PageController::class, 'icons'])
 Route::group(['middleware' => ['auth', 'admin.permission:manage-contacts']], function() {
     Route::resource('contacts', ContactController::class)->except(['create', 'edit', 'update', 'show']);
     Route::get('contacts/{contact}', [ContactController::class, 'show'])
-    ->middleware('admin.permission:view-contacts')
-    ->name('contacts.show');
+        ->middleware('admin.permission:view-contacts')
+        ->name('contacts.show');
     Route::post('contacts/{contact}/reply', [ContactController::class,'sendReply'])->name('contacts.reply');
 });
 
@@ -123,6 +127,9 @@ Route::prefix('complete_services')->group(function () {
     Route::get('/', [CompleteServiceController::class, 'index'])
         ->middleware(['auth', 'admin.permission:view-complete-services'])
         ->name('complete_services.index');
+
+    Route::post('/complete-services/reorder', [CompleteServiceController::class, 'reorder'])
+        ->name('complete_services.reorder');
 
     Route::post('/services/{service}/categories/reorder', [ServiceCategoryController::class, 'reorder'])
         ->name('services.categories.reorder');
@@ -271,8 +278,94 @@ Route::group(['middleware' => ['auth']], function() {
     Route::put('/settings', [SettingController::class, 'update'])->name('settings.update')
         ->middleware('admin.permission:manage-settings');
 });
+
 // videos outes with permissions
-Route::resource('videos', VideoController::class)->middleware(['auth','admin.permission:manage-videos']);
+Route::resource('videos', VideoController::class)
+    ->middleware(['auth','admin.permission:manage-videos']);
+
+// Tech & Creativity Routes
+Route::prefix('tech-creativity')->group(function () {
+    // Index
+    Route::get('/', [TechCreativityController::class, 'index'])
+        ->middleware(['auth', 'admin.permission:view-tech-creativity'])
+        ->name('tech-creativity.index');
+
+    // Reorder
+    Route::post('/reorder', [TechCreativityController::class, 'reorder'])
+        ->middleware(['auth', 'admin.permission:manage-tech-creativity'])
+        ->name('tech-creativity.reorder');
+
+    // Resource routes
+    Route::resource('item', TechCreativityController::class)
+        ->except(['index'])
+        ->middleware(['auth', 'admin.permission:manage-tech-creativity'])
+        ->names('tech-creativity')
+        ->parameters(['item' => 'tech_creativity']);
+});
+
+
+// Policy Terms Routes
+Route::prefix('policy-terms')->group(function () {
+    // Index
+    Route::get('/', [PolicyTermController::class, 'index'])
+        ->middleware(['auth', 'admin.permission:view-policy-terms'])
+        ->name('policy-terms.index');
+
+    // Reorder
+    Route::post('/reorder', [PolicyTermController::class, 'reorder'])
+        ->middleware(['auth', 'admin.permission:manage-policy-terms'])
+        ->name('policy-terms.reorder');
+
+    // Resource routes
+    Route::resource('item', PolicyTermController::class)
+        ->except(['index'])
+        ->middleware(['auth', 'admin.permission:manage-policy-terms'])
+        ->names('policy-terms')
+        ->parameters(['item' => 'policy_term']);
+});
+
+// Blog Routes
+Route::prefix('blogs')->group(function () {
+    // Index
+    Route::get('/', [BlogController::class, 'index'])
+        ->middleware(['auth', 'admin.permission:view-blogs'])
+        ->name('blogs.index');
+
+    // Reorder
+    Route::post('/reorder', [BlogController::class, 'reorder'])
+        ->middleware(['auth', 'admin.permission:manage-blogs'])
+        ->name('blogs.reorder');
+
+    // Resource routes
+    Route::resource('item', BlogController::class)
+        ->except(['index'])
+        ->middleware(['auth', 'admin.permission:manage-blogs'])
+        ->names('blogs')
+        ->parameters(['item' => 'blog']);
+});
+
+// Banners Routes
+Route::prefix('banners')->group(function () {
+    // Index
+    Route::get('/', [BannerController::class, 'index'])
+        ->middleware(['auth', 'admin.permission:view-banners'])
+        ->name('banners.index');
+
+    // Reorder
+    Route::post('/reorder', [BannerController::class, 'reorder'])
+        ->middleware(['auth', 'admin.permission:manage-banners'])
+        ->name('banners.reorder');
+
+    // Resource routes
+    Route::resource('item', BannerController::class)
+        ->except(['index'])
+        ->middleware(['auth', 'admin.permission:manage-banners'])
+        ->names('banners')
+        ->parameters(['item' => 'banner']);
+
+});
+
+
 
 require __DIR__.'/auth.php';
 

@@ -5,21 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CompleteService extends Model
+class Banner extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'title_en',
-        'status',
         'title_ar',
-        'image_path',
-        'order'
+        'description_en',
+        'description_ar',
+        'cover_image',
+        'order',
     ];
-
-     public function scopeOrdered($query)
-    {
-        return $query->orderBy('order');
-    }
-
 }

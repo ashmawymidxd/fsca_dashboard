@@ -24,6 +24,8 @@ class SettingController extends Controller
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'pdf' => 'nullable|file|mimes:pdf|max:102400',
             'email' => 'required|email|max:255',
+            'description_en' => 'nullable|string',
+            'description_ar' => 'nullable|string',
             'phone' => 'nullable|string|max:20',
             'whatsapp' => 'nullable|string|max:20',
             'location_name_ar' => 'nullable|string|max:255',
@@ -105,6 +107,7 @@ class SettingController extends Controller
         $response = [
             'basic_info' => [
                 'website_name' => $settings->{"website_name_$lang"},
+                'description' => $settings->{"description_$lang"},
                 'logo' => $settings->logo ? url($settings->logo) : null,
                 'pdf' => $settings->pdf ? url($settings->pdf) : null,
                 'maintenance_mode' => (bool)$settings->maintenance_mode,

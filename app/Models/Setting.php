@@ -13,6 +13,8 @@ class Setting extends Model
         'website_name_en',
         'website_name_ar',
         'maintenance_mode',
+        'description_en',
+        'description_ar',
         'logo',
         'pdf',
         'email',

@@ -9,13 +9,15 @@ class CompleteServiceController extends Controller
 {
     public function index()
     {
-        $services = CompleteService::latest()->get();
+        $services = CompleteService::orderBy('order')->get();
         return view('pages.services.index', compact('services'));
     }
 
     public function create()
     {
-        return view('pages.services.create');
+        // Get the next order number
+        $nextOrder = CompleteService::max('order') + 1;
+        return view('pages.services.create', compact('nextOrder'));
     }
 
     public function store(Request $request)
@@ -25,6 +27,7 @@ class CompleteServiceController extends Controller
             'title_ar' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|in:active,inactive',
+            'order' => 'sometimes|integer',
         ]);
 
         $imageName = time().'.'.$request->image->extension();
@@ -36,6 +39,7 @@ class CompleteServiceController extends Controller
             'title_ar' => $request->title_ar,
             'image_path' => $imagePath,
             'status' => $request->status,
+            'order' => $request->order ?? (CompleteService::max('order') + 1),
         ]);
 
         return redirect()->route('complete_services.index')->with('success', 'Service created successfully.');
@@ -84,6 +88,20 @@ class CompleteServiceController extends Controller
         return redirect()->route('complete_services.index')->with('success', 'Service updated successfully.');
     }
 
+    public function reorder(Request $request)
+    {
+        $request->validate([
+            'services' => 'required|array',
+            'services.*' => 'exists:complete_services,id',
+        ]);
+
+        foreach ($request->services as $index => $serviceId) {
+            CompleteService::where('id', $serviceId)->update(['order' => $index + 1]);
+        }
+
+        return response()->json(['success' => true]);
+    }
+
     public function apiIndex(Request $request)
     {
         $lang = $request->query('lang', 'en');
@@ -100,12 +118,14 @@ class CompleteServiceController extends Controller
             ->select([
                 "title_$lang as title",
                 'image_path',
+                'order'
             ])
             ->get()
             ->map(function ($service) {
                 return [
                     'title' => $service->title,
                     'image_url' => $service->image_path ? asset($service->image_path) : null,
+                    'order' => $service->order,
                 ];
             });
 
@@ -121,6 +141,13 @@ class CompleteServiceController extends Controller
 
         $completeService->delete();
 
+        // Reorder remaining services
+        CompleteService::ordered()->get()->each(function($service, $index) {
+            $service->update(['order' => $index + 1]);
+        });
+
         return redirect()->route('complete_services.index')->with('success', 'Service deleted successfully.');
     }
 }
+
+

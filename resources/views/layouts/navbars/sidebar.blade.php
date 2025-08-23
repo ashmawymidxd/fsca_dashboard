@@ -111,7 +111,7 @@
 
                     </a>
 
-                    <div class="collapse {{ Request::is('complete_services*') || Request::is('customers*') || Request::is('videos*') || Request::is('who_we_are*') || Request::is('heroes*') || Request::is('sectors*') ? 'show' : '' }}"
+                    <div class="collapse {{ Request::is('complete_services*') || Request::is('banners*') || Request::is('blogs*') || Request::is('customers*') || Request::is('videos*') || Request::is('who_we_are*') || Request::is('heroes*') || Request::is('sectors*') ? 'show' : '' }}"
                         id="navbar-examples">
                         <ul class="nav nav-sm flex-column ps-4">
                             <li class="nav-item">
@@ -156,6 +156,23 @@
                                     <span class="nav-link-text">{{ __('Customers') }}</span>
                                 </a>
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('blogs*') ? 'active' : '' }}"
+                                    href="{{ route('blogs.index') }}">
+                                    <i class="ni ni-bullet-list-67 text-primary"></i>
+                                    <span class="nav-link-text">Blogs</span>
+                                </a>
+                            </li>
+
+                            {{-- banners --}}
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('banners*') ? 'active' : '' }}"
+                                    href="{{ route('banners.index') }}">
+                                    <i class="ni ni-image text-primary"></i>
+                                    <span class="nav-link-text">Banners</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -171,7 +188,7 @@
 
                     </a>
 
-                    <div class="collapse {{ Request::is('projects*') || Request::is('support-and-helps*') || Request::is('sustainabilities*') || Request::is('fleets*') || Request::is('trains*') ? 'show' : '' }}"
+                    <div class="collapse {{ Request::is('projects*') || Request::is('policy-terms*') || Request::is('tech-creativity*') || Request::is('support-and-helps*') || Request::is('sustainabilities*') || Request::is('fleets*') || Request::is('trains*') ? 'show' : '' }}"
                         id="navbar-examples2">
                         <ul class="nav nav-sm flex-column ps-4">
                             <li class="nav-item">
@@ -211,6 +228,22 @@
                                     href="{{ route('trains.index') }}">
                                     <i class="ni ni-user-run text-primary"></i>
                                     <span class="nav-link-text">Trains Centers</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('tech-creativity*') ? 'active' : '' }}"
+                                    href="{{ route('tech-creativity.index') }}">
+                                    <i class="ni ni-compass-04 text-primary"></i>
+                                    <span class="nav-link-text">Tech Creativity</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('policy-terms*') ? 'active' : '' }}"
+                                    href="{{ route('policy-terms.index') }}">
+                                    <i class="ni ni-caps-small text-primary"></i>
+                                    <span class="nav-link-text">Policy Terms</span>
                                 </a>
                             </li>
                         </ul>

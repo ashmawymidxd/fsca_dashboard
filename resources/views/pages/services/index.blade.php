@@ -3,7 +3,7 @@
 @section('content')
     @include('users.partials.header', [
         'title' => __('Services Management'),
-        'description' => __('Here you can manage your services.'),
+        'description' => __('Here you can manage your services. Drag and drop to reorder.'),
         'class' => 'col-lg-12',
     ])
     <div class="container-fluid mt--7">
@@ -22,7 +22,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body bg-whit">
+                    <div class="card-body bg-white">
                         @if (session('success'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 {{ session('success') }}
@@ -36,6 +36,7 @@
                             <table class="table align-items-center table-flush mt-3 w-100" id="completeServicesTable">
                                 <thead class="thead-light">
                                     <tr>
+                                        <th scope="col" width="50">{{ __('Order') }}</th>
                                         <th scope="col">{{ __('Image') }}</th>
                                         <th scope="col">{{ __('English Title') }}</th>
                                         <th scope="col">{{ __('Arabic Title') }}</th>
@@ -44,11 +45,14 @@
                                         <th scope="col">{{ __('Actions') }}</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="sortable">
                                     @foreach ($services as $service)
-                                        <tr>
+                                        <tr data-id="{{ $service->id }}">
+                                            <td class="sortable-handle text-center" style="cursor: move;">
+                                                <i class="fas fa-arrows-alt-v"></i>
+                                            </td>
                                             <td>
-                                                <img src="{{ asset($service->image_path) }}" alt="{{ $service->title }}"
+                                                <img src="{{ asset($service->image_path) }}" alt="{{ $service->title_en }}"
                                                     class="img-thumbnail" style="max-width: 100px;">
                                             </td>
                                             <td>{{ $service->title_en }}</td>
@@ -97,8 +101,81 @@
     </div>
 @endsection
 
+@push('css')
+    <style>
+        .sortable-handle {
+            cursor: move;
+            cursor: -webkit-grabbing;
+        }
+
+        #sortable tr {
+            cursor: move;
+        }
+
+        #sortable tr.sortable-selected {
+            background-color: #f8f9fa;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        #sortable tr.sortable-ghost {
+            opacity: 0.5;
+        }
+    </style>
+@endpush
+
 @push('js')
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
     <script>
-        new DataTable("#completeServicesTable")
+        // Initialize sortable
+        $(document).ready(function() {
+            // Make table rows sortable
+            const sortable = new Sortable(document.getElementById('sortable'), {
+                handle: '.sortable-handle',
+                animation: 150,
+                ghostClass: 'sortable-ghost',
+                chosenClass: 'sortable-selected',
+                onEnd: function() {
+                    // Get the new order
+                    const rows = $('#sortable tr');
+                    const order = [];
+
+                    rows.each(function(index) {
+                        order.push($(this).data('id'));
+                    });
+
+                    // Send AJAX request to update order
+                    $.ajax({
+                        url: "{{ route('complete_services.reorder') }}",
+                        type: 'POST',
+                        data: {
+                            services: order,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                // Update order numbers in the UI
+                                rows.each(function(index) {
+                                    $(this).find('.badge').text(index + 1);
+                                });
+
+                                // Show success message
+                                toastr.success('Order updated successfully');
+                            }
+                        },
+                        error: function(xhr) {
+                            toastr.error('Error updating order');
+                        }
+                    });
+                }
+            });
+
+            // Initialize DataTable but disable sorting on the first column
+            $('#completeServicesTable').DataTable({
+                columnDefs: [
+                    { orderable: false, targets: [0, 6] } // Disable sorting on order and actions columns
+                ],
+                order: [[0, 'asc']] // Order by the order column initially
+            });
+        });
     </script>
 @endpush
