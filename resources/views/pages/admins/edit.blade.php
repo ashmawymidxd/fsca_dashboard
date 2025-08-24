@@ -118,7 +118,13 @@
                                 <hr class="my-4">
 
                                 <div class="form-group">
-                                    <label class="form-control-label">{{ __('Permissions') }}</label>
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <label class="form-control-label mb-0">{{ __('Permissions') }}</label>
+                                        <button type="button" id="check-all-permissions" class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-check-square mr-1"></i> {{ __('Check All') }}
+                                        </button>
+                                    </div>
+
                                     <div class="alert alert-info alert-dismissible fade show">
                                         <i class="fas fa-info-circle mr-2"></i>
                                         {{ __('Select the permissions you want to grant to this administrator') }}
@@ -132,7 +138,7 @@
                                             <div class="col-md-4">
                                                 @foreach ($chunk as $permission)
                                                     <div class="custom-control custom-checkbox mb-3">
-                                                        <input class="custom-control-input" type="checkbox"
+                                                        <input class="custom-control-input permission-checkbox" type="checkbox"
                                                             name="permissions[]" value="{{ $permission->id }}"
                                                             id="permission_{{ $permission->id }}"
                                                             {{ $admin->permissions->contains($permission->id) ? 'checked' : '' }}>
@@ -191,6 +197,22 @@
                     }
                 }
             });
+
+            // Check all permissions functionality
+            $('#check-all-permissions').click(function() {
+                const checkboxes = $('.permission-checkbox');
+                const allChecked = checkboxes.length === checkboxes.filter(':checked').length;
+
+                checkboxes.prop('checked', !allChecked);
+
+                // Update button text
+                $(this).html(
+                    (!allChecked ?
+                        '<i class="fas fa-check-square mr-1"></i> {{ __("Uncheck All") }}' :
+                        '<i class="fas fa-check-square mr-1"></i> {{ __("Check All") }}'
+                    )
+                );
+            });
         });
     </script>
 @endpush
@@ -203,6 +225,9 @@
         }
         .toggle-password:hover {
             background-color: #f6f9fc;
+        }
+        #check-all-permissions {
+            transition: all 0.2s ease;
         }
     </style>
 @endpush
