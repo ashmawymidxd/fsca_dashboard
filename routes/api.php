@@ -21,6 +21,9 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\PolicyTermController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\OurSupportController;
 use App\Http\Controllers\TechCreativityController as TCC;
 
 
@@ -58,5 +61,9 @@ Route::get('/tech-creativity', [TCC::class, 'apiIndex']);
 Route::get('/policy-terms', [PolicyTermController::class, 'apiIndex']);
 Route::get('/postes', [BlogController::class, 'apiIndex']);
 Route::get('/banners', [BannerController::class, 'apiIndex']);
+
+Route::get('/about-us', [AboutUsController::class, 'apiIndex']);
+Route::get('/certificates', [CertificateController::class, 'apiIndex']);
+Route::get('/our-supports', [OurSupportController::class, 'apiIndex']);
 
 

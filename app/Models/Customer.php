@@ -13,5 +13,6 @@ class Customer extends Model
         'name_en',
         'name_ar',
         'logo',
+        'order'
     ];
 }

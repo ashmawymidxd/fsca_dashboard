@@ -35,15 +35,19 @@
                             <table class="table align-items-center table-flush mt-3 w-100" id="WhoWeAreTable">
                                 <thead class="thead-light">
                                     <tr>
+                                        <th scope="col" width="50">{{ __('Order') }}</th>
                                         <th scope="col">{{ __('Title (EN)') }}</th>
                                         <th scope="col">{{ __('Title (AR)') }}</th>
                                         <th scope="col">{{ __('Image') }}</th>
                                         <th scope="col">{{ __('Actions') }}</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="sortable">
                                     @foreach ($whoWeAres as $whoWeAre)
-                                        <tr>
+                                        <tr data-id="{{ $whoWeAre->id }}">
+                                            <td class="sortable-handle text-center" style="cursor: move;">
+                                                <i class="fas fa-arrows-alt-v"></i>
+                                            </td>
                                             <td>{{ $whoWeAre->title_en }}</td>
                                             <td>{{ $whoWeAre->title_ar }}</td>
                                             <td>
@@ -81,12 +85,71 @@
     </div>
 @endsection
 
-@push('js')
-    <script>
-        AOS.init()
-    </script>
+@push('css')
+    <style>
+        .sortable-handle {
+            cursor: move;
+            cursor: -webkit-grabbing;
+        }
 
+        #sortable tr {
+            cursor: move;
+        }
+
+        #sortable tr.sortable-selected {
+            background-color: #f8f9fa;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+    </style>
+@endpush
+
+@push('js')
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
     <script>
-        new DataTable("#WhoWeAreTable")
+        // Initialize sortable
+        $(document).ready(function() {
+            // Make table rows sortable
+            const sortable = new Sortable(document.getElementById('sortable'), {
+                handle: '.sortable-handle',
+                animation: 150,
+                onEnd: function() {
+                    // Get the new order
+                    const rows = $('#sortable tr');
+                    const order = [];
+
+                    rows.each(function(index) {
+                        order.push($(this).data('id'));
+                    });
+
+                    // Send AJAX request to update order
+                    $.ajax({
+                        url: "{{ route('who_we_are.reorder') }}",
+                        type: 'POST',
+                        data: {
+                            who_we_ares: order,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                // Show success message
+                                toastr.success('Order updated successfully');
+                            }
+                        },
+                        error: function(xhr) {
+                            toastr.error('Error updating order');
+                            // Reload the page to reset the order
+                            location.reload();
+                        }
+                    });
+                }
+            });
+
+            // Initialize DataTable but disable sorting on the first column
+            new DataTable("#WhoWeAreTable", {
+                columnDefs: [
+                    { orderable: false, targets: [0, 3, 4] } // Disable sorting for Order, Image, and Actions columns
+                ]
+            });
+        });
     </script>
 @endpush

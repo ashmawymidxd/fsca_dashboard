@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('description_ar');
             $table->string('cover_image')->nullable();
             $table->enum('type', ['banner', 'category'])->default('category');
-            $table->integer('order')->default(0);
+            $table->integer('order')->default(1);
             $table->timestamps();
         });
     }

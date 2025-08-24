@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('who_we_ares', function (Blueprint $table) {
+        Schema::create('certificates', function (Blueprint $table) {
             $table->id();
             $table->string('title_en');
             $table->string('title_ar');
             $table->text('description_en');
             $table->text('description_ar');
-            $table->string('cover_image');
-             $table->integer('order')->default(1);
+            $table->string('cover_image')->nullable();
+            $table->integer('order')->default(1);
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('who_we_ares');
+        Schema::dropIfExists('certificates');
     }
 };

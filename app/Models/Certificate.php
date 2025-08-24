@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Sector extends Model
+class Certificate extends Model
 {
     use HasFactory;
 
-     protected $fillable = [
+    protected $fillable = [
         'title_en',
         'title_ar',
         'description_en',

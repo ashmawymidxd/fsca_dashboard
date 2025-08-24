@@ -45,7 +45,7 @@
 
                         <div class="pl-lg-4">
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="card card-profile shadow-sm mb-4">
                                         <div class="card-header bg-white border-0">
                                             <div class="row align-items-center">
@@ -92,7 +92,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="card card-profile shadow-sm mb-4">
                                         <div class="card-header bg-white border-0">
                                             <div class="row align-items-center">
@@ -110,7 +110,7 @@
                                             @if($admin->permissions->count() > 0)
                                                 <div class="row">
                                                     @foreach($admin->permissions as $permission)
-                                                        <div class="col-md-6 mb-3">
+                                                        <div class="col-md-4 mb-3">
                                                             <div class="card card-stats shadow-none border">
                                                                 <div class="card-body p-2">
                                                                     <div class="d-flex align-items-center">

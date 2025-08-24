@@ -50,9 +50,12 @@
                                         <td>{{ $admin->email }}</td>
                                         <td>
                                             <div class="d-flex flex-wrap">
-                                                @foreach ($admin->permissions as $permission)
+                                                @foreach ($admin->permissions->take(10) as $permission)
                                                     <span class="badge badge-primary m-1">{{ $permission->name }}</span>
                                                 @endforeach
+                                                @if ($admin->permissions->count() > 10)
+                                                    <span class="badge badge-light m-1">+{{ $admin->permissions->count() - 10 }} more ...</span>
+                                                @endif
                                             </div>
                                         </td>
                                         <td>

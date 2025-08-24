@@ -6,28 +6,25 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
-        Schema::create('who_we_ares', function (Blueprint $table) {
+        Schema::create('our_supports', function (Blueprint $table) {
             $table->id();
             $table->string('title_en');
             $table->string('title_ar');
             $table->text('description_en');
             $table->text('description_ar');
-            $table->string('cover_image');
-             $table->integer('order')->default(1);
+            $table->string('button_text_en');
+            $table->string('button_text_ar');
+            $table->string('sub_header_en');
+            $table->string('sub_header_ar');
+            $table->integer('order')->default(0);
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('who_we_ares');
+        Schema::dropIfExists('our_supports');
     }
 };

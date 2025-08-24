@@ -11,13 +11,14 @@ class WhoWeAreController extends Controller
 {
     public function index()
     {
-        $whoWeAres = WhoWeAre::latest()->get();
+        $whoWeAres = WhoWeAre::orderBy('order')->get();
         return view('pages.who_we_are.index', compact('whoWeAres'));
     }
 
     public function create()
     {
-        return view('pages.who_we_are.create');
+        $nextOrder = WhoWeAre::max('order') + 1;
+        return view('pages.who_we_are.create', compact('nextOrder'));
     }
 
     public function store(Request $request)
@@ -37,12 +38,16 @@ class WhoWeAreController extends Controller
             $image->move(public_path('assets/images/who_we_are'), $imageName);
         }
 
+        // Get the next order value
+        $nextOrder = WhoWeAre::max('order') + 1;
+
         WhoWeAre::create([
             'title_en' => $request->title_en,
             'title_ar' => $request->title_ar,
             'description_en' => $request->description_en,
             'description_ar' => $request->description_ar,
             'cover_image' => 'assets/images/who_we_are/' . $imageName,
+            'order' => $nextOrder,
         ]);
 
         return redirect()->route('who_we_are.index')->with('success', 'Who We Are entry created successfully.');
@@ -65,7 +70,7 @@ class WhoWeAreController extends Controller
             'title_ar' => 'required|string|max:255',
             'description_en' => 'required|string',
             'description_ar' => 'required|string',
-            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jjpg,gif,svg|max:2048',
         ]);
 
         $data = [
@@ -103,7 +108,33 @@ class WhoWeAreController extends Controller
 
         $whoWeAre->delete();
 
+        // Reorder remaining items
+        $this->reorderWhoWeAres();
+
         return redirect()->route('who_we_are.index')->with('success', 'Who We Are entry deleted successfully.');
+    }
+
+    public function reorder(Request $request)
+    {
+        $request->validate([
+            'who_we_ares' => 'required|array',
+            'who_we_ares.*' => 'exists:who_we_ares,id',
+        ]);
+
+        foreach ($request->who_we_ares as $index => $whoWeAreId) {
+            WhoWeAre::where('id', $whoWeAreId)->update(['order' => $index + 1]);
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+    private function reorderWhoWeAres()
+    {
+        $whoWeAres = WhoWeAre::orderBy('order')->get();
+
+        foreach ($whoWeAres as $index => $whoWeAre) {
+            $whoWeAre->update(['order' => $index + 1]);
+        }
     }
 
     public function apiIndex(Request $request)
@@ -119,15 +150,17 @@ class WhoWeAreController extends Controller
         }
 
         return response()->json(
-            WhoWeAre::get([
+            WhoWeAre::orderBy('order')->get([
                 "title_$lang as title",
                 "description_$lang as description",
-                'cover_image'
+                'cover_image',
+                'order',
             ])->map(function ($whoWeAre) {
                 return [
                     'title' => $whoWeAre->title,
                     'description' => $whoWeAre->description,
-                    'cover_image_url' => $whoWeAre->cover_image ? asset($whoWeAre->cover_image) : null
+                    'cover_image_url' => $whoWeAre->cover_image ? asset($whoWeAre->cover_image) : null,
+                    'order' => $whoWeAre->order,
                 ];
             })
         );

@@ -110,6 +110,18 @@ class PermissionSeeder extends Seeder
             ['name' => 'View Banners', 'slug' => 'view-banners'],
             ['name' => 'Manage Banners', 'slug' => 'manage-banners'],
 
+            // about-us
+            ['name' => 'View About Us', 'slug' => 'view-about-us'],
+            ['name' => 'Manage About Us', 'slug' => 'manage-about-us'],
+
+            // certificates
+            ['name' => 'View Certificates', 'slug' => 'view-certificates'],
+            ['name' => 'Manage Certificates', 'slug' => 'manage-certificates'],
+
+            // our-supports
+            ['name' => 'View Our Supports', 'slug' => 'view-our-supports'],
+            ['name' => 'Manage Our Supports', 'slug' => 'manage-our-supports'],
+
         ];
 
         foreach ($permissions as $permission) {

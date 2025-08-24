@@ -27,6 +27,9 @@ use App\Http\Controllers\TechCreativityController;
 use App\Http\Controllers\PolicyTermController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\OurSupportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -167,6 +170,10 @@ Route::prefix('customers')->group(function () {
         ->middleware(['auth', 'admin.permission:view-customers'])
         ->name('customers.index');
 
+    Route::post('customers/reorder', [CustomerController::class, 'reorder'])
+        ->name('customers.reorder');
+
+
     // Resource routes with proper path
     Route::resource('customer', CustomerController::class)
         ->except(['index'])
@@ -174,8 +181,6 @@ Route::prefix('customers')->group(function () {
         ->names('customers')
         ->parameters(['customer' => 'customer']); // Explicit parameter naming
 
-    // API route
-    Route::get('/api/customers', [CustomerController::class, 'apiIndex']);
 });
 
 // Sectors Routes
@@ -184,6 +189,9 @@ Route::prefix('sectors')->group(function () {
     Route::get('/', [SectorController::class, 'index'])
         ->middleware(['auth', 'admin.permission:view-sectors'])
         ->name('sectors.index');
+
+   Route::post('sectors/reorder', [SectorController::class, 'reorder'])
+        ->name('sectors.reorder');
 
     // Resource routes with proper path
     Route::resource('sector', SectorController::class)
@@ -199,6 +207,9 @@ Route::prefix('who_we_are')->group(function () {
     Route::get('/', [WhoWeAreController::class, 'index'])
         ->middleware(['auth', 'admin.permission:view-who-we-are'])
         ->name('who_we_are.index');
+
+   Route::post('who_we_are/reorder', [WhoWeAreController::class, 'reorder'])
+        ->name('who_we_are.reorder');
 
     // Resource routes with proper path
     Route::resource('entry', WhoWeAreController::class)
@@ -365,7 +376,64 @@ Route::prefix('banners')->group(function () {
 
 });
 
+Route::prefix('about-us')->group(function () {
+    // Index route
+    Route::get('/', [AboutUsController::class, 'index'])
+        ->middleware(['auth', 'admin.permission:view-about-us'])
+        ->name('about-us.index');
 
+    // Reorder route
+    Route::post('reorder', [AboutUsController::class, 'reorder'])
+        ->middleware(['auth', 'admin.permission:manage-about-us'])
+        ->name('about-us.reorder');
+
+    // Resource routes (except index)
+    Route::resource('item', AboutUsController::class)
+        ->except(['index'])
+        ->middleware(['auth', 'admin.permission:manage-about-us'])
+        ->names('about-us')
+        ->parameters(['item' => 'aboutU']); // keep the parameter consistent
+});
+
+// certificates
+Route::prefix('certificates')->group(function () {
+    // Index
+    Route::get('/', [CertificateController::class, 'index'])
+        ->middleware(['auth', 'admin.permission:view-certificates'])
+        ->name('certificates.index');
+
+    // Reorder
+    Route::post('/reorder', [CertificateController::class, 'reorder'])
+        ->middleware(['auth', 'admin.permission:manage-certificates'])
+        ->name('certificates.reorder');
+
+    // Resource routes
+    Route::resource('item', CertificateController::class)
+        ->except(['index'])
+        ->middleware(['auth', 'admin.permission:manage-certificates'])
+        ->names('certificates')
+        ->parameters(['item' => 'certificate']);
+});
+
+// supports
+Route::prefix('our-supports')->group(function () {
+    // Index
+    Route::get('/', [OurSupportController::class, 'index'])
+        ->middleware(['auth', 'admin.permission:view-our-supports'])
+        ->name('our-supports.index');
+
+    // Reorder
+    Route::post('/reorder', [OurSupportController::class, 'reorder'])
+        ->middleware(['auth', 'admin.permission:manage-our-supports'])
+        ->name('our-supports.reorder');
+
+    // Resource routes
+    Route::resource('item', OurSupportController::class)
+        ->except(['index'])
+        ->middleware(['auth', 'admin.permission:manage-our-supports'])
+        ->names('our-supports')
+        ->parameters(['item' => 'our_support']);
+});
 
 require __DIR__.'/auth.php';
 

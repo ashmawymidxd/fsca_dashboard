@@ -111,7 +111,7 @@
 
                     </a>
 
-                    <div class="collapse {{ Request::is('complete_services*') || Request::is('banners*') || Request::is('blogs*') || Request::is('customers*') || Request::is('videos*') || Request::is('who_we_are*') || Request::is('heroes*') || Request::is('sectors*') ? 'show' : '' }}"
+                    <div class="collapse {{ Request::is('complete_services*') || Request::is('our-supports*') || Request::is('certificates*') || Request::is('about-us*') || Request::is('banners*') || Request::is('blogs*') || Request::is('customers*') || Request::is('videos*') || Request::is('who_we_are*') || Request::is('heroes*') || Request::is('sectors*') ? 'show' : '' }}"
                         id="navbar-examples">
                         <ul class="nav nav-sm flex-column ps-4">
                             <li class="nav-item">
@@ -119,6 +119,13 @@
                                     href="{{ route('heroes.index') }}">
                                     <i class="ni ni-tv-2 text-primary"></i>
                                     <span class="nav-link-text">{{ __('Hero') }}</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('about-us*') ? 'active' : '' }}"
+                                    href="{{ route('about-us.index') }}">
+                                    <i class="ni ni-diamond text-primary"></i>
+                                    <span class="nav-link-text">About Us</span>
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -165,7 +172,6 @@
                                 </a>
                             </li>
 
-                            {{-- banners --}}
                             <li class="nav-item">
                                 <a class="nav-link {{ Request::is('banners*') ? 'active' : '' }}"
                                     href="{{ route('banners.index') }}">
@@ -173,6 +179,24 @@
                                     <span class="nav-link-text">Banners</span>
                                 </a>
                             </li>
+
+                            {{-- certificates --}}
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('certificates*') ? 'active' : '' }}"
+                                    href="{{ route('certificates.index') }}">
+                                    <i class="ni ni-paper-diploma text-primary"></i>
+                                    <span class="nav-link-text">Certificates</span>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link {{ Request::is('our-supports*') ? 'active' : '' }}"
+                                    href="{{ route('our-supports.index') }}">
+                                    <i class="ni ni-support-16 text-primary"></i>
+                                    <span class="nav-link-text">Our Supports</span>
+                                </a>
+                            </li>
+
                         </ul>
                     </div>
                 </li>

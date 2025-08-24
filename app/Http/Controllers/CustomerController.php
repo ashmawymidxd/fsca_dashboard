@@ -11,13 +11,14 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        $customers = Customer::latest()->get();
+        $customers = Customer::orderBy('order')->get();
         return view('pages.customers.index', compact('customers'));
     }
 
     public function create()
     {
-        return view('pages.customers.create');
+        $nextOrder = Customer::max('order') + 1;
+        return view('pages.customers.create', compact('nextOrder'));
     }
 
     public function store(Request $request)
@@ -28,17 +29,19 @@ class CustomerController extends Controller
             'logo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Handle image upload
         if ($request->hasFile('logo')) {
             $image = $request->file('logo');
             $imageName = Str::random(20) . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('assets/images/customers'), $imageName);
         }
 
+        $nextOrder = Customer::max('order') + 1;
+
         Customer::create([
             'name_en' => $request->name_en,
             'name_ar' => $request->name_ar,
             'logo' => 'assets/images/customers/' . $imageName,
+            'order' => $nextOrder,
         ]);
 
         return redirect()->route('customers.index')->with('success', 'Customer created successfully.');
@@ -67,14 +70,11 @@ class CustomerController extends Controller
             'name_ar' => $request->name_ar,
         ];
 
-        // Handle image update
         if ($request->hasFile('logo')) {
-            // Delete old image
             if (File::exists(public_path($customer->logo))) {
                 File::delete(public_path($customer->logo));
             }
 
-            // Upload new image
             $image = $request->file('logo');
             $imageName = Str::random(20) . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('assets/images/customers'), $imageName);
@@ -88,21 +88,43 @@ class CustomerController extends Controller
 
     public function destroy(Customer $customer)
     {
-        // Delete image
         if (File::exists(public_path($customer->logo))) {
             File::delete(public_path($customer->logo));
         }
 
         $customer->delete();
+        $this->reorderCustomers();
 
         return redirect()->route('customers.index')->with('success', 'Customer deleted successfully.');
+    }
+
+    public function reorder(Request $request)
+    {
+        $request->validate([
+            'customers' => 'required|array',
+            'customers.*' => 'exists:customers,id',
+        ]);
+
+        foreach ($request->customers as $index => $customerId) {
+            Customer::where('id', $customerId)->update(['order' => $index + 1]);
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+    private function reorderCustomers()
+    {
+        $customers = Customer::orderBy('order')->get();
+
+        foreach ($customers as $index => $customer) {
+            $customer->update(['order' => $index + 1]);
+        }
     }
 
     public function apiIndex(Request $request)
     {
         $lang = $request->query('lang', 'en');
 
-        // Validate language parameter
         if (!in_array($lang, ['en', 'ar'])) {
             return response()->json([
                 'success' => false,
@@ -111,13 +133,15 @@ class CustomerController extends Controller
         }
 
         return response()->json(
-            Customer::get([
+            Customer::orderBy('order')->get([
                 "name_$lang as name",
-                'logo'
+                'logo',
+                'order'
             ])->map(function ($customer) {
                 return [
                     'name' => $customer->name,
-                    'logo_url' => $customer->logo ? asset($customer->logo) : null
+                    'logo_url' => $customer->logo ? asset($customer->logo) : null,
+                    'order' => $customer->order,
                 ];
             })
         );
