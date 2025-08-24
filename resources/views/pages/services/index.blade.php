@@ -170,12 +170,7 @@
             });
 
             // Initialize DataTable but disable sorting on the first column
-            $('#completeServicesTable').DataTable({
-                columnDefs: [
-                    { orderable: false, targets: [0, 6] } // Disable sorting on order and actions columns
-                ],
-                order: [[0, 'asc']] // Order by the order column initially
-            });
+           new DataTable('#completeServicesTable')
         });
     </script>
 @endpush

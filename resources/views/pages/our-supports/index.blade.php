@@ -66,7 +66,8 @@
                                                         class="btn btn-sm btn-primary mr-2" title="Edit">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
-                                                    <form action="{{ route('our-supports.destroy', $support) }}" method="POST"
+                                                    <form action="{{ route('our-supports.destroy', $support) }}"
+                                                        method="POST"
                                                         onsubmit="return confirm('Are you sure you want to delete this support?');">
                                                         @csrf
                                                         @method('DELETE')
@@ -102,7 +103,7 @@
 
         #sortable tr.sortable-selected {
             background-color: #f8f9fa;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
     </style>
 @endpush
@@ -153,12 +154,7 @@
                 }
             });
 
-            // Initialize DataTable but disable sorting on the first column
-            $('#supportTable').DataTable({
-                "columnDefs": [
-                    { "orderable": false, "targets": 0 }
-                ]
-            });
+            new DataTable("#supportTable");
         });
     </script>
 @endpush

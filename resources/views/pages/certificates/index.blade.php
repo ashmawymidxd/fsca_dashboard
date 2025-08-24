@@ -155,12 +155,7 @@
             });
 
             // Initialize DataTable but disable sorting on the first column
-            $('#certificateTable').DataTable({
-                columnDefs: [
-                    { orderable: false, targets: [0, 1, 5] }
-                ],
-                order: [[3, 'asc']]
-            });
+            new DataTable("#certificateTable");
         });
     </script>
 @endpush
