@@ -16,9 +16,11 @@
                                 <h3 class="mb-0">{{ __('Our Supports Overview') }}</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="{{ route('our-supports.create') }}" class="btn btn-sm btn-primary">
-                                    <i class="fas fa-plus"></i> {{ __('Add New ') }}
-                                </a>
+                               @if ($supports->count() < 1)
+                                   <a href="{{ route('our-supports.create') }}" class="btn btn-sm btn-primary">
+                                       <i class="fas fa-plus"></i> {{ __('Add New ') }}
+                                   </a>
+                               @endif
                             </div>
                         </div>
                     </div>

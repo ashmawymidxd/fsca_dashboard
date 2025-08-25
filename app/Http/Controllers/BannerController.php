@@ -28,6 +28,7 @@ class BannerController extends Controller
             'title_ar' => 'required|string|max:255',
             'description_en' => 'required|string',
             'description_ar' => 'required|string',
+            'status' => 'required|in:active,inactive',
             'cover_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -42,6 +43,7 @@ class BannerController extends Controller
             'title_ar' => $request->title_ar,
             'description_en' => $request->description_en,
             'description_ar' => $request->description_ar,
+            'status' => $request->status,
             'cover_image' => 'assets/images/banners/' . $imageName,
             'order' => $nextOrder,
         ]);
@@ -66,11 +68,12 @@ class BannerController extends Controller
             'title_ar' => 'required|string|max:255',
             'description_en' => 'required|string',
             'description_ar' => 'required|string',
+            'status' => 'required|in:active,inactive',
             'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $data = $request->only([
-            'title_en', 'title_ar', 'description_en', 'description_ar'
+            'title_en', 'title_ar', 'description_en', 'description_ar','status'
         ]);
 
         if ($request->hasFile('cover_image')) {
@@ -129,7 +132,7 @@ class BannerController extends Controller
         }
 
         return response()->json(
-            Banner::orderBy('order')->get(["title_$lang as title","description_$lang as description",'cover_image','order'])
+            Banner::where('status', 'active')->orderBy('order')->get(["title_$lang as title","description_$lang as description",'cover_image','order'])
             ->map(fn($b) => [
                 'title'=>$b->title,
                 'description'=>$b->description,

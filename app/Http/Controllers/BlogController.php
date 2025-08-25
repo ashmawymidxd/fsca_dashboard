@@ -27,6 +27,7 @@ class BlogController extends Controller
             'title_ar' => 'required|string|max:255',
             'description_en' => 'required|string',
             'description_ar' => 'required|string',
+            'status' => 'required|in:active,inactive',
             'cover_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'image_direction' => 'required|in:left,right',
         ]);
@@ -47,6 +48,7 @@ class BlogController extends Controller
             'description_ar' => $request->description_ar,
             'cover_image' => 'assets/images/blogs/' . $imageName,
             'image_direction' => $request->image_direction,
+            'status' => $request->status,
             'order' => $nextOrder,
         ]);
 
@@ -70,6 +72,7 @@ class BlogController extends Controller
             'title_ar' => 'required|string|max:255',
             'description_en' => 'required|string',
             'description_ar' => 'required|string',
+            'status' => 'required|in:active,inactive',
             'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'image_direction' => 'required|in:left,right',
         ]);
@@ -80,6 +83,7 @@ class BlogController extends Controller
             'description_en' => $request->description_en,
             'description_ar' => $request->description_ar,
             'image_direction' => $request->image_direction,
+            'status' => $request->status,
         ];
 
         if ($request->hasFile('cover_image')) {
@@ -140,7 +144,7 @@ class BlogController extends Controller
         }
 
         return response()->json(
-            Blog::orderBy('order')->get([
+            Blog::where('status', 'active')->orderBy('order')->get([
                 "title_$lang as title",
                 "description_$lang as description",
                 'cover_image',
